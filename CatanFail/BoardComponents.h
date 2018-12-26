@@ -1,6 +1,6 @@
 #pragma once
 
-class Network
+class BoardComponents
 {
 private:
 public:

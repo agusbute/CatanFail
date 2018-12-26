@@ -147,7 +147,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="BoardComponents.h" />
+    <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Network.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,7 @@
 #pragma once
 
-class Network
+class Input
 {
 private:
 public:
-
 };
