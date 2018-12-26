@@ -4,5 +4,4 @@ class Graphics
 {
 private:
 public:
-
 };
