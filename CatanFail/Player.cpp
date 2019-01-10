@@ -6,18 +6,23 @@ Player(string name)
 	setName(name);
 
 	// setting all resource cards = 0
-	r_cards.brick = 0;
-	r_cards.grain = 0;
-	r_cards.lumber = 0;
-	r_cards.ore = 0;
-	r_cards.wool = 0;
+	my_r_cards.brick = 0;
+	my_r_cards.grain = 0;
+	my_r_cards.lumber = 0;
+	my_r_cards.ore = 0;
+	my_r_cards.wool = 0;
 
 	// setting all development cards = 0
-	d_cards.knight = 0;
-	d_cards.largest_army = 0;
-	d_cards.longest_road = 0;
-	d_cards.progress = 0;
-	d_cards.victory_point = 0;
+	my_d_cards.knight = 0;
+	my_d_cards.largest_army = 0;
+	my_d_cards.longest_road = 0;
+	my_d_cards.progress = 0;
+	my_d_cards.victory_point = 0;
+
+	// setting my board components
+	total_roads = 15;
+	total_settlements = 5;
+	total_cities = 4;
 }
 
 void Player::
@@ -85,9 +90,9 @@ getDevelopmentCard( DevelopmentCards d_card)
 	switch (d_card)
 	{
 		case KNIGHT:
-			if (d_cards.knight >= 1)
+			if (my_d_cards.knight >= 1)
 			{
-				d_cards.knight -= 1;
+				my_d_cards.knight -= 1;
 			}
 			else
 			{
@@ -97,9 +102,9 @@ getDevelopmentCard( DevelopmentCards d_card)
 			break;
 		
 		case V_POINT:
-			if (d_cards.victory_point >= 1)
+			if (my_d_cards.victory_point >= 1)
 			{
-				d_cards.victory_point -= 1;
+				my_d_cards.victory_point -= 1;
 			}
 			else
 			{
@@ -109,9 +114,9 @@ getDevelopmentCard( DevelopmentCards d_card)
 			break;
 
 		case L_ROAD:
-			if (d_cards.longest_road >= 1)
+			if (my_d_cards.longest_road >= 1)
 			{
-				d_cards.longest_road-= 1;
+				my_d_cards.longest_road-= 1;
 			}
 			else
 			{
@@ -121,9 +126,9 @@ getDevelopmentCard( DevelopmentCards d_card)
 			break;
 
 		case L_ARMY:
-			if (d_cards.largest_army >= 1)
+			if (my_d_cards.largest_army >= 1)
 			{
-				d_cards.largest_army -= 1;
+				my_d_cards.largest_army -= 1;
 			}
 			else
 			{
@@ -133,9 +138,9 @@ getDevelopmentCard( DevelopmentCards d_card)
 			break;
 
 		case PROG:
-			if (d_cards.progress >= 1)
+			if (my_d_cards.progress >= 1)
 			{
-				d_cards.progress -= 1;
+				my_d_cards.progress -= 1;
 			}
 			else
 			{
@@ -163,14 +168,16 @@ getResourceCard(ResourceCards r_card)
 bool Player::
 buildRoad(void)
 {
-	if (roads_built < 2)	//se fija si está en el primer o segundo turno
+	if (roads_built < 2 && total_roads > 13)	//se fija si está en el primer o segundo turno
 	{
 		roads_built += 1;
+		total_roads -= 1;
 	}
-	else if (r_cards.brick >= 1 && r_cards.lumber >= 1)	//si está más avanzado el juego, se fija que tenga las cartas necesarias
+	else if (total_roads > 0 && my_r_cards.brick >= 1 && my_r_cards.lumber >= 1)	//si está más avanzado el juego, se fija que tenga las cartas necesarias
 	{
-		r_cards.brick -= 1;
-		r_cards.lumber -= 1;
+		my_r_cards.brick -= 1;
+		my_r_cards.lumber -= 1;
+		total_roads -= 1;
 		roads_built += 1;
 	}
 	else
@@ -184,16 +191,18 @@ buildRoad(void)
 bool Player::
 buildSettlement(void)
 {
-	if (settlements_built < 2)	//se fija si está en el primer o segundo turno
+	if (settlements_built < 2 && total_settlements > 3)	//se fija si está en el primer o segundo turno
 	{
+		total_settlements -= 1;
 		settlements_built += 1;
 	}
-	else if (r_cards.brick >= 1 && r_cards.grain >= 1 && r_cards.lumber >= 1 && r_cards.wool >= 1)	//si está más avanzado el juego, se fija que tenga las cartas necesarias
+	else if (total_settlements > 0 && my_r_cards.brick >= 1 && my_r_cards.grain >= 1 && my_r_cards.lumber >= 1 && my_r_cards.wool >= 1)	//si está más avanzado el juego, se fija que tenga las cartas necesarias
 	{
-		r_cards.brick -= 1;
-		r_cards.grain -= 1;
-		r_cards.lumber -= 1;
-		r_cards.wool -= 1;
+		my_r_cards.brick -= 1;
+		my_r_cards.grain -= 1;
+		my_r_cards.lumber -= 1;
+		my_r_cards.wool -= 1;
+		total_settlements -= 1;
 		settlements_built += 1;
 	}
 	else
@@ -207,11 +216,12 @@ buildSettlement(void)
 bool Player::
 buildCity(void)
 {
-	if (settlements_built >= 1 && r_cards.ore >= 3 && r_cards.grain >= 2)	//se fija si hay al menos un settlement y si tiene las cartas de recurso necesarias
+	if (total_cities > 0 && settlements_built >= 1 && my_r_cards.ore >= 3 && my_r_cards.grain >= 2)	//se fija si hay al menos un settlement y si tiene las cartas de recurso necesarias
 	{
-		r_cards.ore -= 3;
-		r_cards.grain -= 2;
+		my_r_cards.ore -= 3;
+		my_r_cards.grain -= 2;
 		settlements_built -= 1;
+		total_cities -= 1;
 		cities_built += 1;
 	}
 	else
@@ -230,11 +240,11 @@ void maritimeTrade();
 bool Player::
 buyDevelopmentCard(void)
 {
-	if (r_cards.ore >= 1 && r_cards.wool >= 1 && r_cards.grain >= 1)	//se fija si tengo las cartas de recurso necesarias para comprar una development card
+	if (my_r_cards.ore >= 1 && my_r_cards.wool >= 1 && my_r_cards.grain >= 1)	//se fija si tengo las cartas de recurso necesarias para comprar una development card
 	{
-		r_cards.ore -= 1;
-		r_cards.wool -= 1;
-		r_cards.grain -= 1;
+		my_r_cards.ore -= 1;
+		my_r_cards.wool -= 1;
+		my_r_cards.grain -= 1;
 	}
 	else
 	{

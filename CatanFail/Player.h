@@ -65,12 +65,15 @@ public:
 
 private:
 	string name;
+	unsigned int total_roads;
+	unsigned int total_settlements;
+	unsigned int total_cities;
 	unsigned int victory_points;
 	unsigned int roads_built;
 	unsigned int settlements_built;
 	unsigned int cities_built;
-	myResourseCards_t r_cards;
-	myDevelopmentCards_t d_cards;
+	myResourseCards_t my_r_cards;
+	myDevelopmentCards_t my_d_cards;
 	unsigned int dice_number;
 
 	Player_Error error;
