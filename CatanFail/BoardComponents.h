@@ -2,7 +2,8 @@
 
 class BoardComponents
 {
-private:
-public:
+	private:
+	
+	public:
 
 };
