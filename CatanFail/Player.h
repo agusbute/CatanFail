@@ -8,9 +8,9 @@
 
 using namespace :: std;
 
-enum Actions { ADD, SUBTRACT};
+enum Actions {ADD, SUBTRACT};
 enum DevelopmentCards {KNIGHT, V_POINT, L_ROAD, L_ARMY, PROG};	//Development Cards: Knight, Victory Point, Longest Road, Largest Army, Progress
-enum ResourceCards {LUMBER, BRICK, ORE, GRAIN, WOOL}; //Resource Cards: Lumber, Brick, Ore, Grain, Wool
+enum Resources {LUMBER, BRICK, ORE, GRAIN, WOOL, DESERT, NOTHING}; //Resource Cards: Lumber, Brick, Ore, Grain, Wool, Desert and Nothing se usan para los hexágonos
 enum MaritimeTradeType {THREE_X_ONE, TWO_X_ONE};	
 enum Player_Error { NEG_VP, NO_DCARD};	//NEG_VP = Victory Points negativos, NO_DCARD = no tengo esa carta de resurso
 
@@ -56,11 +56,11 @@ public:
 	/******************************************************FALTAN ESTAS********************************************/
 	void moveRobber();
 	
-	void domesticTrade(ResourceCards my_r_card, ResourceCards the_r_card_wanted); // with opponent // puedo hacer trades de mas de una carta!!!!!
+	void domesticTrade(Resources my_r_card, Resources the_r_card_wanted); // with opponent // puedo hacer trades de mas de una carta!!!!!
 	/*************************************************************************************************************/
 	
-	bool maritimeTrade(ResourceCards my_r_card, ResourceCards the_r_card_i_want, MaritimeTradeType trade); //se fija si tengo las cartas para el intercambio, devuelve true si lo hizo
-	bool bankTrade(ResourceCards my_r_card, ResourceCards the_r_card_wanted); //se fija si tengo las cartas necesarias para el intercambio, devuelve true si lo hizo
+	bool maritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade); //se fija si tengo las cartas para el intercambio, devuelve true si lo hizo
+	bool bankTrade(Resources my_r_card, Resources the_r_card_wanted); //se fija si tengo las cartas necesarias para el intercambio, devuelve true si lo hizo
 	
 	bool BuyDevelopmentCard(void);	//solamente se fija si tengo las cartas de recurso necesarias y las resta, devuelve true si las tengo
 	//debería haber uno que me agregue la que me tocó, ahora tengo sueño para hacerlo (tipo el setter de las r card)

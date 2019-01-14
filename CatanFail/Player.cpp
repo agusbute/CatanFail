@@ -250,11 +250,11 @@ buildCity(void)
 
 /****************************************** FALTAN ESTOS **********************************************/
 void moveRobber();
-void domesticTrade(ResourceCards my_r_card, ResourceCards the_r_card_i_want);
+void domesticTrade(Resources my_r_card, Resources the_r_card_i_want);
 /*****************************************************************************************************/
 
 bool Player::
-maritimeTrade(ResourceCards my_r_card, ResourceCards the_r_card_i_want, MaritimeTradeType trade)
+maritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade)
 {
 	bool resource_available = false;
 
@@ -414,7 +414,7 @@ maritimeTrade(ResourceCards my_r_card, ResourceCards the_r_card_i_want, Maritime
 }
 
 bool Player::
-bankTrade(ResourceCards my_r_card, ResourceCards the_r_card_wanted)
+bankTrade(Resources my_r_card, Resources the_r_card_wanted)
 {
 	bool resource_available = false;
 

@@ -148,9 +148,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
-    <ClInclude Include="BoardComponents.h" />
+    <ClInclude Include="BoardComponent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="SeaFrameTiles.h" />
+    <ClInclude Include="TerrainHexes.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="Player.h" />
@@ -158,10 +160,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="BoardComponents.cpp" />
+    <ClCompile Include="BoardComponent.cpp" />
     <ClCompile Include="CatanFail.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="SeaFrameTiles.cpp" />
+    <ClCompile Include="TerrainHexes.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="Player.cpp" />
