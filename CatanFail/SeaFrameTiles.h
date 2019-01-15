@@ -9,20 +9,28 @@
 
 using namespace :: std;
 
-typedef enum PORT {NONE, SHEEP, WOOD, STONE, BRICK, WHEAT, ANY};
+namespace ports {
+	enum PORT { NONE, WOOL, LUMBER, ORE, BRICK, GRAIN, ANY };
+}
+
 
 typedef struct {
-	PORT port1;
-	PORT port2 = NONE;
+	ports::PORT port1;
+	ports::PORT port2 = ports::NONE;
 }ports_t;
 
 class SeaFrameTiles : public BoardComponent
 {
 	public:
+		
 		SeaFrameTiles(char position_in_map = 0); 
 		bool setPorts(char ports); //char ports son que puertos tiene (identificado por 'N', 'T', 'O', 'L', 'P', 'M')
+		
+		void setAdjacentPieces(char left, char bottom_left, char bottom, char bottom_right, char right); //setter de las piezas adyacentes a la pieza
+		bool setAdjacentPieces();
 
 	private:
+		
 		ports_t myPorts;
-		char adjacentPieces[5] = {0,0,0,0,0}; //Todos los Sea Frame Tiles tienen 5 piezas adyacentes(2 Sea frames, 3 hexes)
+		char adjacentPieces[5]; //Todos los Sea Frame Tiles tienen 5 piezas adyacentes(2 Sea frames, 3 hexes)
 };

@@ -45,6 +45,9 @@
     <ClInclude Include="BoardComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DevelopmentCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CatanFail.cpp">
@@ -75,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BoardComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DevelopmentCard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

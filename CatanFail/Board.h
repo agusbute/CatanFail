@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
@@ -29,6 +27,7 @@ class Board
 		/************* FALTA UNO COMO EL DE ABAJO PARA LOS RECURSOS Y LOS PUERTOS (?) ***************/	//lo uso en el init
 		void createRandomTokens(char* random_tokens);	//crea una lista con los tokens al azahar 
 		bool tokenExists(char* random_tokens, char token);	//devuelve false si todavía puedo usar ese token
+		
 
 		~Board();
 
@@ -38,7 +37,7 @@ class Board
 		SeaFrameTiles* all_the_sea_frames;	//puntero al arreglo de piezas de mar
 		// cartas de desarrollo
 		//cartas de recurso ¡son ilimitadas!
-
+		
 	
 };
 

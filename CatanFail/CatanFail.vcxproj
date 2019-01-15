@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="BoardComponent.h" />
+    <ClInclude Include="DevelopmentCard.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="SeaFrameTiles.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="BoardComponent.cpp" />
     <ClCompile Include="CatanFail.cpp" />
+    <ClCompile Include="DevelopmentCard.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="SeaFrameTiles.cpp" />

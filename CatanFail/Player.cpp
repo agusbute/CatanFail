@@ -12,8 +12,8 @@ Player(string name)
 	my_r_cards.ore = 0;
 	my_r_cards.wool = 0;
 
-	//setteo las development cards = 0 
-	my_d_cards.knight = 0;
+	//setteo las development cards = 0  
+	my_d_cards.knight = 0;	
 	my_d_cards.largest_army = 0;
 	my_d_cards.longest_road = 0;
 	my_d_cards.progress = 0;
