@@ -7,6 +7,12 @@
 #include <time.h>
 #include "BoardComponent.h"
 
+#define LEFT 0
+#define BOTTOM_LEFT 1
+#define BOTTOM 2
+#define BOTTOM_RIGHT 3
+#define RIGHT 4
+
 using namespace :: std;
 
 namespace ports {
@@ -26,11 +32,11 @@ class SeaFrameTiles : public BoardComponent
 		SeaFrameTiles(char position_in_map = 0); 
 		bool setPorts(char ports); //char ports son que puertos tiene (identificado por 'N', 'T', 'O', 'L', 'P', 'M')
 		
-		void setAdjacentPieces(char left, char bottom_left, char bottom, char bottom_right, char right); //setter de las piezas adyacentes a la pieza
-		bool setAdjacentPieces();
+		void defineAdjacentPieces(char left, char bottom_left, char bottom, char bottom_right, char right); //setter de las piezas adyacentes a la pieza
+		virtual bool setAdjacentPieces();
 
 	private:
 		
 		ports_t myPorts;
-		char adjacentPieces[5]; //Todos los Sea Frame Tiles tienen 5 piezas adyacentes(2 Sea frames, 3 hexes)
+		char adjacentPieces[ADJACENT_SEA]; //Todos los Sea Frame Tiles tienen 5 piezas adyacentes(2 Sea frames, 3 hexes)
 };

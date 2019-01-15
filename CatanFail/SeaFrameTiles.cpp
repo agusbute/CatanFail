@@ -54,13 +54,13 @@ setPorts(char ports)		//devuelve true si no hubo errores
 }
 
 void SeaFrameTiles::
-setAdjacentPieces(char left, char bottom_left, char bottom, char bottom_right, char right)
+defineAdjacentPieces(char left, char bottom_left, char bottom, char bottom_right, char right)
 {
-	adjacentPieces[0] = left;
-	adjacentPieces[1] = bottom_left;
-	adjacentPieces[2] = bottom;
-	adjacentPieces[3] = bottom_right;
-	adjacentPieces[4] = right;
+	adjacentPieces[LEFT] = left;
+	adjacentPieces[BOTTOM_LEFT] = bottom_left;
+	adjacentPieces[BOTTOM] = bottom;
+	adjacentPieces[BOTTOM_RIGHT] = bottom_right;
+	adjacentPieces[RIGHT] = right;
 }
 
 bool SeaFrameTiles::
@@ -69,17 +69,17 @@ setAdjacentPieces()
 	bool ret = true;
 	switch (getPositionInMap())
 	{
-		case 0: setAdjacentPieces('5', 'A', 'B', 'C', '1'); break;
+		case 0: defineAdjacentPieces('5', 'A', 'B', 'C', '1'); break;
 		
-		case 1: setAdjacentPieces('0', 'C', 'G', 'L', '2'); break;
+		case 1: defineAdjacentPieces('0', 'C', 'G', 'L', '2'); break;
 		
-		case 2: setAdjacentPieces('1', 'L', 'P', 'S', '3'); break;
+		case 2: defineAdjacentPieces('1', 'L', 'P', 'S', '3'); break;
 		
-		case 3: setAdjacentPieces('2', 'S', 'R', 'Q', '4'); break;
+		case 3: defineAdjacentPieces('2', 'S', 'R', 'Q', '4'); break;
 		
-		case 4: setAdjacentPieces('3', 'Q', 'M', 'H', '5'); break;
+		case 4: defineAdjacentPieces('3', 'Q', 'M', 'H', '5'); break;
 		
-		case 5: setAdjacentPieces('4', 'H', 'D', 'A', '0'); break;
+		case 5: defineAdjacentPieces('4', 'H', 'D', 'A', '0'); break;
 		
 		default: ret = false;
 	}

@@ -8,6 +8,14 @@
 #include "BoardComponent.h"
 #include "Player.h"		//esto lo pongo solamente por los enum, hay que sacarlo
 
+#define TOP_LEFT 0
+#define TOP_RIGHT 1
+#define RIGHT 2
+#define BOTTOM_RIGHT 3
+#define BOTTOM_LEFT 4
+#define LEFT 5
+
+
 enum PieceType {ROAD, SETTLEMENT, CITY};	//tipos de piezas para construir
 
 using namespace :: std;
@@ -26,9 +34,12 @@ class TerrainHexes : public BoardComponent
 		char getToken(void);
 		void setResource(Resources my_resource);
 		Resources getResource(void);
+		virtual bool setAdjacentPieces(void);
+		void defineAdjacentPieces(char top_left, char top_right, char right, char bottom_right, char bottom_left, char left);
 
 	private:
 		Resources resource;	
 		int token;
+		char adjacentPieces[ADJACENT_HEX];
 
 };

@@ -79,19 +79,19 @@ setVictoryPoints(unsigned int v_points, Actions action)
 unsigned int Player::
 getRoadsBuilt(void)
 {
-	return this->roads_built;
+	return this->roads_built.size();
 }
 
 unsigned int Player::
 getSettlementsBuilt(void)
 {
-	return this->settlements_built;
+	return this->settlements_built.size();
 }
 
 unsigned int Player::
 getCitiesBuilt(void)
 {
-	return this->cities_built;
+	return this->cities_built.size();
 }
 
 bool Player::
@@ -128,7 +128,7 @@ getDevelopmentCard( DevelopmentCards d_card)
 		case L_ROAD:
 			if (my_d_cards.longest_road >= 1)
 			{
-				my_d_cards.longest_road-= 1;
+				my_d_cards.longest_road -= 1;
 				successfully_used = true;
 			}
 			else
@@ -182,67 +182,104 @@ getDiceNumber(void)
 }
 
 bool Player::
-buildRoad(void)
+buildRoad(char x, char y)
 {
 	bool road_is_built = false;
+	road_t road = { x, y };
 
-	if (roads_built < 2 && total_roads > 13)	//se fija si está en el primer o segundo turno
+	if (roads_built.size() < 2 && total_roads > 13)	//se fija si está en el primer o segundo turno
 	{
-		roads_built += 1;	//agrega a la cantidad de caminos construidos
-		total_roads -= 1;	//saca de los caminos restantes
-		road_is_built = true;
+		for (int i = 0; i < roads_built.size(); i++)
+		{
+			if (roads_built[i].x != road.x || roads_built[i].y != road.y)
+			{
+				roads_built.push_back(road);	//agrega a la cantidad de caminos construidos
+				total_roads -= 1;	//saca de los caminos restantes
+				road_is_built = true;
+			}
+		}
 	}
 	else if (total_roads > 0 && my_r_cards.brick >= 1 && my_r_cards.lumber >= 1)	//si está más avanzado el juego, se fija que tenga las cartas necesarias y caminos para usar
 	{
-		my_r_cards.brick -= 1;	//uso las cartas necesarias
-		my_r_cards.lumber -= 1;
-		total_roads -= 1;	//setteo caminos contruidos y restantes
-		roads_built += 1;
-		road_is_built = true;
+		for (int i = 0; i < roads_built.size(); i++)
+		{
+			if (roads_built[i].x != road.x || roads_built[i].y != road.y)
+			{
+				my_r_cards.brick -= 1;	//uso las cartas necesarias
+				my_r_cards.lumber -= 1;
+				total_roads -= 1;	//setteo caminos contruidos y restantes
+				roads_built.push_back(road);
+				road_is_built = true;
+			}
+		}
 	}
 
 	return road_is_built;
 }
 
 bool Player::
-buildSettlement(void)
+buildSettlement(char x, char y, char z)
 {
 	bool settlement_is_built = false;
-
-	if (settlements_built < 2 && total_settlements > 3)	//se fija si está en el primer o segundo turno
+	settlement_t settlement = { x, y, z };
+	if (settlements_built.size() < 2 && total_settlements > 3)	//se fija si está en el primer o segundo turno
 	{
-		total_settlements -= 1;	//saco de los asentamientos restantes
-		settlements_built += 1;	//agrego a los que tengo construidos
-		settlement_is_built = true;
+		for (int i = 0; i < settlements_built.size(); i++)
+		{
+			if (settlements_built[i].x != settlement.x || settlements_built[i].y != settlement.y || settlements_built[i].z != settlement.z)
+			{
+				total_settlements -= 1;	//saco de los asentamientos restantes
+				settlements_built.push_back(settlement);	//agrego a los que tengo construidos
+				settlement_is_built = true;
+			}
+		}
 	}
 	else if (total_settlements > 0 && my_r_cards.brick >= 1 && my_r_cards.grain >= 1 && my_r_cards.lumber >= 1 && my_r_cards.wool >= 1)	//si está más avanzado el juego, se fija que tenga las cartas necesarias
 	{
-		my_r_cards.brick -= 1;	//"uso" las cartas que se requieren
-		my_r_cards.grain -= 1;
-		my_r_cards.lumber -= 1;
-		my_r_cards.wool -= 1;
-		total_settlements -= 1;	//setteo los asentamientos contruidos y los restantes
-		settlements_built += 1;
-		settlement_is_built = true;
+		if (settlements_built.size() < 2 && total_settlements > 3)	//se fija si está en el primer o segundo turno
+		{
+			for (int i = 0; i < settlements_built.size(); i++)
+			{
+				if (settlements_built[i].x != settlement.x || settlements_built[i].y != settlement.y || settlements_built[i].z != settlement.z)
+				{
+					//if para ver si tiene los roads que necesita
+					my_r_cards.brick -= 1;	//"uso" las cartas que se requieren
+					my_r_cards.grain -= 1;
+					my_r_cards.lumber -= 1;
+					my_r_cards.wool -= 1;
+					total_settlements -= 1;	//setteo los asentamientos contruidos y los restantes
+					settlements_built.push_back(settlement);
+					settlement_is_built = true;
+				}
+			}
+		}
 	}
 
 	return settlement_is_built;
 }
 
 bool Player::
-buildCity(void)
+buildCity(char x, char y, char z)
 {
 	bool city_is_built = false;
-
-	if (total_cities > 0 && settlements_built >= 1 && my_r_cards.ore >= 3 && my_r_cards.grain >= 2)	//se fija si hay al menos un settlement y si tiene las cartas de recurso necesarias
+	settlement_t settlement = { x, y, z };
+	if (total_cities > 0 && settlements_built.size() >= 1 && my_r_cards.ore >= 3 && my_r_cards.grain >= 2)	//se fija si hay al menos un settlement y si tiene las cartas de recurso necesarias
 	{
 		my_r_cards.ore -= 3;	//"uso" las cartas que se necesitan
 		my_r_cards.grain -= 2;
-		settlements_built -= 1;	//quito el asentamiento construido
-		total_settlements += 1; //recupero ese asentamiento
-		total_cities -= 1;	//saco de las ciudades restantes
-		cities_built += 1;	//agrego a las que tengo
-		city_is_built = true;
+		for (int i = 0; i < settlements_built.size(); i++)
+		{
+			if (settlements_built[i].x == settlement.x && settlements_built[i].y == settlement.y && settlements_built[i].z == settlement.z)
+			{
+				settlements_built.erase(settlements_built.begin()+i); //quito el asentamiento construido
+				total_settlements += 1; //recupero ese asentamiento
+				total_cities -= 1;	//saco de las ciudades restantes
+				city_t city = { x, y, z };
+				cities_built.push_back(city); //agrego la cuidad construida
+				city_is_built = true;
+			}
+		}	
+		
 	}
 
 	return city_is_built;
@@ -260,6 +297,7 @@ maritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeTyp
 
 	if (trade == THREE_X_ONE)	//me fijo que tipo de intercambio marítimo es ((((( se supone que llamo a este método si desde el tablero pued hacerlo )))))
 	{
+		//checkTrade()
 		switch (my_r_card)	//y a partir de eso veo si tengo la cantidad de cartas necesarias para intercambiar
 		{
 			case LUMBER:
@@ -336,6 +374,7 @@ maritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeTyp
 
 	else if (trade == TWO_X_ONE)	//lo mismo que el caso anterior
 	{
+		//checkTrade()
 		switch (my_r_card)
 		{
 			case LUMBER:
@@ -533,5 +572,19 @@ gameWon(void)
 	return am_i_the_winner;
 }
 
-//~Player();
+city_t& Player::
+operator= (const settlement_t &settlement_to_upgrade)
+{
+	city_t new_city;
+	new_city.x = settlement_to_upgrade.x;
+	new_city.y = settlement_to_upgrade.y;
+	new_city.z = settlement_to_upgrade.z;
+	return new_city;
+}
+
+Player::
+~Player()
+{
+
+}
 
