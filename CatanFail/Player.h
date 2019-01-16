@@ -63,8 +63,8 @@ class Player
 
 		//(los siguientes tres métodos) devuelven true si puedo contruir un camino, un asentamiento o una ciudad respectivamente
 		//en base a mis cartas y el luagr en el tablero
-		bool buildRoad(char x, char y);
-		bool buildSettlement(char x, char y, char z);
+		bool buildRoad(char x, char y);	//falta chequear el road anterior
+		bool buildSettlement(char x, char y, char z);	//falta chequear la distancia
 		bool buildCity(char x, char y, char z);
 
 		/******************************************************FALTAN ESTAS********************************************/
