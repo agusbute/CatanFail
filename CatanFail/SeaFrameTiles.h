@@ -34,6 +34,7 @@ class SeaFrameTiles : public BoardComponent
 		
 		void defineAdjacentPieces(char left, char bottom_left, char bottom, char bottom_right, char right); //setter de las piezas adyacentes a la pieza
 		virtual bool setAdjacentPieces();
+		virtual char getAdjacentPiece(char position);	//le mando la position con los defines y devuelve que pieza tiene al lado
 
 	private:
 		

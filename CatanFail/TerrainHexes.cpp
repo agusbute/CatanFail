@@ -92,3 +92,41 @@ setAdjacentPieces()
 	}
 	return ret;
 }
+
+char TerrainHexes::
+getAdjacentPiece(char position)	//le mando la position con los defines y devuelve que pieza tiene al lado
+{
+	char ret_position;
+
+	switch (position)
+	{
+		case TOP_LEFT:
+			ret_position = adjacentPieces[TOP_LEFT];
+			break;
+
+		case TOP_RIGHT:
+			ret_position = adjacentPieces[TOP_RIGHT];
+			break;
+
+		case RIGHT:
+			ret_position = adjacentPieces[RIGHT];
+			break;
+
+		case BOTTOM_RIGHT:
+			ret_position = adjacentPieces[BOTTOM_RIGHT];
+			break;
+
+		case BOTTOM_LEFT:
+			ret_position = adjacentPieces[BOTTOM_LEFT];
+			break;
+
+		case LEFT:
+			ret_position = adjacentPieces[LEFT];
+
+		default:
+			ret_position = ERROR;
+			break;
+	}
+
+	return ret_position;
+}

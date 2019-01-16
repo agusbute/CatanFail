@@ -6,7 +6,10 @@
 #include <time.h>
 #include <algorithm>
 #include <stack>
+#include "Board.h"
+#include "Player.h"
 #include "DevelopmentCard.h"
+#include "Input.h"
 
 #define TOTAL_D_CARDS 25
 #define TOTAL_KNIGHT_CARDS 14
@@ -20,7 +23,9 @@ class Game
 	public:
 		void createDevelopmentCards(void);
 		void play(void);	//fsm global
+		void checkRoad(char x, char y);
 	
 	private:
 		stack <DevelopmentCard> development_cards;
+
 };

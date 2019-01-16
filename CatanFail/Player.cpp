@@ -151,7 +151,7 @@ buildRoad(char x, char y)
 			}
 		}
 	}
-
+	//network.sendMessage{"road", x, y};
 	return road_is_built;
 }
 

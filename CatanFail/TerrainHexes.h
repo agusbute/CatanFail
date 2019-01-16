@@ -36,6 +36,7 @@ class TerrainHexes : public BoardComponent
 		Resources getResource(void);
 		virtual bool setAdjacentPieces(void);
 		void defineAdjacentPieces(char top_left, char top_right, char right, char bottom_right, char bottom_left, char left);
+		virtual char getAdjacentPiece(char position);	//le mando la position con los defines y devuelve que pieza tiene al lado
 
 	private:
 		Resources resource;	

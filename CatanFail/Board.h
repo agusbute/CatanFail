@@ -27,8 +27,7 @@ class Board
 		/************* FALTA UNO COMO EL DE ABAJO PARA LOS RECURSOS Y LOS PUERTOS (?) ***************/	//lo uso en el init
 		void createRandomTokens(char* random_tokens);	//crea una lista con los tokens al azahar 
 		bool tokenExists(char* random_tokens, char token);	//devuelve false si todavía puedo usar ese token
-		
-
+		TerrainHexes searchPiece(char info);
 		~Board();
 
 

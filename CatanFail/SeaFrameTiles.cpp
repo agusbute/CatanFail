@@ -86,3 +86,38 @@ setAdjacentPieces()
 	return ret;
 }
 
+char SeaFrameTiles::
+getAdjacentPiece(char position)	//le mando la position de los defines y devuelve que pieza tiene al lado
+{
+	char ret_position;
+
+	switch (position)
+	{
+		case LEFT:
+			ret_position = adjacentPieces[LEFT];
+			break;
+
+		case BOTTOM_LEFT:
+			ret_position = adjacentPieces[BOTTOM_LEFT];
+			break;
+
+		case BOTTOM:
+			ret_position = adjacentPieces[BOTTOM];
+			break;
+
+		case BOTTOM_RIGHT:
+			ret_position = adjacentPieces[BOTTOM_RIGHT];
+			break;
+
+		case RIGHT:
+			ret_position = adjacentPieces[RIGHT];
+			break;
+
+		default:
+			ret_position = ERROR;
+			break;
+	}
+
+	return ret_position;
+}
+

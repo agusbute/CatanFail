@@ -43,3 +43,9 @@ createDevelopmentCards(void)
 		}
 	}
 }
+
+void Game::
+checkRoad(char x, char y)
+{
+
+}
