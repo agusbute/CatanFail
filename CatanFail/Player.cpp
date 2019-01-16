@@ -12,13 +12,6 @@ Player(string name)
 	my_r_cards.ore = 0;
 	my_r_cards.wool = 0;
 
-	//setteo las development cards = 0  
-	my_d_cards.knight = 0;	
-	my_d_cards.largest_army = 0;
-	my_d_cards.longest_road = 0;
-	my_d_cards.progress = 0;
-	my_d_cards.victory_point = 0;
-
 	//setteo las piezas que tengo
 	total_roads = 15;
 	total_settlements = 5;
@@ -95,77 +88,22 @@ getCitiesBuilt(void)
 }
 
 bool Player::
-getDevelopmentCard( DevelopmentCards d_card)
+getDevelopmentCard(DevelopmentCards d_card)
 {
 	bool successfully_used = false;
 
-	switch (d_card)	//me fijo que tipo de carta quiero usar
+	for (int i = 0; i < my_d_cards.size(); i++)	//me fijo si tengo una carta de esas
 	{
-		case KNIGHT:
-			if (my_d_cards.knight >= 1)	//si tengo al menos una, la uso
-			{
-				my_d_cards.knight -= 1;
-				successfully_used = true;
-			}
-			else
-			{
-				error = NO_DCARD;	//no tengo esa development card
-			}
-			break;
-		
-		case V_POINT:
-			if (my_d_cards.victory_point >= 1)
-			{
-				my_d_cards.victory_point -= 1;
-				successfully_used = true;
-			}
-			else
-			{
-				error = NO_DCARD;
-			}
-			break;
-
-		case L_ROAD:
-			if (my_d_cards.longest_road >= 1)
-			{
-				my_d_cards.longest_road -= 1;
-				successfully_used = true;
-			}
-			else
-			{
-				error = NO_DCARD;
-			}
-			break;
-
-		case L_ARMY:
-			if (my_d_cards.largest_army >= 1)
-			{
-				my_d_cards.largest_army -= 1;
-				successfully_used = true;
-			}
-			else
-			{
-				error = NO_DCARD;
-			}
-			break;
-
-		case PROG:
-			if (my_d_cards.progress >= 1)
-			{
-				my_d_cards.progress -= 1;
-				successfully_used = true;
-			}
-			else
-			{
-				error = NO_DCARD;
-			}
-			break;
-
-		default: break;
+		if (my_d_cards[i].getType() == d_card)	//si está
+		{
+			my_d_cards.erase(my_d_cards.begin() + i);	//la "uso"
+			successfully_used = true;
+		}
 	}
-
 	return successfully_used;
 }
+
+	
 
 /*
 unsigned int Player::
@@ -274,7 +212,7 @@ buildCity(char x, char y, char z)
 				settlements_built.erase(settlements_built.begin()+i); //quito el asentamiento construido
 				total_settlements += 1; //recupero ese asentamiento
 				total_cities -= 1;	//saco de las ciudades restantes
-				city_t city = { x, y, z };
+				city_t city = /*settlement;*/{ x, y, z };
 				cities_built.push_back(city); //agrego la cuidad construida
 				city_is_built = true;
 			}
@@ -534,7 +472,7 @@ bankTrade(Resources my_r_card, Resources the_r_card_wanted)
 }
 
 bool Player::
-BuyDevelopmentCard(void)	
+BuyDevelopmentCard(DevelopmentCard my_new_card)	
 {
 	bool new_development_card = false;
 
@@ -543,6 +481,9 @@ BuyDevelopmentCard(void)
 		my_r_cards.ore -= 1;	//"uso" las cartas que necesito
 		my_r_cards.wool -= 1;
 		my_r_cards.grain -= 1;
+
+		my_d_cards.push_back(my_new_card);	//la agrego a mis cartas de desarrollo 
+
 		new_development_card = true;
 	}
 

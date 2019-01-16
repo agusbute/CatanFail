@@ -10,6 +10,7 @@
 class DevelopmentCard
 {
 	public:
+		DevelopmentCard();
 		DevelopmentCard(DevelopmentCards d_type);	//inicializa ready_to_use = false
 		DevelopmentCards getType();	//devuelve el tipo desarrollo
 		bool canUseThisCard();	//devuelve ready_to_use

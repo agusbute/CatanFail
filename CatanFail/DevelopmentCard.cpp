@@ -3,6 +3,12 @@
 #include "DevelopmentCard.h"
 
 DevelopmentCard::
+DevelopmentCard()
+{
+
+}
+
+DevelopmentCard::
 DevelopmentCard(DevelopmentCards d_type)
 {
 	this->ready_to_use = false;
