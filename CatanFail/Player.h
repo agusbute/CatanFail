@@ -6,13 +6,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include <vector>
+#include "TerrainHexes.h"
 #include "DevelopmentCard.h"
 
-using namespace :: std;
+using namespace std;
 
 enum Actions {ADD, SUBTRACT};
-enum DevelopmentCards {KNIGHT, V_POINT, YEAR_OF_P, MONO, R_BUILDING};	//Development Cards: Knight, Victory Point, Year Of Plenty, Monopoly, Road Building
-enum Resources {LUMBER, BRICK, ORE, GRAIN, WOOL, DESERT, NOTHING}; //Resource Cards: Lumber, Brick, Ore, Grain, Wool, Desert and Nothing se usan para los hexágonos
 enum MaritimeTradeType {THREE_X_ONE, TWO_X_ONE};	
 enum Player_Error { NEG_VP, NO_DCARD};	//NEG_VP = Victory Points negativos, NO_DCARD = no tengo esa carta de resurso
 
@@ -61,11 +60,15 @@ class Player
 		bool getDevelopmentCard(DevelopmentCards d_card);	//"usa" la development card que quiero usar, devuelve true si se pudo hacer sino el error es NO_DCARD
 		unsigned int getDiceNumber(void);	//devuelve el número que salío al tirar los dados
 
-		//(los siguientes tres métodos) devuelven true si puedo contruir un camino, un asentamiento o una ciudad respectivamente
-		//en base a mis cartas y el luagr en el tablero
+		//(los siguientes tres métodos) devuelven true si puedo contruir un camino, 
+		//un asentamiento o una ciudad respectivamente en base a mis cartas
 		bool buildRoad(char x, char y);	//falta chequear el road anterior
 		bool buildSettlement(char x, char y, char z);	//falta chequear la distancia
 		bool buildCity(char x, char y, char z);
+
+		//devuelven true si hay algo construido en los lugares especificados
+		bool searchRoad(char x, char y);
+		bool searchBuilding(char x, char y, char z);
 
 		/******************************************************FALTAN ESTAS********************************************/
 		void moveRobber();
@@ -84,7 +87,7 @@ class Player
 
 		bool gameWon(void); //se fija si tengo los victory points necesarios para ganar, devuelve true si gané
 
-		//~Player();
+		~Player();
 
 	private:
 		string name;

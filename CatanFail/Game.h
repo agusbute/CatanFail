@@ -6,10 +6,12 @@
 #include <time.h>
 #include <algorithm>
 #include <stack>
+
 #include "Board.h"
 #include "Player.h"
 #include "DevelopmentCard.h"
 #include "Input.h"
+#include "Graphics.h"
 
 #define TOTAL_D_CARDS 25
 #define TOTAL_KNIGHT_CARDS 14
@@ -21,11 +23,16 @@
 class Game
 {
 	public:
+		Game();
+		~Game();
 		void createDevelopmentCards(void);
 		void play(void);	//fsm global
-		void checkRoad(char x, char y);
-	
+		bool checkRoad(char x, char y); //justo antes de player->buildRoad(x,y)
+		bool checkLongestRoad(char x, char y); //justo despues de player->buildRoad(x,y)
+		unsigned int longestRecursive(char x, char y); //recursiva para chequear 
 	private:
+		Player * player;
+		Board * board;
 		stack <DevelopmentCard> development_cards;
 
 };

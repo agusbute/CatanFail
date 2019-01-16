@@ -99,7 +99,27 @@ tokenExists(char* random_tokens, char token)	//devuelve true si ya no lo puedo u
 	return token_is_used;
 }
 
+TerrainHexes * Board::
+searchPiece(char info) //devuelve NULL si lo introducido no es un hexagono
+{
+	TerrainHexes * ret = NULL;
+	if (info >= 'A' && info <= 'S')
+	{
+		ret = &all_the_hexes[info];
+	}
+	return ret;
+}
 
+SeaFrameTiles * Board::
+searchSeaPiece(char info)
+{
+	SeaFrameTiles * ret = NULL;
+	if (info >= '0' && info <= '5')
+	{
+		ret = &all_the_sea_frames[info];
+	}
+	return ret;
+}
 
 Board::
 ~Board()

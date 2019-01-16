@@ -9,7 +9,7 @@
 #include "TerrainHexes.h"
 #include "SeaFrameTiles.h"
 
-using namespace ::std;
+using namespace std;
 
 #define TERRAIN_HEXES 19	//cantidad total de hexagonos
 #define SEA_FRAME_TILES 6	//cantidad total de piezas de mar
@@ -27,7 +27,8 @@ class Board
 		/************* FALTA UNO COMO EL DE ABAJO PARA LOS RECURSOS Y LOS PUERTOS (?) ***************/	//lo uso en el init
 		void createRandomTokens(char* random_tokens);	//crea una lista con los tokens al azahar 
 		bool tokenExists(char* random_tokens, char token);	//devuelve false si todavía puedo usar ese token
-		TerrainHexes searchPiece(char info);
+		TerrainHexes * searchPiece(char info);
+		SeaFrameTiles * searchSeaPiece(char info);
 		~Board();
 
 

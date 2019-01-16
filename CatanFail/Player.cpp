@@ -151,8 +151,20 @@ buildRoad(char x, char y)
 			}
 		}
 	}
-	//network.sendMessage{"road", x, y};
 	return road_is_built;
+}
+bool Player::
+searchRoad(char x, char y)
+{
+	bool ret = false;
+	for (int i = 0; i < roads_built.size(); i++)
+	{
+		if (roads_built[i].x == x && roads_built[i].y == y)
+		{
+			ret = true;
+		}
+	}
+	return ret;
 }
 
 bool Player::

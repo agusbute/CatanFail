@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "BoardComponent.h"
-#include "Player.h"		//esto lo pongo solamente por los enum, hay que sacarlo
 
 #define TOP_LEFT 0
 #define TOP_RIGHT 1
@@ -15,10 +14,10 @@
 #define BOTTOM_LEFT 4
 #define LEFT 5
 
-
+enum Resources { LUMBER, BRICK, ORE, GRAIN, WOOL, DESERT, NOTHING }; //Resource Cards: Lumber, Brick, Ore, Grain, Wool, Desert and Nothing se usan para los hexágonos
 enum PieceType {ROAD, SETTLEMENT, CITY};	//tipos de piezas para construir
 
-using namespace :: std;
+using namespace std;
 
 typedef struct
 {
@@ -35,10 +34,11 @@ class TerrainHexes : public BoardComponent
 		void setResource(Resources my_resource);
 		Resources getResource(void);
 		virtual bool setAdjacentPieces(void);
-		void defineAdjacentPieces(char top_left, char top_right, char right, char bottom_right, char bottom_left, char left);
 		virtual char getAdjacentPiece(char position);	//le mando la position con los defines y devuelve que pieza tiene al lado
 
 	private:
+		void defineAdjacentPieces(char top_left, char top_right, char right, char bottom_right, char bottom_left, char left);
+
 		Resources resource;	
 		int token;
 		char adjacentPieces[ADJACENT_HEX];

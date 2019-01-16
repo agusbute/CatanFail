@@ -10,7 +10,7 @@
 #define ADJACENT_HEX 6
 #define ERROR 99
 
-using namespace :: std;
+using namespace std;
 
 class BoardComponent	//clase padre de las piezas de mar y los hexagonos
 {

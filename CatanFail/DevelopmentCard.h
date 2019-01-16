@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Player.h""
+enum DevelopmentCards { KNIGHT, V_POINT, YEAR_OF_P, MONO, R_BUILDING };	//Development Cards: Knight, Victory Point, Year Of Plenty, Monopoly, Road Building
 
 class DevelopmentCard
 {

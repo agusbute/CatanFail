@@ -56,11 +56,11 @@ setPorts(char ports)		//devuelve true si no hubo errores
 void SeaFrameTiles::
 defineAdjacentPieces(char left, char bottom_left, char bottom, char bottom_right, char right)
 {
-	adjacentPieces[LEFT] = left;
-	adjacentPieces[BOTTOM_LEFT] = bottom_left;
+	adjacentPieces[PREV] = left;
+	adjacentPieces[LOWER_LEFT] = bottom_left;
 	adjacentPieces[BOTTOM] = bottom;
-	adjacentPieces[BOTTOM_RIGHT] = bottom_right;
-	adjacentPieces[RIGHT] = right;
+	adjacentPieces[LOWER_RIGHT] = bottom_right;
+	adjacentPieces[NEXT] = right;
 }
 
 bool SeaFrameTiles::
@@ -93,24 +93,24 @@ getAdjacentPiece(char position)	//le mando la position de los defines y devuelve
 
 	switch (position)
 	{
-		case LEFT:
-			ret_position = adjacentPieces[LEFT];
+		case PREV:
+			ret_position = adjacentPieces[PREV];
 			break;
 
-		case BOTTOM_LEFT:
-			ret_position = adjacentPieces[BOTTOM_LEFT];
+		case LOWER_LEFT:
+			ret_position = adjacentPieces[LOWER_LEFT];
 			break;
 
 		case BOTTOM:
 			ret_position = adjacentPieces[BOTTOM];
 			break;
 
-		case BOTTOM_RIGHT:
-			ret_position = adjacentPieces[BOTTOM_RIGHT];
+		case LOWER_RIGHT:
+			ret_position = adjacentPieces[LOWER_RIGHT];
 			break;
 
-		case RIGHT:
-			ret_position = adjacentPieces[RIGHT];
+		case NEXT:
+			ret_position = adjacentPieces[NEXT];
 			break;
 
 		default:
