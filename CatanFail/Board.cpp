@@ -21,21 +21,25 @@ initToStartGame()
 							GRAIN, GRAIN, GRAIN, GRAIN, 
 							WOOL, WOOL, WOOL, WOOL, 
 							DESERT };
+	int randvalue;		//valor aleatorio para repartir las cosas
 	for (int i = 0; i < TERRAIN_HEXES; i++, letter++)	//va setteando cada uno de los hexagonos
 	{
 		all_the_hexes[i].setPositionInMap(letter);	//con la posición en el tablero
 		all_the_hexes[i].setAdjacentPieces();		//y las piezas adyacentes 
 		all_the_hexes[i].setToken(random_tokens[i]);	//el token que tiene
-		int randvalue;
 		do
 		{
-			randvalue = rand() % TERRAIN_HEXES;		//un valor aleatorio de 0-5
+			randvalue = rand() % TERRAIN_HEXES;		//un valor aleatorio
 			if (resources[randvalue] != 0)
 			{
-				all_the_hexes[i].setResource(resources[randvalue]);	//agrega aleatoriamente los recursos, sin que haya dos iguales
+				if (all_the_hexes[i].getToken() == 7)	//si tiene toke 7, es el desierto
+				{
+					randvalue = 18;
+				}
+				all_the_hexes[i].setResource(resources[randvalue]);	//agrega aleatoriamente los recursos, sin que haya dos iguales	
 			}
 		} while (resources[randvalue] == NOTHING);
-		resources[randvalue] = NOTHING;	//y lo que produce
+		resources[randvalue] = NOTHING;	
 	}
 	delete[] random_tokens;	//porque ya los tiene cada hex
 
@@ -44,9 +48,7 @@ initToStartGame()
 	for (int j = 0; j < SEA_FRAME_TILES; j++, number++)	//lo mismo con las piezas de mar
 	{
 		all_the_sea_frames[j].setPositionInMap(number);	//con la posición en el tablero
-		all_the_sea_frames[j].setAdjacentPieces();		//y las piezas adyacentes
-		
-		int randvalue;									
+		all_the_sea_frames[j].setAdjacentPieces();		//y las piezas adyacentes								
 		do
 		{
 			randvalue = rand() % SEA_FRAME_TILES;		//un valor aleatorio de 0-5

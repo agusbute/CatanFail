@@ -128,10 +128,9 @@ getAdjacentRoads(road_t main_road, road_t * adjacent_roads)
 	SeaFrameTiles * X_sea;		//si y es un borde, este apunta a el
 	BoardComponent * Xsearch = board->getPiece(main_road.x);
 	BoardComponent * Ysearch = board->getPiece(main_road.y);
-	char X_pos_in_map = Xsearch->getPositionInMap();
 	char X_side, Y_side;							//X_side: de que lado para x esta y - Y_side:de que lado para y esta x
 	char coin1, coin2;								//las dos piezas con las que coinciden x e y
-	if (X_pos_in_map >= 'A' && X_pos_in_map <= 'S')				//si x es un hexagono, me fijo los adyacentes a el
+	if (main_road.x >= 'A' && main_road.x <= 'S')				//si x es un hexagono, me fijo los adyacentes a el
 	{															//hasta encontrar de que lado esta y
 		X = (TerrainHexes *)Xsearch;
 		Y = (TerrainHexes *)Ysearch;
@@ -226,8 +225,7 @@ getAdjacentRoads(road_t main_road, road_t * adjacent_roads)
 			*(adjacent_roads + 3) = road;
 		}
 	}
-	
-	else if (X_pos_in_map >= '0' && X_pos_in_map <= '5')		//si x es mar, me fijo los adyacentes a el
+	else if (main_road.x >= '0' && main_road.x <= '5')		//si x es mar, me fijo los adyacentes a el
 	{															//hasta encontrar de que lado esta y
 		X_sea = (SeaFrameTiles *)Xsearch;
 		for (char i = PREV; i < ADJACENT_SEA; i++)
@@ -262,6 +260,49 @@ getAdjacentRoads(road_t main_road, road_t * adjacent_roads)
 			}
 		}
 		}
+		
+		//busco las coincidencias entre x e y
+		for (char i = PREV; i < ADJACENT_SEA; i++)
+		{
+			if (i != X_side)		//ya se que de x_side esta y
+			{
+				coin1 = X->getAdjacentPiece(i);
+				for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+				{
+					if (j != Y_side)	//ya se que de Y_side esta x
+					{
+						if (coin1 == Y->getAdjacentPiece(j))
+						{
+							break;		//una vez que encontre un par, salgo
+						}
+					}
+				}
+			}
+		}
+		for (char i = PREV; i < ADJACENT_SEA; i++)
+		{
+			if (i != X_side)		//ya se que de x_side esta y
+			{
+				coin2 = X->getAdjacentPiece(i);
+				if (coin2 != coin1)			//ya me fije coin1
+				{
+					for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+					{
+						if (j != Y_side)	//ya se que de Y_side esta x
+						{
+							if (coin2 == Y->getAdjacentPiece(j))
+							{
+								break;		//una vez que encontre un par, salgo
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		//las calles entre pieza de mar y hexagono tienen 2 o 3 calles adyacentes
+		road_t road;
+		
 	}
 
 }

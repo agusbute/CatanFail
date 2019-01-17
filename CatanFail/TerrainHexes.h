@@ -35,6 +35,8 @@ class TerrainHexes : public BoardComponent
 		char getToken(void);
 		void setResource(Resources my_resource);
 		Resources getResource(void);
+		bool hasRobber();			//devuelve el estado del Robber bool
+		void setRobber(bool value);
 		virtual bool setAdjacentPieces(void);
 		virtual char getAdjacentPiece(char position);	//le mando la position con los defines y devuelve que pieza tiene al lado
 
@@ -44,5 +46,5 @@ class TerrainHexes : public BoardComponent
 		Resources resource;	
 		int token;
 		char adjacentPieces[ADJACENT_HEX];
-
+		bool robber;	//si tiene el robber esto es true
 };

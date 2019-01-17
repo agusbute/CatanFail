@@ -10,6 +10,18 @@ TerrainHexes(char position_in_map, Resources resource, int token) : BoardCompone
 }
 
 void TerrainHexes::
+setRobber(bool value)
+{
+	this->robber = value;
+}
+
+bool TerrainHexes::
+hasRobber()
+{
+	return this->robber;
+}
+
+void TerrainHexes::
 setToken(char my_token)
 {
 	this->token = my_token;
