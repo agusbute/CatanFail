@@ -258,8 +258,81 @@ buildCity(char x, char y, char z)
 
 /****************************************** FALTAN ESTOS **********************************************/
 void moveRobber();
-void domesticTrade(Resources my_r_card, Resources the_r_card_i_want);
-/*****************************************************************************************************/
+
+bool Player::
+domesticTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted)
+{
+	bool trade_succesfully = false;
+	if (askForTrade(r_cards_offered, r_cards_wanted))
+	{
+		for (int i = 0; i < TOTAL_RESOURCES; i++)
+		{
+			if (r_cards_wanted[i] > 0)
+			{
+				switch (i)
+				{
+				case LUMBER:
+					my_r_cards.lumber += r_cards_wanted[i];
+
+				case BRICK:
+					my_r_cards.brick += r_cards_wanted[i];
+
+				case ORE:
+					my_r_cards.ore += r_cards_wanted[i];
+
+				case GRAIN:
+					my_r_cards.grain += r_cards_wanted[i];
+
+				case WOOL:
+					my_r_cards.wool += r_cards_wanted[i];
+
+				default: break;
+				}
+
+			}
+
+			if (r_cards_offered[i] > 0)
+			{
+				switch (i)
+				{
+					case LUMBER:
+						my_r_cards.lumber -= r_cards_offered[i];
+
+					case BRICK:
+						my_r_cards.brick -= r_cards_offered[i];
+
+					case ORE:
+						my_r_cards.ore -= r_cards_offered[i];
+
+					case GRAIN:
+						my_r_cards.grain -= r_cards_offered[i];
+
+					case WOOL:
+						my_r_cards.wool -= r_cards_offered[i];
+
+					default: break;
+				}
+			}
+		}
+
+		trade_succesfully = true;
+	}
+	
+	return trade_succesfully;
+}
+
+bool Player::
+askForTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted)
+{
+	bool trade_accepted = false;
+	if ((r_cards_offered[LUMBER] <= my_r_cards.lumber) && (r_cards_offered[BRICK] <= my_r_cards.brick) && (r_cards_offered[ORE] <= my_r_cards.ore) && (r_cards_offered[GRAIN] <= my_r_cards.grain) && (r_cards_offered[WOOL] <= my_r_cards.wool))	//me fijo si tengo las cartas que quiero dar
+	{
+		if(1 /* algo de network*/)
+		trade_accepted = true;
+	}
+	return trade_accepted;
+}
+
 
 bool Player::
 maritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade)
@@ -544,16 +617,6 @@ gameWon(void)
 	}
 
 	return am_i_the_winner;
-}
-
-city_t& Player::
-operator= (const settlement_t &settlement_to_upgrade)
-{
-	city_t new_city;
-	new_city.x = settlement_to_upgrade.x;
-	new_city.y = settlement_to_upgrade.y;
-	new_city.z = settlement_to_upgrade.z;
-	return new_city;
 }
 
 Player::

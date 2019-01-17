@@ -62,8 +62,8 @@ class Player
 
 		/******************************************************FALTAN ESTAS********************************************/
 		void moveRobber();
-
-		void domesticTrade(Resources my_r_card, Resources the_r_card_wanted); // with opponent // puedo hacer trades de mas de una carta!!!!!
+		bool askForTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted);	//necesito network acá
+		bool domesticTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted); // with opponent // puedo hacer trades de mas de una carta!!!!!
 		/*************************************************************************************************************/
 
 		bool maritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade); //se fija si tengo las cartas para el intercambio, devuelve true si lo hizo
@@ -101,6 +101,4 @@ class Player
 
 		Player_Error error;	//está re basico, podría mejorarse
 
-		city_t& operator= (const settlement_t &settlement_to_upgrade);
-	
 };

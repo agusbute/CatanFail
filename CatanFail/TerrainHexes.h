@@ -7,6 +7,8 @@
 #include <time.h>
 #include "BoardComponent.h"
 
+#define TOTAL_RESOURCES 5
+
 #define TOP_LEFT 0
 #define TOP_RIGHT 1
 #define RIGHT 2
@@ -14,7 +16,7 @@
 #define BOTTOM_LEFT 4
 #define LEFT 5
 
-enum Resources { LUMBER, BRICK, ORE, GRAIN, WOOL, DESERT, NOTHING }; //Resource Cards: Lumber, Brick, Ore, Grain, Wool, Desert and Nothing se usan para los hexágonos
+enum Resources {LUMBER, BRICK, ORE, GRAIN, WOOL, DESERT, NOTHING }; //Resource Cards: Lumber, Brick, Ore, Grain, Wool, Desert and Nothing se usan para los hexágonos
 enum PieceType {ROAD, SETTLEMENT, CITY};	//tipos de piezas para construir
 
 using namespace std;
