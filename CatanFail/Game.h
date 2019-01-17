@@ -33,7 +33,7 @@ class Game
 		bool checkLongestRoad(char x, char y, char z = 0); //justo despues de player->buildRoad(x,y)
 		
 	private:
-		void getAdjacentRoads(road_t main_road, road_t adjacent_roads[4]); //devuelve en adjacent_roads las 4(o 3, siendo la ultima {0,0,0}) calles adyacentes a road
+		void getAdjacentRoads(road_t main_road, road_t * adjacent_roads); //devuelve en adjacent_roads las 4(o 3, siendo alguna {0,0,0}) calles adyacentes a road
 		unsigned int longestRecursive(char x, char y, char z = 0); //recursiva para chequear longest road
 
 		Player * player;

@@ -12,6 +12,9 @@ Player(string name)
 	my_r_cards.ore = 0;
 	my_r_cards.wool = 0;
 
+	//setteo longest = 0
+	myLongest = 0;
+
 	//setteo las piezas que tengo
 	total_roads = 15;
 	total_settlements = 5;
@@ -69,6 +72,18 @@ setVictoryPoints(unsigned int v_points, Actions action)
 	return successfully_setted;
 }
 
+void Player::
+setLongest(unsigned int value)
+{
+	this->myLongest = value;
+}
+
+unsigned int Player::
+getLongest()
+{
+	return this->myLongest;
+}
+
 unsigned int Player::
 getRoadsBuilt(void)
 {
@@ -86,6 +101,7 @@ getCitiesBuilt(void)
 {
 	return this->cities_built.size();
 }
+
 
 bool Player::
 getDevelopmentCard(DevelopmentCards d_card)
@@ -169,7 +185,7 @@ searchRoad(char x, char y, char z)
 bool Player::
 searchRoad(road_t road)
 {
-	bool ret = searchRoad(road.x, road.y, road.z);
+	return searchRoad(road.x, road.y, road.z);
 }
 
 bool Player::

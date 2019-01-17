@@ -46,6 +46,9 @@ class Player
 		bool getDevelopmentCard(DevelopmentCards d_card);	//"usa" la development card que quiero usar, devuelve true si se pudo hacer sino el error es NO_DCARD
 		unsigned int getDiceNumber(void);	//devuelve el número que salío al tirar los dados
 
+		void setLongest(unsigned int value); //setter de myLongest
+		unsigned int getLongest();			//getter de myLongest
+
 		//(los siguientes tres métodos) devuelven true si puedo contruir un camino, 
 		//un asentamiento o una ciudad respectivamente en base a mis cartas
 		bool buildRoad(char x, char y, char z = 0);	//falta chequear el road anterior
@@ -84,6 +87,8 @@ class Player
 		unsigned int total_cities;
 
 		unsigned int victory_points;
+
+		unsigned int myLongest;		//contador de longest road
 
 		vector <road_t> roads_built;
 		vector <settlement_t> settlements_built;
