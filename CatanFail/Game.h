@@ -27,11 +27,17 @@ class Game
 		~Game();
 		void createDevelopmentCards(void);
 		void play(void);	//fsm global
-		bool checkRoad(char x, char y); //justo antes de player->buildRoad(x,y)
-		bool checkLongestRoad(char x, char y); //justo despues de player->buildRoad(x,y)
-		unsigned int longestRecursive(char x, char y); //recursiva para chequear 
+		
+		bool checkRoad(road_t road);				//	justo antes de player->buildRoad(x,y)	
+		bool checkRoad(char x, char y, char z = 0); //	
+		bool checkLongestRoad(char x, char y, char z = 0); //justo despues de player->buildRoad(x,y)
+		
 	private:
+		void getAdjacentRoads(road_t main_road, road_t adjacent_roads[4]); //devuelve en adjacent_roads las 4(o 3, siendo la ultima {0,0,0}) calles adyacentes a road
+		unsigned int longestRecursive(char x, char y, char z = 0); //recursiva para chequear longest road
+
 		Player * player;
+		Player * oponent;
 		Board * board;
 		stack <DevelopmentCard> development_cards;
 

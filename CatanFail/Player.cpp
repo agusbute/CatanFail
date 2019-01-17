@@ -120,11 +120,11 @@ getDiceNumber(void)
 }
 
 bool Player::
-buildRoad(char x, char y)
+buildRoad(char x, char y, char z)
 {
 	bool road_is_built = false;
-	road_t road = { x, y };
-
+	road_t road = { x, y, z };
+	
 	if (roads_built.size() < 2 && total_roads > 13)	//se fija si está en el primer o segundo turno
 	{
 		for (int i = 0; i < roads_built.size(); i++)
@@ -154,17 +154,22 @@ buildRoad(char x, char y)
 	return road_is_built;
 }
 bool Player::
-searchRoad(char x, char y)
+searchRoad(char x, char y, char z)
 {
 	bool ret = false;
 	for (int i = 0; i < roads_built.size(); i++)
 	{
-		if (roads_built[i].x == x && roads_built[i].y == y)
+		if (roads_built[i].x == x && roads_built[i].y == y && roads_built[i].z == z)
 		{
 			ret = true;
 		}
 	}
 	return ret;
+}
+bool Player::
+searchRoad(road_t road)
+{
+	bool ret = searchRoad(road.x, road.y, road.z);
 }
 
 bool Player::

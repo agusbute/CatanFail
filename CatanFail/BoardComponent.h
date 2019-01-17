@@ -12,6 +12,13 @@
 
 using namespace std;
 
+typedef struct
+{
+	char x;
+	char y;
+	char z = 0;
+}coord_t;
+
 class BoardComponent	//clase padre de las piezas de mar y los hexagonos
 {
 	public:

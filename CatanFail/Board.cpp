@@ -100,7 +100,7 @@ tokenExists(char* random_tokens, char token)	//devuelve true si ya no lo puedo u
 }
 
 TerrainHexes * Board::
-searchPiece(char info) //devuelve NULL si lo introducido no es un hexagono
+searchHexPiece(char info) //devuelve NULL si lo introducido no es un hexagono
 {
 	TerrainHexes * ret = NULL;
 	if (info >= 'A' && info <= 'S')
@@ -117,6 +117,40 @@ searchSeaPiece(char info)
 	if (info >= '0' && info <= '5')
 	{
 		ret = &all_the_sea_frames[info];
+	}
+	return ret;
+}
+
+BoardComponent * Board::
+getPiece(char info)
+{
+	BoardComponent * ret;
+	ret = searchHexPiece(info);
+	if (ret == NULL)
+	{
+		ret = searchSeaPiece(info);
+	}
+	return ret;
+}
+
+bool Board::
+inEdges(coord_t coord)
+{
+	bool ret = false;
+	for (int i = 0; i < Edges.size(); i++)
+	{
+		ret = (ret || (coord.x == Edges[i].x && coord.y == Edges[i].y && coord.z == Edges[i].z));
+	}
+	return ret;
+}
+
+bool Board::
+inVertices(coord_t coord)
+{
+	bool ret = false;
+	for (int i = 0; i < Vertices.size(); i++)
+	{
+		ret = (ret || (coord.x == Vertices[i].x && coord.y == Vertices[i].y && coord.z == Vertices[i].z));
 	}
 	return ret;
 }

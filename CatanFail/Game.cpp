@@ -52,46 +52,91 @@ createDevelopmentCards(void)
 }
 
 bool Game::
-checkRoad(char x, char y)
+checkRoad(road_t road)
+{
+	return checkRoad(road.x, road.y, road.z);
+}
+
+bool Game::
+checkRoad(char x, char y, char z)
 {
 	bool ret = false;
-	
-	void * search = board->searchPiece(x);
-	char side, prev, next;
-	if (search != NULL)				//si x es un hexagono, me fijo los adyacentes a el
+	if (!(oponent->searchRoad(x, y, z))) //si el contrincante ya construyo ahi, no se puede hacer nada, devuelve false
 	{
-		TerrainHexes * temp1 = (TerrainHexes *)search;
+		//buscar calles adyacentes
+		road_t adjacent_roads[] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+		getAdjacentRoads({ x, y, z }, adjacent_roads);
+		for (int i = 0; i < 4; i++)
+		{
+			ret = (ret || player->searchRoad(adjacent_roads[i]));
+		}
+	}
+
+	return ret;
+}
+
+bool Game::
+checkLongestRoad(char x, char y, char z) //agregar tener en cuenta la longest del constrincante
+{
+	bool ret;
+	if (longestRecursive(x, y) >= 5)
+	{
+		//if(player->myLongest > player2.longest)
+		ret = true;
+	}
+	return ret;
+}
+
+unsigned int Game::
+longestRecursive(char x, char y, char z)
+{
+	unsigned int length = 0;
+
+	//algoritmo busqueda de calles adyacentes
+	return length;
+	//recursiva
+}
+
+Game::
+~Game()
+{
+	delete board;
+}
+
+void Game::
+getAdjacentRoads(road_t main_road, road_t adjacent_roads[4])
+{
+	TerrainHexes * X;		//si x es un hexagono, este apunta a el
+	SeaFrameTiles * X_sea;		//si y es un borde, este apunta a el
+	BoardComponent * Xsearch = board->getPiece(main_road.x);
+	char X_pos_in_map = Xsearch->getPositionInMap();
+	char side;
+	if (X_pos_in_map >= 'A' && X_pos_in_map <= 'S')				//si x es un hexagono, me fijo los adyacentes a el
+	{															//hasta encontrar de que lado esta y
+		X = (TerrainHexes *)Xsearch;
 		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
 		{
-			if (temp1->getAdjacentPiece(i) == y)
+			if (X->getAdjacentPiece(i) == main_road.y)
 			{
 				side = i;
 				break;
 			}
 		}
-		/*
-		switch (side)
+	}
+	else if (X_pos_in_map >= '0' && X_pos_in_map <= '5')		//si x es mar, me fijo los adyacentes a el
+	{															//hasta encontrar de que lado esta y
+		X_sea = (SeaFrameTiles *)Xsearch;
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
 		{
-		case LEFT:
-		{
-			next = temp1->getAdjacentPiece(TOP_LEFT);
-			prev = temp1->getAdjacentPiece(BOTTOM_LEFT);
-		} break;
-		case TOP_LEFT:
-		{
-			next = temp1->getAdjacentPiece(TOP_RIGHT);
-			prev = temp1->getAdjacentPiece(LEFT);
-		} break;
-		default:
-		{
-			next = temp1->getAdjacentPiece(side + 1);
-			prev = temp1->getAdjacentPiece(side - 1);
-		} break;
+			if (X_sea->getAdjacentPiece(i) == main_road.y)
+			{
+				side = i;
+				break;
+			}
 		}
-		*/
 	}
 
-
+	/*
 	void * search2 = board->searchPiece(y);
 	char side2, prev2, next2;
 	if (search2 != NULL)
@@ -124,115 +169,6 @@ checkRoad(char x, char y)
 			prev2 = temp2->getAdjacentPiece(side - 1);
 		} break;
 		}
-		*/
-	}
-	//if de confirmacion
-	/*
-	if (player->searchRoad(x, prev) || player->searchRoad(x, next) || player->searchRoad(prev2, y) || player->searchRoad(next2, y))
-	{
-		ret = true;
 	}
 	*/
-	return ret;
-}
-
-bool Game::
-checkLongestRoad(char x, char y) //agregar tener en cuenta la longest del constrincante
-{
-	bool ret;
-	if (longestRecursive(x, y) >= 5)
-	{
-		//if(player->myLongest > player2.longest)
-		ret = true;
-	}
-	return ret;
-}
-
-unsigned int Game::
-longestRecursive(char x, char y)
-{
-	unsigned int length = 0;
-
-	void * search = board->searchPiece(x);
-	char side, prev, next;
-	if (search != NULL)				//si x es un hexagono, me fijo los adyacentes a el
-	{
-		TerrainHexes * temp1 = (TerrainHexes *)search;
-		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
-		{
-			if (temp1->getAdjacentPiece(i) == y)
-			{
-				side = i;
-				break;
-			}
-		}
-		/*
-		switch (side)
-		{
-			
-			case LEFT:
-			{
-				next = temp1->getAdjacentPiece(TOP_LEFT);
-				prev = temp1->getAdjacentPiece(BOTTOM_LEFT);
-			} break;
-			case TOP_LEFT:
-			{
-				next = temp1->getAdjacentPiece(TOP_RIGHT);
-				prev = temp1->getAdjacentPiece(LEFT);
-			} break;
-			default:
-			{
-				next = temp1->getAdjacentPiece(side + 1);
-				prev = temp1->getAdjacentPiece(side - 1);
-			} break;
-			
-		}
-		*/
-	}
-
-
-	void * search2 = board->searchPiece(y);
-	char side2, prev2, next2;
-	if (search2 != NULL)
-	{
-		TerrainHexes * temp2 = (TerrainHexes *)search2;
-		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
-		{
-			if (temp2->getAdjacentPiece(i) == x)
-			{
-				side2 = i;
-				break;
-			}
-		}
-		/*
-		switch (side2)
-		{
-			
-			case LEFT:
-			{
-				next2 = temp2->getAdjacentPiece(TOP_LEFT);
-				prev2 = temp2->getAdjacentPiece(BOTTOM_LEFT);
-			} break;
-			case TOP_LEFT:
-			{
-				next2 = temp2->getAdjacentPiece(TOP_RIGHT);
-				prev2 = temp2->getAdjacentPiece(LEFT);
-			} break;
-			default:
-			{
-				next2 = temp2->getAdjacentPiece(side + 1);
-				prev2 = temp2->getAdjacentPiece(side - 1);
-			} break;
-			
-		}
-		*/
-	}
-	return length;
-	//recursiva
-}
-
-Game::
-~Game()
-{
-	delete board;
 }

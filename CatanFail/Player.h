@@ -7,6 +7,7 @@
 #include <time.h>
 #include <vector>
 #include "TerrainHexes.h"
+#include "SeaFrameTiles.h"
 #include "DevelopmentCard.h"
 
 using namespace std;
@@ -15,26 +16,11 @@ enum Actions {ADD, SUBTRACT};
 enum MaritimeTradeType {THREE_X_ONE, TWO_X_ONE};	
 enum Player_Error { NEG_VP, NO_DCARD};	//NEG_VP = Victory Points negativos, NO_DCARD = no tengo esa carta de resurso
 
-typedef struct
-{
-	char x;
-	char y;
-	char z;
-}settlement_t;
+typedef coord_t settlement_t;
 
-typedef struct
-{
-	char x;
-	char y;
-	char z;
+typedef coord_t city_t;
 
-}city_t;
-
-typedef struct
-{
-	char x;
-	char y;
-}road_t;
+typedef coord_t road_t;
 
 typedef struct 
 {
@@ -62,13 +48,14 @@ class Player
 
 		//(los siguientes tres métodos) devuelven true si puedo contruir un camino, 
 		//un asentamiento o una ciudad respectivamente en base a mis cartas
-		bool buildRoad(char x, char y);	//falta chequear el road anterior
-		bool buildSettlement(char x, char y, char z);	//falta chequear la distancia
-		bool buildCity(char x, char y, char z);
+		bool buildRoad(char x, char y, char z = 0);	//falta chequear el road anterior
+		bool buildSettlement(char x, char y, char z = 0);	//falta chequear la distancia
+		bool buildCity(char x, char y, char z = 0);
 
 		//devuelven true si hay algo construido en los lugares especificados
-		bool searchRoad(char x, char y);
-		bool searchBuilding(char x, char y, char z);
+		bool searchRoad(char x, char y, char z = 0);
+		bool searchRoad(road_t road);
+		bool searchBuilding(char x, char y, char z = 0);
 
 		/******************************************************FALTAN ESTAS********************************************/
 		void moveRobber();
