@@ -92,9 +92,20 @@ longestRecursive(char x, char y, char z)
 {
 	unsigned int length = 0;
 
-	//algoritmo busqueda de calles adyacentes
+	if (x != 0 && y != 0)
+	{
+		//algoritmo busqueda de calles adyacentes
+		road_t adjacent_roads[] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+		getAdjacentRoads({ x, y, z }, adjacent_roads);
+
+		//recursiva
+		length += longestRecursive(adjacent_roads[0].x, adjacent_roads[0].y, adjacent_roads[0].z);
+		length += longestRecursive(adjacent_roads[1].x, adjacent_roads[1].y, adjacent_roads[1].z);
+		length += longestRecursive(adjacent_roads[2].x, adjacent_roads[2].y, adjacent_roads[2].z);
+		length += longestRecursive(adjacent_roads[3].x, adjacent_roads[3].y, adjacent_roads[3].z);
+	}
+
 	return length;
-	//recursiva
 }
 
 Game::
