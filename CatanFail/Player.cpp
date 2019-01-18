@@ -178,6 +178,7 @@ searchRoad(char x, char y, char z)
 		if (roads_built[i].x == x && roads_built[i].y == y && roads_built[i].z == z)
 		{
 			ret = true;
+			break;
 		}
 	}
 	return ret;

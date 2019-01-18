@@ -31,14 +31,14 @@ class Game
 		bool checkRoad(road_t road);				//	justo antes de player->buildRoad(x,y)	
 		bool checkRoad(char x, char y, char z = 0); //	
 		bool checkLongestRoad(char x, char y, char z = 0); //justo despues de player->buildRoad(x,y)
-		
+
 	private:
 		void getAdjacentRoads(road_t main_road, road_t * adjacent_roads); //devuelve en adjacent_roads las 4(o 3, siendo alguna {0,0,0}) calles adyacentes a road
-		unsigned int longestRecursive(char x, char y, char z = 0); //recursiva para chequear longest road
+		unsigned int longestRecursive(road_t road, vector <road_t> &previous_roads, unsigned int length = 0); //recursiva para chequear longest road
+		bool inPreviousRoads(road_t road, vector <road_t> &previous_roads);	//devuelve true is road esta en previous_road
 
 		Player * player;
 		Player * oponent;
 		Board * board;
 		stack <DevelopmentCard> development_cards;
-
 };

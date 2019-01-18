@@ -17,6 +17,12 @@ typedef struct
 	char x;
 	char y;
 	char z = 0;
+
+	bool operator== (coord_t &coord)
+	{
+		return (x == coord.x && y == coord.y && z == coord.z);
+	}
+
 }coord_t;
 
 class BoardComponent	//clase padre de las piezas de mar y los hexagonos

@@ -78,8 +78,9 @@ checkRoad(char x, char y, char z)
 bool Game::
 checkLongestRoad(char x, char y, char z) //chequear si la calle es mas larga
 {
+	vector <road_t> roads;
 	bool ret;
-	if (longestRecursive(x, y) >= 5)
+	if (longestRecursive({ x, y, z }, roads) >= 5)
 	{
 		//if(player->getLongest() > oponent-getLongest())
 		ret = true;
@@ -88,24 +89,47 @@ checkLongestRoad(char x, char y, char z) //chequear si la calle es mas larga
 }
 
 unsigned int Game::
-longestRecursive(char x, char y, char z)
+longestRecursive(road_t road, vector <road_t> &previous_roads, unsigned int length)
 {
-	unsigned int length = 0;
+	unsigned int lengths[] = { 0, 0, 0, 0 };
+	unsigned int longest;
+	if (road.x != 0 && road.y != 0)		//solo se fija si las calles no son todo cero
+	{	
+		if (player->searchRoad(road))	//solo sigue si hay una calle construida ahi
+		{
+			lengths[0]++;
+			lengths[1]++;
+			lengths[2]++;
+			lengths[3]++;
+			if (!(inPreviousRoads(road, previous_roads)))		//solo sigue si no paso por esa calle todavia
+			{
+				previous_roads.push_back(road);
+				road_t adjacent_roads[] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+				getAdjacentRoads({ road.x, road.y, road.z }, adjacent_roads);
 
-	if (x != 0 && y != 0)
-	{
-		//algoritmo busqueda de calles adyacentes
-		road_t adjacent_roads[] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-		getAdjacentRoads({ x, y, z }, adjacent_roads);
-
-		//recursiva
-		length += longestRecursive(adjacent_roads[0].x, adjacent_roads[0].y, adjacent_roads[0].z);
-		length += longestRecursive(adjacent_roads[1].x, adjacent_roads[1].y, adjacent_roads[1].z);
-		length += longestRecursive(adjacent_roads[2].x, adjacent_roads[2].y, adjacent_roads[2].z);
-		length += longestRecursive(adjacent_roads[3].x, adjacent_roads[3].y, adjacent_roads[3].z);
+				for (int i = 0; i < 4; i++)
+				{
+					lengths[i] += longestRecursive(adjacent_roads[i], previous_roads, lengths[i]);
+				}
+			}
+		}
 	}
+	longest = max(max(lengths[0], lengths[1]), max(lengths[2], lengths[3]));
+	return longest;
+}
 
-	return length;
+bool Game::
+inPreviousRoads(road_t road, vector <road_t> &previous_roads) //devuelve true is road esta en previous_road
+{
+	bool ret = false;
+	for (int i = 0; i < previous_roads.size(); i++)
+	{
+		if (road == previous_roads[i])
+		{
+			ret = true;
+			break;
+		}
+	}
 }
 
 Game::
@@ -300,9 +324,100 @@ getAdjacentRoads(road_t main_road, road_t * adjacent_roads)
 			}
 		}
 		
+		if (coin1 > coin2)
+		{
+			swap(coin1, coin2);		//por simplicidad pongo coin1 como el menor de ellos
+		}
 		//las calles entre pieza de mar y hexagono tienen 2 o 3 calles adyacentes
+		//algunas coordenadas no tienen z, otras tienen la coincidencia mas chica como z, otras la coincidencia mas grande
+		//dependiendo cual es, las calles adyacentes siguen distintas reglas
 		road_t road;
-		
+		if (main_road.z = 0)
+		{
+			//road 1
+			road = { coin1, main_road.y, main_road.x };
+			if (board->inEdges(road))
+			{
+				*(adjacent_roads) = road;
+			}
+			//else ERROR
+
+			//road 2
+			road = { min(main_road.y, coin2), max(main_road.y, coin2), 0 };
+			if (board->inEdges(road))
+			{
+				*(adjacent_roads) = road;
+			}
+			//else ERROR
+
+			//road 3
+			road = { main_road.x, coin2, main_road.y };
+			if (board->inEdges(road))
+			{
+				*(adjacent_roads) = road;
+			}
+			//else ERROR
+		}
+		else if (main_road.z == coin1)
+		{
+			//road 1
+			road = { main_road.x, main_road.y, coin2};
+			if (board->inEdges(road))
+			{
+				*(adjacent_roads) = road;
+			}
+			//else ERROR
+
+			//road 2
+			road = { main_road.x, coin1, 0 };	//puede que no exista esta calle, por ejemplo, si main_road es {'3','S','2'}
+			if (board->inEdges(road))			//en ese caso, road seria {'3','2'}, que no existe
+			{
+				*(adjacent_roads) = road;
+			}
+			//else ERROR
+
+			//road 3
+			road = { min(main_road.y, coin1), max(main_road.y, coin1), 0 };
+			if (board->inEdges(road))
+			{
+				*(adjacent_roads) = road;
+			}
+			//else ERROR
+		}
+		else							//si z == coin2
+		{
+			//road 1
+			road = { main_road.x, main_road.y, coin1 };
+			if (board->inEdges(road))
+			{
+				*(adjacent_roads) = road;
+			}
+			//else ERROR
+
+			//road 2
+			road = { main_road.y, coin2, 0 };
+			if (board->inEdges(road))
+			{
+				*(adjacent_roads) = road;
+			}
+			//else ERROR
+
+			//road 3
+			road = { main_road.x, coin2, main_road.y };
+			if (board->inEdges(road))
+			{
+				*(adjacent_roads) = road;
+			}
+			else
+			{
+				road = { main_road.x, coin2, 0 };
+				if (board->inEdges(road))
+				{
+					*(adjacent_roads) = road;
+				}
+				//else ERROR
+			}
+		}
 	}
 
 }
