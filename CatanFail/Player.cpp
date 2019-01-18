@@ -290,10 +290,16 @@ buildCity(char x, char y, char z)
 }
 
 /****************************************** FALTAN ESTOS **********************************************/
-void moveRobber()
-{
-
+bool canMoveRobber(TerrainHexes &place_robber_here)	// después hay que llamar a moveRobber desde Game porque
+{													//	tengo ese método en Board, sino hay que agregar uno acá
+	bool can_i = false;
+	if ((getDiceNumber() == 7) && (!place_robber_here.hasRobber()))
+	{
+		can_i = true;
+	}
+	return can_i;
 }
+
 
 bool Player::
 domesticTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted)

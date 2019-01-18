@@ -13,6 +13,8 @@
 #define LOWER_RIGHT 3
 #define NEXT 4
 
+#define SEA_FRAME_TILES 6	//cantidad total de piezas de mar
+
 using namespace std;
 
 namespace ports {

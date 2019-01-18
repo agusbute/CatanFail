@@ -9,6 +9,8 @@
 
 #define TOTAL_RESOURCES 5
 
+#define TERRAIN_HEXES 19	//cantidad total de hexagonos
+
 #define TOP_LEFT 0
 #define TOP_RIGHT 1
 #define RIGHT 2
@@ -46,5 +48,5 @@ class TerrainHexes : public BoardComponent
 		Resources resource;	
 		int token;
 		char adjacentPieces[ADJACENT_HEX];
-		bool robber;	//si tiene el robber esto es true
+		bool robber_here;	//si tiene el robber esto es true
 };

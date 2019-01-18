@@ -136,6 +136,23 @@ getPiece(char info)
 }
 
 bool Board::
+moveRobber(TerrainHexes &place_robber_here)
+{
+	bool keep_searching = true;
+	for (int i = 0; i < TERRAIN_HEXES, keep_searching == true; i++)
+	{
+		if (all_the_hexes[i].hasRobber())
+		{
+			all_the_hexes[i].setRobber(false);
+			keep_searching = false;
+		}
+	}
+	place_robber_here.setRobber(true);
+	
+	return keep_searching;
+}
+
+bool Board::
 inEdges(coord_t coord)
 {
 	bool ret = false;

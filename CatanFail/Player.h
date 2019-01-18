@@ -9,6 +9,7 @@
 #include "TerrainHexes.h"
 #include "SeaFrameTiles.h"
 #include "DevelopmentCard.h"
+#include "Board.h"
 
 using namespace std;
 
@@ -61,7 +62,7 @@ class Player
 		bool searchBuilding(char x, char y, char z = 0);
 		bool searchBuilding(coord_t coords);
 		/******************************************************FALTAN ESTAS********************************************/
-		void moveRobber();
+		bool canMoveRobber(TerrainHexes &place_robber_here);
 		bool askForTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted);	//necesito network acá
 		bool domesticTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted); // with opponent // puedo hacer trades de mas de una carta!!!!!
 		/*************************************************************************************************************/

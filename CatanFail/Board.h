@@ -12,9 +12,6 @@
 
 using namespace std;
 
-#define TERRAIN_HEXES 19	//cantidad total de hexagonos
-#define SEA_FRAME_TILES 6	//cantidad total de piezas de mar
-
 class Board
 {
 	public:
@@ -29,6 +26,7 @@ class Board
 		BoardComponent * getPiece(char info);
 		TerrainHexes * searchHexPiece(char info);
 		SeaFrameTiles * searchSeaPiece(char info);
+		bool moveRobber(TerrainHexes &place_robber_here);
 		bool inEdges(coord_t coord); //devuelve true si la coordenada introducida esta en Edges
 		bool inNodes(coord_t coord); //devuelve true si la coordenada introducida esta en Vertices
 		~Board();
