@@ -147,7 +147,7 @@ inEdges(coord_t coord)
 }
 
 bool Board::
-inVertices(coord_t coord)
+inNodes(coord_t coord)
 {
 	bool ret = false;
 	for (int i = 0; i < Vertices.size(); i++)

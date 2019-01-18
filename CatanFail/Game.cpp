@@ -52,6 +52,16 @@ createDevelopmentCards(void)
 }
 
 bool Game::
+checkSettlement(settlement_t settlement)
+{
+	bool ret = false;
+	if (!(oponent->searchBuilding(settlement)) && !(player->searchBuilding(settlement))) //si el contrincante o el jugador ya construyeron ahi, no se puede hacer nada, devuelve false
+	{
+		
+	}
+}
+
+bool Game::
 checkRoad(road_t road)
 {
 	return checkRoad(road.x, road.y, road.z);
@@ -61,7 +71,7 @@ bool Game::
 checkRoad(char x, char y, char z)
 {
 	bool ret = false;
-	if (!(oponent->searchRoad(x, y, z))) //si el contrincante ya construyo ahi, no se puede hacer nada, devuelve false
+	if (!(oponent->searchRoad(x, y, z)) && !(player->searchRoad(x,y,z))) //si el contrincante o el jugador ya construyeron ahi, no se puede hacer nada, devuelve false
 	{
 		//buscar calles adyacentes
 		road_t adjacent_roads[] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
@@ -82,8 +92,10 @@ checkLongestRoad(char x, char y, char z) //chequear si la calle es mas larga
 	bool ret;
 	if (longestRecursive({ x, y, z }, roads) >= 5)
 	{
-		//if(player->getLongest() > oponent-getLongest())
-		ret = true;
+		if (player->getLongest() > oponent->getLongest())
+		{
+			ret = true;
+		}
 	}
 	return ret;
 }
@@ -422,4 +434,141 @@ getAdjacentRoads(road_t main_road, road_t * adjacent_roads)
 		}
 	}
 
+}
+
+void Game::
+getNodeAdjacentRoads(settlement_t settlement, road_t * adjacent_roads)
+{
+	//NOTA: x < y < z SIEMPRE => x: arriba, y: izquierda, z: derecha || x: izquierda, y: derecha, z: abajo
+	
+	//primero pongo todos los elementos de adjacent_roads en {0,0,0}
+	for (int i = 0; i < 3; i++)
+	{
+		*(adjacent_roads + i) = { 0, 0, 0 };
+	}
+	
+	//si x, y, z son hexagonos, es facil
+	if ((settlement.x >= 'A' && settlement.x <= 'S') && 
+		(settlement.y >= 'A' && settlement.y <= 'S') && 
+		(settlement.z >= 'A' && settlement.z <= 'S'))
+	{
+		road_t road;
+		//road 1
+		road = { settlement.x, settlement.y, 0 };
+		if (board->inEdges(road))
+		{
+			*(adjacent_roads) = road;
+		}
+		//road 2
+		road = { settlement.x, settlement.z, 0 };
+		if (board->inEdges(road))
+		{
+			*(adjacent_roads + 1) = road;
+		}
+		//road 3
+		road = { settlement.y, settlement.z, 0 };
+		if (board->inEdges(road))
+		{
+			*(adjacent_roads + 2) = road;
+		}
+	}
+
+	//el problema es con el mar
+
+}
+
+void Game::
+getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
+{
+	//NOTA: x < y < z SIEMPRE => x: arriba, y: izquierda, z: derecha || x: izquierda, y: derecha, z: abajo
+	
+	//primero pongo todos los elementos de adjacent_nodes en {0,0,0}
+	for (int i = 0; i < 3; i++)
+	{
+		*(adjacent_nodes + i) = { 0, 0, 0 };
+	}
+
+	//si x, y, z son todos hexagonos, es mas simple
+	if ((settlement.x >= 'A' && settlement.x <= 'S') &&
+		(settlement.y >= 'A' && settlement.y <= 'S') &&
+		(settlement.z >= 'A' && settlement.z <= 'S'))
+	{
+		BoardComponent *X, *Y, *Z;
+		X = board->getPiece(settlement.x);
+		Y = board->getPiece(settlement.y);
+		Z = board->getPiece(settlement.z);
+		
+		//me fijo las coincidencias entre los hexagonos que ya no sepa
+		char c1, c2, c3;
+		
+		//entre x e y
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		{
+			c1 = X->getAdjacentPiece(i);
+			if (c1 != settlement.z)			//ya se que una coincidencia va a ser z, esa no la quiero
+			{
+				for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+				{
+					if (c1 == Y->getAdjacentPiece(j))
+					{
+						break;		//una vez que encontre un par, salgo
+					}
+				}
+			}
+		}
+		
+		//entre x y z
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		{
+			c2 = X->getAdjacentPiece(i);
+			if (c2 != settlement.y)			//ya se que una coincidencia va a ser y, esa no la quiero
+			{
+				for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+				{
+					if (c2 == Z->getAdjacentPiece(j))
+					{
+						break;		//una vez que encontre un par, salgo
+					}
+				}
+			}
+		}
+
+		//entre y y z
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		{
+			c3 = Y->getAdjacentPiece(i);
+			if (c1 != settlement.x)			//ya se que una coincidencia va a ser x, esa no la quiero
+			{
+				for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+				{
+					if (c3 == Z->getAdjacentPiece(j))
+					{
+						break;		//una vez que encontre un par, salgo
+					}
+				}
+			}
+		}
+
+		//entonces, los nodos van a ser los siguientes;
+		coord_t node1, node2, node3;
+		node1 = { min(c1, settlement.x), max(c1, settlement.x), settlement.y };
+		node2 = { min(c2, settlement.x), max(c2, settlement.x), settlement.z };
+		node3 = { min(c3, settlement.y), min(max(c3, settlement.y), settlement.z), max(max(c3, settlement.y), settlement.z) };
+		
+		//los guardo
+		if (board->inNodes(node1))
+		{
+			adjacent_nodes[0] = node1;
+		}
+		if (board->inNodes(node2))
+		{
+			adjacent_nodes[1] = node2;
+		}
+		if (board->inNodes(node3))
+		{
+			adjacent_nodes[2] = node3;
+		}
+	}
+
+	//de vuelta, el problema es con el mar (maldito poseidon!)
 }

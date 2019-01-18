@@ -59,7 +59,7 @@ class Player
 		bool searchRoad(char x, char y, char z = 0);
 		bool searchRoad(road_t road);
 		bool searchBuilding(char x, char y, char z = 0);
-
+		bool searchBuilding(coord_t coords);
 		/******************************************************FALTAN ESTAS********************************************/
 		void moveRobber();
 		bool askForTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted);	//necesito network acá

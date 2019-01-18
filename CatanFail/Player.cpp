@@ -169,6 +169,7 @@ buildRoad(char x, char y, char z)
 	}
 	return road_is_built;
 }
+
 bool Player::
 searchRoad(char x, char y, char z)
 {
@@ -187,6 +188,37 @@ bool Player::
 searchRoad(road_t road)
 {
 	return searchRoad(road.x, road.y, road.z);
+}
+
+bool Player::
+searchBuilding(coord_t coords)
+{
+	bool ret = false;
+	for (int i = 0; i < settlements_built.size(); i++)	//me fijo si las coords estan en settlements(es decir que se construyo un settlement ahi)
+	{
+		if (settlements_built[i] == coords)
+		{
+			ret = true;
+			break;
+		}
+	}
+	if (!ret)		//si no hay settlement ahi, ret va a seguir siendo false, entonces me fijo los cities
+	{
+		for (int i = 0; i < cities_built.size(); i++)
+		{
+			if (cities_built[i] == coords)
+			{
+				ret = true;
+				break;
+			}
+		}
+	}
+	return ret;
+}
+bool Player::
+searchBuilding(char x, char y, char z)
+{
+	return searchBuilding({ x, y, z });
 }
 
 bool Player::
@@ -258,7 +290,10 @@ buildCity(char x, char y, char z)
 }
 
 /****************************************** FALTAN ESTOS **********************************************/
-void moveRobber();
+void moveRobber()
+{
+
+}
 
 bool Player::
 domesticTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted)

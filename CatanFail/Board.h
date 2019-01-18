@@ -30,7 +30,7 @@ class Board
 		TerrainHexes * searchHexPiece(char info);
 		SeaFrameTiles * searchSeaPiece(char info);
 		bool inEdges(coord_t coord); //devuelve true si la coordenada introducida esta en Edges
-		bool inVertices(coord_t coord); //devuelve true si la coordenada introducida esta en Vertices
+		bool inNodes(coord_t coord); //devuelve true si la coordenada introducida esta en Vertices
 		~Board();
 
 
@@ -52,12 +52,12 @@ class Board
 									{'4','Q','M'}, {'Q','R'}, {'R','S'}, {'2','S'},
 				{'4','Q','3'}, {'3','Q'}, {'3','R','Q'}, {'3','R','S'}, {'3','S','R'}, {'3','S','2'}
 		};
-		const vector <coord_t> Vertices = {
+		const vector <coord_t> Nodes = {
 									{'0','A'}, {'0','B'}, {'0','1','C'},
 
 							  {'0','5','A'}, {'0','A','B'}, {'0','B','C'}, {'1','C'},
 
-							{'5','A','D'}, {'3','A','B'}, {'B','C','F'}, {'1','C','G'},
+							{'5','A','D'}, {'A','B','E'}, {'B','C','F'}, {'1','C','G'},
 
 						{'5','D'}, {'A','D','E'}, {'B','E','F'}, {'C','F','G'}, {'1','G'},
 
@@ -69,7 +69,7 @@ class Board
 
 					{'4','H','M'}, {'I','M','N'}, {'J','N','O'}, {'K','O','P'}, {'2','L','P'},
 
-						{'4','M'}, {'N','M','Q'}, {'N','O','R'}, {'O','P','S'}, {'2','P'},
+						{'4','M'}, {'M','N','Q'}, {'N','O','R'}, {'O','P','S'}, {'2','P'},
 
 							{'4','M','Q'}, {'N','Q','R'}, {'O','R','S'}, {'2','P','S'},
 

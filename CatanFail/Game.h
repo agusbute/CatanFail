@@ -32,8 +32,12 @@ class Game
 		bool checkRoad(char x, char y, char z = 0); //	
 		bool checkLongestRoad(char x, char y, char z = 0); //justo despues de player->buildRoad(x,y)
 
+		bool checkSettlement(settlement_t settlement);	//justo antes de player->buildSettlement(x,y,z);
+
 	private:
-		void getAdjacentRoads(road_t main_road, road_t * adjacent_roads); //devuelve en adjacent_roads las 4(o 3, siendo alguna {0,0,0}) calles adyacentes a road
+		void getAdjacentRoads(road_t main_road, road_t * adjacent_roads); //devuelve en adjacent_roads las 4(o 3, o 2, siendo algunas {0,0,0}) calles adyacentes a road
+		void getNodeAdjacentRoads(settlement_t settlement, road_t * adjacent_roads); //devuelve en adjacent_roads las 3 o 2 calles adyacentes a settlement
+		void getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes); //devuelve en adjacent_nodes los 3 o 2 nodos adyacentes a settlement
 		unsigned int longestRecursive(road_t road, vector <road_t> &previous_roads, unsigned int length = 0); //recursiva para chequear longest road
 		bool inPreviousRoads(road_t road, vector <road_t> &previous_roads);	//devuelve true is road esta en previous_road
 
