@@ -150,9 +150,9 @@ bool Board::
 inNodes(coord_t coord)
 {
 	bool ret = false;
-	for (int i = 0; i < Vertices.size(); i++)
+	for (int i = 0; i < Nodes.size(); i++)
 	{
-		ret = (ret || (coord.x == Vertices[i].x && coord.y == Vertices[i].y && coord.z == Vertices[i].z));
+		ret = (ret || (coord.x == Nodes[i].x && coord.y == Nodes[i].y && coord.z == Nodes[i].z));
 	}
 	return ret;
 }

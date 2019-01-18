@@ -7,6 +7,12 @@ Game()
 	board->initToStartGame();
 }
 
+Game::
+~Game()
+{
+	delete board;
+}
+
 void Game::
 createDevelopmentCards(void)
 {
@@ -55,10 +61,44 @@ bool Game::
 checkSettlement(settlement_t settlement)
 {
 	bool ret = false;
-	if (!(oponent->searchBuilding(settlement)) && !(player->searchBuilding(settlement))) //si el contrincante o el jugador ya construyeron ahi, no se puede hacer nada, devuelve false
+	//si el contrincante o el jugador ya construyeron ahi, no se puede hacer nada, devuelve false
+	if (!(oponent->searchBuilding(settlement)) && !(player->searchBuilding(settlement))) 
 	{
+		//busco nodos adyacentes
+		coord_t adjacent_nodes[3];
+		getAdjacentNodes(settlement, adjacent_nodes);
 		
+		//si el contrincante o el jugador ya construyeron en los adyacentes, no se puede hacer nada, devuelve false
+		if (!(oponent->searchBuilding(adjacent_nodes[0])) && !(player->searchBuilding(adjacent_nodes[0])) &&
+			!(oponent->searchBuilding(adjacent_nodes[1])) && !(player->searchBuilding(adjacent_nodes[1])) &&
+			!(oponent->searchBuilding(adjacent_nodes[2])) && !(player->searchBuilding(adjacent_nodes[2])))
+		{
+			//busco calles adyacentes --- EN EL PRIMER TURNO ESTO NO SE TIENE QUE TENER EN CUENTA
+			if (!(turnCounter < 3))
+			{
+				road_t adjacent_roads[3];
+				getNodeAdjacentRoads(settlement, adjacent_roads);
+				
+				//si hay una calle del jugador en las aristas adyacentes(lo que teniendo en cuenta
+				//que no puede haber un settlement en los nodos adyacentes significa que hay al menos dos caminos)
+				//entonces se puede construir
+				if (player->searchRoad(adjacent_roads[0]) || 
+					player->searchRoad(adjacent_roads[1]) || 
+					player->searchRoad(adjacent_roads[2]))
+				{
+					ret = true;
+				}
+			}
+			
+		}
 	}
+	return ret;
+}
+
+bool Game::
+checkSettlement(char x, char y, char z)
+{
+	return checkSettlement({ x, y, z });
 }
 
 bool Game::
@@ -73,12 +113,21 @@ checkRoad(char x, char y, char z)
 	bool ret = false;
 	if (!(oponent->searchRoad(x, y, z)) && !(player->searchRoad(x,y,z))) //si el contrincante o el jugador ya construyeron ahi, no se puede hacer nada, devuelve false
 	{
-		//buscar calles adyacentes
-		road_t adjacent_roads[] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-		getAdjacentRoads({ x, y, z }, adjacent_roads);
-		for (int i = 0; i < 4; i++)
+		//primer turno
+		if (turnCounter < 3)
 		{
-			ret = (ret || player->searchRoad(adjacent_roads[i]));
+			//FALTA PARA EL PRIMER TURNO! (es decir, que solo necesite un settlement en uno de los dos nodos adyacentes a esa calle)
+		}
+		//resto
+		else
+		{
+			//buscar calles adyacentes
+			road_t adjacent_roads[] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+			getAdjacentRoads({ x, y, z }, adjacent_roads);
+			for (int i = 0; i < 4; i++)
+			{
+				ret = (ret || player->searchRoad(adjacent_roads[i]));
+			}
 		}
 	}
 
@@ -143,12 +192,6 @@ inPreviousRoads(road_t road, vector <road_t> &previous_roads) //devuelve true is
 		}
 	}
 	return ret;
-}
-
-Game::
-~Game()
-{
-	delete board;
 }
 
 void Game::
