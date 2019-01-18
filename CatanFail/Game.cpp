@@ -130,6 +130,7 @@ inPreviousRoads(road_t road, vector <road_t> &previous_roads) //devuelve true is
 			break;
 		}
 	}
+	return ret;
 }
 
 Game::
@@ -252,6 +253,7 @@ getAdjacentRoads(road_t main_road, road_t * adjacent_roads)
 	else if (main_road.x >= '0' && main_road.x <= '5')		//si x es mar, me fijo los adyacentes a el
 	{															//hasta encontrar de que lado esta y
 		X_sea = (SeaFrameTiles *)Xsearch;
+		Y = (TerrainHexes *)Ysearch;
 		for (char i = PREV; i < ADJACENT_SEA; i++)
 		{
 			if (X_sea->getAdjacentPiece(i) == main_road.y)
@@ -290,7 +292,7 @@ getAdjacentRoads(road_t main_road, road_t * adjacent_roads)
 		{
 			if (i != X_side)		//ya se que de x_side esta y
 			{
-				coin1 = X->getAdjacentPiece(i);
+				coin1 = X_sea->getAdjacentPiece(i);
 				for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
 				{
 					if (j != Y_side)	//ya se que de Y_side esta x
@@ -307,7 +309,7 @@ getAdjacentRoads(road_t main_road, road_t * adjacent_roads)
 		{
 			if (i != X_side)		//ya se que de x_side esta y
 			{
-				coin2 = X->getAdjacentPiece(i);
+				coin2 = X_sea->getAdjacentPiece(i);
 				if (coin2 != coin1)			//ya me fije coin1
 				{
 					for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)

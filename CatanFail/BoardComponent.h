@@ -12,7 +12,7 @@
 
 using namespace std;
 
-typedef struct
+typedef struct coord_t
 {
 	char x;
 	char y;
