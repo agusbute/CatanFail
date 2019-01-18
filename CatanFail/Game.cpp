@@ -515,9 +515,106 @@ getNodeAdjacentRoads(settlement_t settlement, road_t * adjacent_roads)
 			*(adjacent_roads + 2) = road;
 		}
 	}
-
 	//el problema es con el mar
+	else if (settlement.z == 0)			//no tiene coordenada z (esta entre un mar y un hexagono)
+	{
+		BoardComponent *X, *Y; //punteros a las piezas del tablero (antes no las neceseitaba porque era mas simple)
+		X = board->getPiece(settlement.x);
+		Y = board->getPiece(settlement.y);
+		
+		//solo hay dos calles adyacenetes
+		road_t road1, road2;
 
+		//x e y tienen dos piezas con las que coinciden
+		char c1, c2;
+
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		{
+			c1 = X->getAdjacentPiece(i);
+			for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+			{
+				if (c1 == Y->getAdjacentPiece(j))
+				{
+					break;		//una vez que encontre un par, salgo
+				}
+			}
+		}
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		{
+			c2 = X->getAdjacentPiece(i);
+			if (c2 != c1)			//ya se que una coincidencia va a ser c1, esa no la quiero
+			{
+				for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+				{
+					if (c2 == Y->getAdjacentPiece(j))
+					{
+						break;		//una vez que encontre un par, salgo
+					}
+				}
+			}
+		}
+		
+		//por comodidad, hago que c1 sea la coincidencia menor
+		if (c1 > c2)
+		{
+			swap(c1, c2);
+		}
+
+		road1 = { settlement.x, settlement.y, c1 };
+		road2 = { settlement.x, settlement.y, c2 };
+		//deberian estar ambas calles
+		if (board->inEdges(road1))
+		{
+			adjacent_roads[0] = road1;
+		}
+		//else ERROR
+		if (board->inEdges(road2))
+		{
+			adjacent_roads[1] = road2;
+		}
+		//else ERROR
+	}
+	//Despues hay solo 6 nodos que tienen dos piezas que son mar y un hexagono
+	//son poquitos, puedo hacerlo con switch case simplen no? No?
+	else
+	{
+		switch (settlement.x)
+		{
+		case '0':
+		{
+			if (settlement.y == '1')		//estamos en el (0,1,C)
+			{
+				adjacent_roads[0] = { '0', 'C', 0 };
+				adjacent_roads[1] = { '1', 'C', '0' };
+			}
+			else							//estamos en el (0,5,A)
+			{
+				adjacent_roads[0] = { '0', 'A', '5' };
+				adjacent_roads[1] = { '5', 'A', 0 };
+			}
+		}
+		case '1':							//estamos en el (1,2,L)
+		{
+			adjacent_roads[0] = { '2', '1', 'L' };
+			adjacent_roads[1] = { '1', 'L', 0 };
+		}
+		case '2':							//estamos en el (2,3,S)
+		{
+			adjacent_roads[0] = { '3', 'S', '2' };
+			adjacent_roads[1] = { '2', 'S', 0 };
+		}
+		case '3':							//estamos en el (3,4,Q)
+		{
+			adjacent_roads[0] = { '4', 'Q', '3' };
+			adjacent_roads[1] = { '3', 'Q', 0 };
+		}
+		case '4':							//estamos en el (4,5,H)
+		{
+			adjacent_roads[0] = { '5', 'H', '4' };
+			adjacent_roads[1] = { '4', 'H', 0 };
+		}
+		}
+	}
 }
 
 void Game::
@@ -525,6 +622,13 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 {
 	//NOTA: x < y < z SIEMPRE => x: arriba, y: izquierda, z: derecha || x: izquierda, y: derecha, z: abajo
 	
+	BoardComponent *X, *Y, *Z;		//punteros a las piezas del tablero
+	X = board->getPiece(settlement.x);
+	Y = board->getPiece(settlement.y);
+	Z = board->getPiece(settlement.z);
+	
+	coord_t node1, node2, node3;		//nodos a guardar
+
 	//primero pongo todos los elementos de adjacent_nodes en {0,0,0}
 	for (int i = 0; i < 3; i++)
 	{
@@ -536,10 +640,6 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 		(settlement.y >= 'A' && settlement.y <= 'S') &&
 		(settlement.z >= 'A' && settlement.z <= 'S'))
 	{
-		BoardComponent *X, *Y, *Z;
-		X = board->getPiece(settlement.x);
-		Y = board->getPiece(settlement.y);
-		Z = board->getPiece(settlement.z);
 		
 		//me fijo las coincidencias entre los hexagonos que ya no sepa
 		char c1, c2, c3;
@@ -580,7 +680,7 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
 		{
 			c3 = Y->getAdjacentPiece(i);
-			if (c1 != settlement.x)			//ya se que una coincidencia va a ser x, esa no la quiero
+			if (c3 != settlement.x)			//ya se que una coincidencia va a ser x, esa no la quiero
 			{
 				for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
 				{
@@ -593,25 +693,210 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 		}
 
 		//entonces, los nodos van a ser los siguientes;
-		coord_t node1, node2, node3;
 		node1 = { min(c1, settlement.x), max(c1, settlement.x), settlement.y };
 		node2 = { min(c2, settlement.x), max(c2, settlement.x), settlement.z };
 		node3 = { min(c3, settlement.y), min(max(c3, settlement.y), settlement.z), max(max(c3, settlement.y), settlement.z) };
 		
-		//los guardo
+		//los guardo (deberian existir todos)
 		if (board->inNodes(node1))
 		{
 			adjacent_nodes[0] = node1;
 		}
+		//else ERROR
 		if (board->inNodes(node2))
 		{
 			adjacent_nodes[1] = node2;
 		}
+		//else ERROR
 		if (board->inNodes(node3))
 		{
 			adjacent_nodes[2] = node3;
 		}
+		//else ERROR
 	}
-
 	//de vuelta, el problema es con el mar (maldito poseidon!)
+	//si solo tiene un lado que es mar y los otros dos son hexagonos, tampoco es muy dificil (por suerte)
+	else if ((settlement.x >= '0' && settlement.x <= '5') && 
+			 (settlement.y >= 'A' && settlement.y <= 'S') && (settlement.z != 0))
+	{
+		node1 = { settlement.x, settlement.y, 0 };
+		if (board->inNodes(node1))
+		{
+			adjacent_nodes[0] = node1;
+		}
+		//puede que este no exista(ejemplo: nodo principal = (4,h,m) => node1 quedaria (4,h) que no existe)
+		//por suerte, la solucion es facil
+		else
+		{
+			char c; //coincidencia entre x y y que no sea z
+			for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+			{
+				c = X->getAdjacentPiece(i);
+				if (c != settlement.z)			//ya se que una coincidencia va a ser z, esa no la quiero
+				{
+					for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+					{
+						if (c == Y->getAdjacentPiece(j))
+						{
+							break;		//una vez que encontre un par, salgo
+						}
+					}
+				}
+			}
+			node1 = { min(settlement.x, c), max(settlement.x, c), settlement.y };
+			if (board->inNodes(node1))
+			{
+				adjacent_nodes[0] = node1;
+			}
+			//else ERROR
+		}
+		
+		node2 = { settlement.x, settlement.z, 0 };
+		if (board->inNodes(node2))
+		{
+			adjacent_nodes[1] = node2;
+		}
+		//puede que este no exista(ejemplo: nodo principal = (0,b,c) => node2 quedaria (0,c) que no existe)
+		//por suerte, la solucion es facil
+		else
+		{			
+			char c; //coincidencia entre x y z que no sea y
+			for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+			{
+				c = X->getAdjacentPiece(i);
+				if (c != settlement.y)			//ya se que una coincidencia va a ser y, esa no la quiero
+				{
+					for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+					{
+						if (c == Z->getAdjacentPiece(j))
+						{
+							break;		//una vez que encontre un par, salgo
+						}
+					}
+				}
+			}
+			node2 = { min(settlement.x, c), max(settlement.x, c), settlement.z };
+			if (board->inNodes(node1))
+			{
+				adjacent_nodes[1] = node2;
+			}
+			//else ERROR
+		}
+
+		//para node3 necesitamos la coincidencia entre y y z que no sea x
+		char c;
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		{
+			c = Y->getAdjacentPiece(i);
+			if (c != settlement.x)			//ya se que una coincidencia va a ser x, esa no la quiero
+			{
+				for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+				{
+					if (c == Z->getAdjacentPiece(j))
+					{
+						break;		//una vez que encontre un par, salgo
+					}
+				}
+			}
+		}
+		node3 = { min(settlement.y, c), min(max(settlement.y, c),settlement.z), max(max(settlement.y, c),settlement.z) };
+		if (board->inNodes(node3))
+		{
+			adjacent_nodes[2] = node3;
+		}
+		//else ERROR
+	}
+	//despues puede que solo un lado sea mar y el otro hexagono - aca solo tiene dos nodos adyacentes
+	else if ((settlement.x >= '0' && settlement.x <= '5') && 
+			 (settlement.y >= 'A' && settlement.y <= 'S') && (settlement.z == 0))
+	{
+		//x e y tienen dos piezas con las que coinciden
+		char c1, c2;
+		
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		{
+			c1 = X->getAdjacentPiece(i);
+			for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+			{
+				if (c1 == Y->getAdjacentPiece(j))
+				{
+					break;		//una vez que encontre un par, salgo
+				}
+			}
+		}
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		{
+			c2 = X->getAdjacentPiece(i);
+			if (c2 != c1)			//ya se que una coincidencia va a ser c1, esa no la quiero
+			{
+				for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+				{
+					if (c2 == Y->getAdjacentPiece(j))
+					{
+						break;		//una vez que encontre un par, salgo
+					}
+				}
+			}
+		}
+		
+		//por comodidad, hago que c1 sea la coincidencia menor
+		if (c1 > c2)
+		{
+			swap(c1, c2);
+		}
+
+		node1 = { min(settlement.x, c1), min(max(settlement.x, c1), settlement.y), max(max(settlement.x, c1), settlement.y) };
+		if (board->inNodes(node1))
+		{
+			adjacent_nodes[0] = node1;
+		}
+		//else ERROR
+		node2 = { min(settlement.x, c2), min(max(settlement.x, c2), settlement.y), max(max(settlement.x, c2), settlement.y) };
+		if (board->inNodes(node2))
+		{
+			adjacent_nodes[1] = node2;
+		}
+		//else ERROR
+	}
+	//Despues hay solo 6 nodos que tienen dos piezas que son mar y un hexagono
+	//son poquitos, puedo hacerlo con switch case simplen no? No?
+	else
+	{
+		switch (settlement.x)
+		{
+			case '0':
+			{
+				if (settlement.y == '1')		//estamos en el (0,1,C)
+				{
+					adjacent_nodes[0] = { '0', 'B', 'C' };
+					adjacent_nodes[1] = { '1', 'C', 0 };
+				}
+				else							//estamos en el (0,5,A)
+				{
+					adjacent_nodes[0] = { '0', 'A', 0 };
+					adjacent_nodes[1] = { '5', 'A', 'D' };
+				}
+			}
+			case '1':							//estamos en el (1,2,L)
+			{
+				adjacent_nodes[0] = { '1', 'G', 'L' };
+				adjacent_nodes[1] = { '2', 'L', 0 };
+			}
+			case '2':							//estamos en el (2,3,S)
+			{
+				adjacent_nodes[0] = { '2', 'P', 'S' };
+				adjacent_nodes[1] = { '3', 'S', 0 };
+			}
+			case '3':							//estamos en el (3,4,Q)
+			{
+				adjacent_nodes[0] = { '3', 'Q', 'R' };
+				adjacent_nodes[1] = { '4', 'Q', 0 };
+			}
+			case '4':							//estamos en el (4,5,H)
+			{
+				adjacent_nodes[0] = { '4', 'H', 'M' };
+				adjacent_nodes[1] = { '5', 'H', 0 };
+			}
+		}
+	}
 }
