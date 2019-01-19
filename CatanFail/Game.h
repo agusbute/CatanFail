@@ -40,6 +40,8 @@ class Game
 		bool checkSettlement(settlement_t settlement);	//justo antes de player->buildSettlement(x,y,z);
 		bool checkSettlement(char x, char y, char z = 0);
 
+		bool moveRobber(TerrainHexes &place_robber_here);
+
 	private:
 		void getAdjacentRoads(road_t main_road, road_t * adjacent_roads); //devuelve en adjacent_roads las 4(o 3, o 2, siendo algunas {0,0,0}) calles adyacentes a road
 		void getNodeAdjacentRoads(settlement_t settlement, road_t * adjacent_roads); //devuelve en adjacent_roads las 3 o 2 calles adyacentes a settlement

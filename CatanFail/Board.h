@@ -26,15 +26,15 @@ class Board
 		BoardComponent * getPiece(char info);
 		TerrainHexes * searchHexPiece(char info);
 		SeaFrameTiles * searchSeaPiece(char info);
-		bool moveRobber(TerrainHexes &place_robber_here);
 		bool inEdges(coord_t coord); //devuelve true si la coordenada introducida esta en Edges
 		bool inNodes(coord_t coord); //devuelve true si la coordenada introducida esta en Vertices
 		~Board();
 
 
-	private:
+	//no estan en private porque game necesita tener acceso a ellos
 		TerrainHexes* all_the_hexes;	//puntero al arreglo de hexagonos
 		SeaFrameTiles* all_the_sea_frames;	//puntero al arreglo de piezas de mar
+	private:
 		// cartas de desarrollo
 		//cartas de recurso ¡son ilimitadas!
 		const vector <coord_t> Edges = {

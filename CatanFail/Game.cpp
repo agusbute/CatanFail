@@ -900,3 +900,24 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 		}
 	}
 }
+
+bool Game::
+moveRobber(TerrainHexes &place_robber_here)
+{
+	bool keep_searching = true;
+
+	bool can_i = false;
+	if ((player->getDiceNumber() == 7) && (!place_robber_here.hasRobber()))	//me aseguro que haya salido el 7 y que el hex que elegí no tenga ya el robber
+	{
+		for (int i = 0; i < TERRAIN_HEXES, keep_searching == true; i++)
+		{
+			if (board->all_the_hexes[i].hasRobber())	//me fijo donde está el robber
+			{
+				board->all_the_hexes[i].setRobber(false);	//lo saco
+				keep_searching = false;
+			}
+		}
+		place_robber_here.setRobber(true);	//y lo ubico en la posición que quiero
+	}
+	return keep_searching;
+}

@@ -61,11 +61,10 @@ class Player
 		bool searchRoad(road_t road);
 		bool searchBuilding(char x, char y, char z = 0);
 		bool searchBuilding(coord_t coords);
-		/******************************************************FALTAN ESTAS********************************************/
-		bool canMoveRobber(TerrainHexes &place_robber_here);
+		
 		bool askForTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted);	//necesito network acá
 		bool domesticTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted); // with opponent // puedo hacer trades de mas de una carta!!!!!
-		/*************************************************************************************************************/
+		
 
 		bool maritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade); //se fija si tengo las cartas para el intercambio, devuelve true si lo hizo
 		bool bankTrade(Resources my_r_card, Resources the_r_card_wanted); //se fija si tengo las cartas necesarias para el intercambio, devuelve true si lo hizo
