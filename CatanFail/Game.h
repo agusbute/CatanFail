@@ -41,10 +41,12 @@ class Game
 		bool checkSettlement(char x, char y, char z = 0);
 
 		bool moveRobber(TerrainHexes &place_robber_here);
+		bool moveRobber(char place_robber_here);
 
 	private:
 		void getAdjacentRoads(road_t main_road, road_t * adjacent_roads); //devuelve en adjacent_roads las 4(o 3, o 2, siendo algunas {0,0,0}) calles adyacentes a road
 		void getNodeAdjacentRoads(settlement_t settlement, road_t * adjacent_roads); //devuelve en adjacent_roads las 3 o 2 calles adyacentes a settlement
+		void getRoadAdjacentNodes(road_t road, coord_t * adjacent_nodes); //devuelve en adjacent nodes los dos nodos entre los cuales se encuentra road
 		void getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes); //devuelve en adjacent_nodes los 3 o 2 nodos adyacentes a settlement
 		unsigned int longestRecursive(road_t road, vector <road_t> &previous_roads, unsigned int length = 0); //recursiva para chequear longest road
 		bool inPreviousRoads(road_t road, vector <road_t> &previous_roads);	//devuelve true is road esta en previous_road

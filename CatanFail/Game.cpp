@@ -89,6 +89,10 @@ checkSettlement(settlement_t settlement)
 					ret = true;
 				}
 			}
+			else
+			{
+				ret = true;
+			}
 			
 		}
 	}
@@ -180,7 +184,7 @@ longestRecursive(road_t road, vector <road_t> &previous_roads, unsigned int leng
 }
 
 bool Game::
-inPreviousRoads(road_t road, vector <road_t> &previous_roads) //devuelve true is road esta en previous_road
+inPreviousRoads(road_t road, vector <road_t> &previous_roads) //devuelve true is road esta en previous_roads
 {
 	bool ret = false;
 	for (int i = 0; i < previous_roads.size(); i++)
@@ -389,7 +393,7 @@ getAdjacentRoads(road_t main_road, road_t * adjacent_roads)
 		//algunas coordenadas no tienen z, otras tienen la coincidencia mas chica como z, otras la coincidencia mas grande
 		//dependiendo cual es, las calles adyacentes siguen distintas reglas
 		road_t road;
-		if (main_road.z = 0)
+		if (main_road.z == 0)
 		{
 			//road 1
 			road = { coin1, main_road.y, main_road.x };
@@ -528,7 +532,7 @@ getNodeAdjacentRoads(settlement_t settlement, road_t * adjacent_roads)
 		//x e y tienen dos piezas con las que coinciden
 		char c1, c2;
 
-		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		for (char i = PREV; i < ADJACENT_SEA; i++)
 		{
 			c1 = X->getAdjacentPiece(i);
 			for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
@@ -539,7 +543,7 @@ getNodeAdjacentRoads(settlement_t settlement, road_t * adjacent_roads)
 				}
 			}
 		}
-		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		for (char i = PREV; i < ADJACENT_SEA; i++)
 		{
 			c2 = X->getAdjacentPiece(i);
 			if (c2 != c1)			//ya se que una coincidencia va a ser c1, esa no la quiero
@@ -575,7 +579,7 @@ getNodeAdjacentRoads(settlement_t settlement, road_t * adjacent_roads)
 		//else ERROR
 	}
 	//Despues hay solo 6 nodos que tienen dos piezas que son mar y un hexagono
-	//son poquitos, puedo hacerlo con switch case simplen no? No?
+	//son poquitos, puedo hacerlo con switch case simple no? No?
 	else
 	{
 		switch (settlement.x)
@@ -729,7 +733,7 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 		else
 		{
 			char c; //coincidencia entre x y y que no sea z
-			for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+			for (char i = PREV; i < ADJACENT_SEA; i++)
 			{
 				c = X->getAdjacentPiece(i);
 				if (c != settlement.z)			//ya se que una coincidencia va a ser z, esa no la quiero
@@ -761,7 +765,7 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 		else
 		{			
 			char c; //coincidencia entre x y z que no sea y
-			for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+			for (char i = PREV; i < ADJACENT_SEA; i++)
 			{
 				c = X->getAdjacentPiece(i);
 				if (c != settlement.y)			//ya se que una coincidencia va a ser y, esa no la quiero
@@ -813,7 +817,7 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 		//x e y tienen dos piezas con las que coinciden
 		char c1, c2;
 		
-		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		for (char i = PREV; i < ADJACENT_SEA; i++)
 		{
 			c1 = X->getAdjacentPiece(i);
 			for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
@@ -824,7 +828,7 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 				}
 			}
 		}
-		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		for (char i = PREV; i < ADJACENT_SEA; i++)
 		{
 			c2 = X->getAdjacentPiece(i);
 			if (c2 != c1)			//ya se que una coincidencia va a ser c1, esa no la quiero
@@ -859,7 +863,7 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 		//else ERROR
 	}
 	//Despues hay solo 6 nodos que tienen dos piezas que son mar y un hexagono
-	//son poquitos, puedo hacerlo con switch case simplen no? No?
+	//son poquitos, puedo hacerlo con switch case simple no? No?
 	else
 	{
 		switch (settlement.x)
@@ -901,6 +905,12 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 	}
 }
 
+void Game::
+getRoadAdjacentNodes(road_t road, coord_t * adjacent_nodes)
+{
+
+}
+
 bool Game::
 moveRobber(TerrainHexes &place_robber_here)
 {
@@ -920,4 +930,12 @@ moveRobber(TerrainHexes &place_robber_here)
 		place_robber_here.setRobber(true);	//y lo ubico en la posición que quiero
 	}
 	return keep_searching;
+}
+
+bool Game::
+moveRobber(char move_robber_here)
+{
+	TerrainHexes * hex = (TerrainHexes *)board->getPiece(move_robber_here); //ya se que va a ser un hexagono(el robber no puede ir en pieza de mar
+
+	moveRobber(*hex);
 }
