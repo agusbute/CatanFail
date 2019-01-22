@@ -23,11 +23,13 @@ enum PieceType {ROAD, SETTLEMENT, CITY};	//tipos de piezas para construir
 
 using namespace std;
 
+/*
 typedef struct
 {
 	PieceType type;
 	string player;
 }piece_t;	//no se que onda esto, después vemos
+*/
 
 class TerrainHexes : public BoardComponent
 {

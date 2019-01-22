@@ -17,11 +17,6 @@ enum Actions {ADD, SUBTRACT};
 enum MaritimeTradeType {THREE_X_ONE, TWO_X_ONE};	
 enum Player_Error { NEG_VP, NO_DCARD};	//NEG_VP = Victory Points negativos, NO_DCARD = no tengo esa carta de resurso
 
-typedef coord_t settlement_t;
-
-typedef coord_t city_t;
-
-typedef coord_t road_t;
 
 typedef struct 
 {
@@ -36,7 +31,7 @@ typedef struct
 class Player
 {
 	public:
-		Player(string name);	//settea el nombre del jugador y todo en cero para comenzar
+		Player();	//settea todo en cero para comenzar
 		void setName(string name);	//settea el nombre del jugador
 		string getName(void);	//devuelve el nombre del jugador
 		unsigned int getVictoryPoints(void);	//devuelve los victory points
@@ -44,8 +39,12 @@ class Player
 		unsigned int getRoadsBuilt(void);	//devuleve la cantidad de caminos que construí
 		unsigned int getSettlementsBuilt(void);	//devuelve la cantidad de asentamientos que construí 
 		unsigned int getCitiesBuilt(void);	//devuelve la cantidad de ciudades que construí
-		bool getDevelopmentCard(DevelopmentCards d_card);	//"usa" la development card que quiero usar, devuelve true si se pudo hacer sino el error es NO_DCARD
+		bool useDevelopmentCard(DevelopmentCards d_card);	//"usa" la development card que quiero usar, devuelve true si se pudo hacer sino el error es NO_DCARD
 		unsigned int getDiceNumber(void);	//devuelve el número que salío al tirar los dados
+
+		unsigned int getResourceCards();
+
+		void setBoard(Board * board_);	//IMPORTANTE!!!!
 
 		void setLongest(unsigned int value); //setter de myLongest
 		unsigned int getLongest();			//getter de myLongest
@@ -61,17 +60,20 @@ class Player
 		bool searchRoad(road_t road);
 		bool searchBuilding(char x, char y, char z = 0);
 		bool searchBuilding(coord_t coords);
+
+		//si hay un settlement/city en el hexagono especificado, levanta las cartas que tenga que levantar
+		void checkHexBuilding(char hex);
+		void checkHexBuilding(TerrainHexes &hex);
 		
 		bool askForTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted);	//necesito network acá
-		bool domesticTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted); // with opponent // puedo hacer trades de mas de una carta!!!!!
+		bool domesticTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted); // with opponent -- puedo hacer trades de mas de una carta!!!!!
 		
 
 		bool maritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade); //se fija si tengo las cartas para el intercambio, devuelve true si lo hizo
 		bool bankTrade(Resources my_r_card, Resources the_r_card_wanted); //se fija si tengo las cartas necesarias para el intercambio, devuelve true si lo hizo
 
-		bool BuyDevelopmentCard(DevelopmentCard my_new_card);	//solamente se fija si tengo las cartas de recurso necesarias y las resta, devuelve true si las tengo
-		//debería haber uno que me agregue la que me tocó, ahora tengo sueño para hacerlo (tipo el setter de las r card)
-		//vendría la d cart desde el tablero
+		bool BuyDevelopmentCard();	//solamente se fija si tengo las cartas de recurso necesarias y las resta, devuelve true si las tengo
+		void addDevelopmentCard(DevelopmentCard my_new_card);//agrega la carta que toco
 
 		void throwTheDices(void);	//toma dos números al azar, los suma y los guarda en dice_number
 
@@ -80,7 +82,12 @@ class Player
 		~Player();
 
 	private:
+
+		void grabResourceCard(Resources resource, PieceType piece);
+
 		string name;
+
+		Board * board;
 
 		unsigned int total_roads;
 		unsigned int total_settlements;

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <algorithm>
 #include "BoardComponent.h"
 
 #define PREV 0
@@ -21,10 +22,16 @@ namespace ports {
 	enum PORT { NONE, WOOL, LUMBER, ORE, BRICK, GRAIN, ANY };
 }
 
+typedef struct {
+	coord_t node1;
+	coord_t node2;
+	ports::PORT port;
+}portData_t;
+
 
 typedef struct {
-	ports::PORT port1;
-	ports::PORT port2 = ports::NONE;
+	portData_t port1;
+	portData_t port2 = { { 0, 0, 0 }, ports::NONE };
 }ports_t;
 
 class SeaFrameTiles : public BoardComponent

@@ -2,6 +2,8 @@
 
 class Input
 {
-private:
-public:
+	public:
+		
+	private:
+
 };

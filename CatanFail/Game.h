@@ -12,6 +12,7 @@
 #include "DevelopmentCard.h"
 #include "Input.h"
 #include "Graphics.h"
+#include "Network.h"
 
 #define TOTAL_D_CARDS 25
 #define TOTAL_KNIGHT_CARDS 14
@@ -26,7 +27,7 @@ class Game
 		Game();
 		~Game();
 		
-		void play(void);	//fsm global
+		void play();	//fsm global
 		
 		void createDevelopmentCards(void);
 		
@@ -36,25 +37,28 @@ class Game
 		bool checkRoad(road_t road);				//	justo antes de player->buildRoad(x,y)	
 		bool checkRoad(char x, char y, char z = 0); //	
 		bool checkLongestRoad(char x, char y, char z = 0); //justo despues de player->buildRoad(x,y)
-
+		
 		bool checkSettlement(settlement_t settlement);	//justo antes de player->buildSettlement(x,y,z);
 		bool checkSettlement(char x, char y, char z = 0);
+
+		bool checkMaritmeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade);	//se fija si se puede hacer un intercambio maritimo
 
 		bool moveRobber(TerrainHexes &place_robber_here);
 		bool moveRobber(char place_robber_here);
 
 	private:
-		void getAdjacentRoads(road_t main_road, road_t * adjacent_roads); //devuelve en adjacent_roads las 4(o 3, o 2, siendo algunas {0,0,0}) calles adyacentes a road
-		void getNodeAdjacentRoads(settlement_t settlement, road_t * adjacent_roads); //devuelve en adjacent_roads las 3 o 2 calles adyacentes a settlement
-		void getRoadAdjacentNodes(road_t road, coord_t * adjacent_nodes); //devuelve en adjacent nodes los dos nodos entre los cuales se encuentra road
-		void getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes); //devuelve en adjacent_nodes los 3 o 2 nodos adyacentes a settlement
 		unsigned int longestRecursive(road_t road, vector <road_t> &previous_roads, unsigned int length = 0); //recursiva para chequear longest road
 		bool inPreviousRoads(road_t road, vector <road_t> &previous_roads);	//devuelve true is road esta en previous_road
 
 		unsigned int turnCounter;
+
+		Graphics * graphics;
+		Input * input;
+
+		Network * network;
 		
 		Player * player;
-		Player * oponent;
+		Player * opponent;
 		Board * board;
 		stack <DevelopmentCard> development_cards;
 };

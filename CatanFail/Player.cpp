@@ -1,10 +1,8 @@
 #include "Player.h"
 
 Player::
-Player(string name)
+Player()
 {
-	setName(name);
-
 	//setteo las resource cards = 0
 	my_r_cards.brick = 0;
 	my_r_cards.grain = 0;
@@ -34,6 +32,12 @@ string Player::
 getName(void)
 {
 	return this->name;
+}
+
+void Player::
+setBoard(Board * board_)
+{
+	this->board = board_;
 }
 
 unsigned int Player::
@@ -102,9 +106,8 @@ getCitiesBuilt(void)
 	return this->cities_built.size();
 }
 
-
 bool Player::
-getDevelopmentCard(DevelopmentCards d_card)
+useDevelopmentCard(DevelopmentCards d_card)
 {
 	bool successfully_used = false;
 
@@ -114,20 +117,25 @@ getDevelopmentCard(DevelopmentCards d_card)
 		{
 			my_d_cards.erase(my_d_cards.begin() + i);	//la "uso"
 			successfully_used = true;
+			break;
 		}
 	}
 	return successfully_used;
 }
 
-	
-
-/*
 unsigned int Player::
-getResourceCard(ResourceCards r_card)
+getResourceCards()
 {
-
+	unsigned int total = 0;
+	
+	total += my_r_cards.brick;
+	total += my_r_cards.grain;
+	total += my_r_cards.lumber;
+	total += my_r_cards.ore;
+	total += my_r_cards.wool;
+	
+	return total;
 }
-*/
 
 unsigned int Player::
 getDiceNumber(void)
@@ -240,6 +248,7 @@ buildSettlement(char x, char y, char z)
 			{
 				total_settlements -= 1;	//saco de los asentamientos restantes
 				settlements_built.push_back(settlement);	//agrego a los que tengo construidos
+				victory_points++;
 				settlement_is_built = true;
 			}
 		}
@@ -259,6 +268,7 @@ buildSettlement(char x, char y, char z)
 					my_r_cards.wool -= 1;
 					total_settlements -= 1;	//setteo los asentamientos contruidos y los restantes
 					settlements_built.push_back(settlement);
+					victory_points++;
 					settlement_is_built = true;
 				}
 			}
@@ -279,14 +289,16 @@ buildCity(char x, char y, char z)
 		my_r_cards.grain -= 2;
 		for (int i = 0; i < settlements_built.size(); i++)
 		{
-			if (settlements_built[i].x == settlement.x && settlements_built[i].y == settlement.y && settlements_built[i].z == settlement.z)
+			if (settlements_built[i] == settlement)
 			{
 				settlements_built.erase(settlements_built.begin()+i); //quito el asentamiento construido
 				total_settlements += 1; //recupero ese asentamiento
 				total_cities -= 1;	//saco de las ciudades restantes
 				city_t city = settlement;
 				cities_built.push_back(city); //agrego la cuidad construida
+				victory_points++;
 				city_is_built = true;
+				break;
 			}
 		}	
 		
@@ -294,7 +306,6 @@ buildCity(char x, char y, char z)
 
 	return city_is_built;
 }
-
 
 bool Player::
 domesticTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted)
@@ -358,6 +369,37 @@ domesticTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted)
 	return trade_succesfully;
 }
 
+void Player::
+checkHexBuilding(char hex)
+{
+	TerrainHexes * hex_ = (TerrainHexes *)board->getPiece(hex);
+	checkHexBuilding(*hex_);
+}
+void Player::
+checkHexBuilding(TerrainHexes &hex)
+{
+	//me fijo en los settlements
+	for (int i = 0; i < settlements_built.size(); i++)
+	{
+		if ((settlements_built[i].x == hex.getPositionInMap()) ||
+			(settlements_built[i].y == hex.getPositionInMap()) ||
+			(settlements_built[i].z == hex.getPositionInMap()))
+		{
+			grabResourceCard(hex.getResource(), SETTLEMENT);
+		}
+	}
+	//me fijo en las cities
+	for (int i = 0; i < cities_built.size(); i++)
+	{
+		if ((cities_built[i].x == hex.getPositionInMap()) ||
+			(cities_built[i].y == hex.getPositionInMap()) ||
+			(cities_built[i].z == hex.getPositionInMap()))
+		{
+			grabResourceCard(hex.getResource(), CITY);
+		}
+	}
+}
+
 bool Player::
 askForTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted)
 {
@@ -369,7 +411,6 @@ askForTrade(vector<char> r_cards_offered, vector<char> r_cards_wanted)
 	}
 	return trade_accepted;
 }
-
 
 bool Player::
 maritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade)
@@ -615,7 +656,7 @@ bankTrade(Resources my_r_card, Resources the_r_card_wanted)
 }
 
 bool Player::
-BuyDevelopmentCard(DevelopmentCard my_new_card)	
+BuyDevelopmentCard()	
 {
 	bool new_development_card = false;
 
@@ -625,12 +666,16 @@ BuyDevelopmentCard(DevelopmentCard my_new_card)
 		my_r_cards.wool -= 1;
 		my_r_cards.grain -= 1;
 
-		my_d_cards.push_back(my_new_card);	//la agrego a mis cartas de desarrollo 
-
 		new_development_card = true;
 	}
 
 	return new_development_card;
+}
+
+void Player::
+addDevelopmentCard(DevelopmentCard new_card)
+{
+	my_d_cards.push_back(new_card);
 }
 
 void Player::
@@ -647,13 +692,49 @@ bool Player::
 gameWon(void)
 {
 	bool am_i_the_winner = false;
-	 
+	//falta tener en cuenta si se activaron las development cards
 	if (getVictoryPoints() >= 8)	//si tengo 8 o mas puntos, gané
 	{
 		am_i_the_winner = true;	
 	}
 
 	return am_i_the_winner;
+}
+
+void Player::
+grabResourceCard(Resources resource, PieceType piece)
+{
+	int take = 1; //cuantas cartas agarrar (asumo que es settlement)
+	if (piece == CITY)//si es city, hago que agarre una mas
+	{
+		take++;
+	}
+
+	switch (resource)
+	{
+		case LUMBER:
+		{
+			my_r_cards.lumber += take;
+		}break;
+		case ORE:
+		{
+			my_r_cards.ore += take;
+		}break;
+		case WOOL:
+		{
+			my_r_cards.wool += take;
+		}break;
+		case BRICK:
+		{
+			my_r_cards.brick += take;
+		}break;
+		case GRAIN:
+		{
+			my_r_cards.grain += take;
+		}break;
+		default: /*ERROR*/ break;
+	}
+
 }
 
 Player::

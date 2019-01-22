@@ -12,6 +12,12 @@
 
 using namespace std;
 
+typedef coord_t settlement_t;
+
+typedef coord_t city_t;
+
+typedef coord_t road_t;
+
 class Board
 {
 	public:
@@ -28,15 +34,21 @@ class Board
 		SeaFrameTiles * searchSeaPiece(char info);
 		bool inEdges(coord_t coord); //devuelve true si la coordenada introducida esta en Edges
 		bool inNodes(coord_t coord); //devuelve true si la coordenada introducida esta en Vertices
+		
+		void getAdjacentRoads(road_t main_road, road_t * adjacent_roads); //devuelve en adjacent_roads las 4(o 3, o 2, siendo algunas {0,0,0}) calles adyacentes a road
+		void getNodeAdjacentRoads(settlement_t settlement, road_t * adjacent_roads); //devuelve en adjacent_roads las 3 o 2 calles adyacentes a settlement
+		void getRoadAdjacentNodes(road_t road, coord_t * adjacent_nodes); //devuelve en adjacent nodes los dos nodos entre los cuales se encuentra road
+		void getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes); //devuelve en adjacent_nodes los 3 o 2 nodos adyacentes a settlement
+
+		
 		~Board();
 
-
-	//no estan en private porque game necesita tener acceso a ellos
+		//game las necesita
 		TerrainHexes* all_the_hexes;	//puntero al arreglo de hexagonos
 		SeaFrameTiles* all_the_sea_frames;	//puntero al arreglo de piezas de mar
+		
 	private:
-		// cartas de desarrollo
-		//cartas de recurso ¡son ilimitadas!
+
 		const vector <coord_t> Edges = {
 				{'0','A','5'}, {'0','A','B'}, {'0','B','A'}, {'0','B','C'}, {'0','C'}, {'1','C','0'},
 									{'5','A'},{'A','B'},{'B','C'},{'1','C','G'},

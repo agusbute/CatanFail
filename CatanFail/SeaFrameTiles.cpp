@@ -5,7 +5,6 @@
 SeaFrameTiles ::
 SeaFrameTiles(char position_in_map) : BoardComponent(position_in_map)
 {
-	//no se como poner los puertosssssssssss
 };
 
 bool SeaFrameTiles::		//asigna los puertos respectivos
@@ -17,35 +16,74 @@ setPorts(char ports)		//devuelve true si no hubo errores
 	{
 		case 'N': case 'n':
 		{
-			myPorts.port1 = ports::ANY;
+			myPorts.port1.port = ports::ANY;
+			myPorts.port1.node1 = { this->getPositionInMap(), 
+									min(this->getAdjacentPiece(LOWER_LEFT), this->getAdjacentPiece(BOTTOM)), 
+									max(this->getAdjacentPiece(LOWER_LEFT), this->getAdjacentPiece(BOTTOM)) };
+			myPorts.port1.node2 = { this->getPositionInMap(), this->getAdjacentPiece(BOTTOM), 0 };
 		} break;
 		
 		case 'T': case 't':
 		{
-			myPorts.port1 = ports::ANY;
-			myPorts.port2 = ports::GRAIN;
+			myPorts.port1.port = ports::ANY;
+			myPorts.port1.node1 = { min(this->getPositionInMap(), this->getAdjacentPiece(PREV)),
+									max(this->getPositionInMap(), this->getAdjacentPiece(PREV)),
+									this->getAdjacentPiece(LOWER_LEFT) };
+			myPorts.port1.node2 = { this->getPositionInMap(), this->getAdjacentPiece(LOWER_LEFT) };
+			
+			myPorts.port2.port = ports::GRAIN;
+			myPorts.port2.node1 = { this->getPositionInMap(), this->getAdjacentPiece(BOTTOM) };
+			myPorts.port2.node2 = { this->getPositionInMap(), 
+									min(this->getAdjacentPiece(BOTTOM), this->getAdjacentPiece(LOWER_RIGHT)), 
+									max(this->getAdjacentPiece(BOTTOM), this->getAdjacentPiece(LOWER_RIGHT)) };
 		} break;
 
 		case 'O': case 'o':
 		{
-			myPorts.port1 = ports::ANY;
-			myPorts.port2 = ports::WOOL;
+			myPorts.port1.port = ports::ANY;
+			myPorts.port1.node1 = { min(this->getPositionInMap(), this->getAdjacentPiece(PREV)),
+									max(this->getPositionInMap(), this->getAdjacentPiece(PREV)),
+									this->getAdjacentPiece(LOWER_LEFT) };
+			myPorts.port1.node2 = { this->getPositionInMap(), this->getAdjacentPiece(LOWER_LEFT) };
+			
+			myPorts.port2.port = ports::WOOL;
+			myPorts.port2.node1 = { this->getPositionInMap(), this->getAdjacentPiece(BOTTOM) };
+			myPorts.port2.node2 = { this->getPositionInMap(),
+									min(this->getAdjacentPiece(BOTTOM), this->getAdjacentPiece(LOWER_RIGHT)),
+									max(this->getAdjacentPiece(BOTTOM), this->getAdjacentPiece(LOWER_RIGHT)) };
 		} break;
 			
 		case 'L': case 'l':
 		{
-			myPorts.port1 = ports::ANY;
-			myPorts.port2 = ports::BRICK;
+			myPorts.port1.port = ports::ANY;
+			myPorts.port1.node1 = { min(this->getPositionInMap(), this->getAdjacentPiece(PREV)),
+									max(this->getPositionInMap(), this->getAdjacentPiece(PREV)),
+									this->getAdjacentPiece(LOWER_LEFT) };
+			myPorts.port1.node2 = { this->getPositionInMap(), this->getAdjacentPiece(LOWER_LEFT) };
+			
+			myPorts.port2.port = ports::BRICK;
+			myPorts.port2.node1 = { this->getPositionInMap(), this->getAdjacentPiece(BOTTOM) };
+			myPorts.port2.node2 = { this->getPositionInMap(),
+									min(this->getAdjacentPiece(BOTTOM), this->getAdjacentPiece(LOWER_RIGHT)),
+									max(this->getAdjacentPiece(BOTTOM), this->getAdjacentPiece(LOWER_RIGHT)) };
 		} break;
 		
 		case 'P': case 'p':
 		{
-			myPorts.port1 = ports::ORE;
+			myPorts.port1.port = ports::ORE;
+			myPorts.port1.node1 = { this->getPositionInMap(),
+						min(this->getAdjacentPiece(LOWER_LEFT), this->getAdjacentPiece(BOTTOM)),
+						max(this->getAdjacentPiece(LOWER_LEFT), this->getAdjacentPiece(BOTTOM)) };
+			myPorts.port1.node2 = { this->getPositionInMap(), this->getAdjacentPiece(BOTTOM), 0 };
 		} break;
 		
 		case 'M': case 'm':
 		{
-			myPorts.port1 = ports::LUMBER;
+			myPorts.port1.port = ports::LUMBER;
+			myPorts.port1.node1 = { this->getPositionInMap(),
+						min(this->getAdjacentPiece(LOWER_LEFT), this->getAdjacentPiece(BOTTOM)),
+						max(this->getAdjacentPiece(LOWER_LEFT), this->getAdjacentPiece(BOTTOM)) };
+			myPorts.port1.node2 = { this->getPositionInMap(), this->getAdjacentPiece(BOTTOM), 0 };
 		} break;
 
 		default: ret = false; break;  //se introdujo un caracter incorrecto
