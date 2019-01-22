@@ -7,18 +7,26 @@ TerrainHexes(char position_in_map, Resources resource, int token) : BoardCompone
 {
 	this->resource = resource;
 	this->token = token;
+	if (resource != DESERT)
+	{
+		this->robber_here = false;
+	}
+	else
+	{
+		this->robber_here = true;
+	}
 }
 
 void TerrainHexes::
 setRobber(bool value)
 {
-	this->robber = value;
+	this->robber_here = value;
 }
 
 bool TerrainHexes::
 hasRobber()
 {
-	return this->robber;
+	return this->robber_here;
 }
 
 void TerrainHexes::
@@ -37,6 +45,14 @@ void TerrainHexes::
 setResource(Resources my_resource)
 {
 	this->resource = my_resource;
+	if (resource != DESERT)
+	{
+		this->robber_here = false;
+	}
+	else
+	{
+		this->robber_here = true;
+	}
 }
 
 Resources TerrainHexes::

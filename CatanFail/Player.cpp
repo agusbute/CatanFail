@@ -174,12 +174,15 @@ bool Player::
 searchRoad(char x, char y, char z)
 {
 	bool ret = false;
-	for (int i = 0; i < roads_built.size(); i++)
+	if (x != 0 && y != 0)
 	{
-		if (roads_built[i].x == x && roads_built[i].y == y && roads_built[i].z == z)
+		for (int i = 0; i < roads_built.size(); i++)
 		{
-			ret = true;
-			break;
+			if (roads_built[i].x == x && roads_built[i].y == y && roads_built[i].z == z)
+			{
+				ret = true;
+				break;
+			}
 		}
 	}
 	return ret;
@@ -194,22 +197,25 @@ bool Player::
 searchBuilding(coord_t coords)
 {
 	bool ret = false;
-	for (int i = 0; i < settlements_built.size(); i++)	//me fijo si las coords estan en settlements(es decir que se construyo un settlement ahi)
+	if (coords.x != 0 && coords.y != 0 && coords.z != 0)
 	{
-		if (settlements_built[i] == coords)
+		for (int i = 0; i < settlements_built.size(); i++)	//me fijo si las coords estan en settlements(es decir que se construyo un settlement ahi)
 		{
-			ret = true;
-			break;
-		}
-	}
-	if (!ret)		//si no hay settlement ahi, ret va a seguir siendo false, entonces me fijo los cities
-	{
-		for (int i = 0; i < cities_built.size(); i++)
-		{
-			if (cities_built[i] == coords)
+			if (settlements_built[i] == coords)
 			{
 				ret = true;
 				break;
+			}
+		}
+		if (!ret)		//si no hay settlement ahi, ret va a seguir siendo false, entonces me fijo los cities
+		{
+			for (int i = 0; i < cities_built.size(); i++)
+			{
+				if (cities_built[i] == coords)
+				{
+					ret = true;
+					break;
+				}
 			}
 		}
 	}
@@ -278,7 +284,7 @@ buildCity(char x, char y, char z)
 				settlements_built.erase(settlements_built.begin()+i); //quito el asentamiento construido
 				total_settlements += 1; //recupero ese asentamiento
 				total_cities -= 1;	//saco de las ciudades restantes
-				city_t city = /*settlement;*/{ x, y, z };
+				city_t city = settlement;
 				cities_built.push_back(city); //agrego la cuidad construida
 				city_is_built = true;
 			}

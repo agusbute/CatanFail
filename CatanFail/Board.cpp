@@ -32,7 +32,7 @@ initToStartGame()
 			randvalue = rand() % TERRAIN_HEXES;		//un valor aleatorio
 			if (resources[randvalue] != 0)
 			{
-				if (all_the_hexes[i].getToken() == 7)	//si tiene toke 7, es el desierto
+				if (all_the_hexes[i].getToken() == 7)	//si tiene token 7, es el desierto
 				{
 					randvalue = 18;
 				}
@@ -60,6 +60,36 @@ initToStartGame()
 		types[randvalue] = 0;
 	}
 
+}
+
+void Board::
+searchResource(char dice_number, char * hex)
+{
+	//hay maximo dos hexagonos con el mismo token
+	//para empezar, los pongo en null
+	hex[0] = NULL;
+	hex[1] = NULL;
+
+	int i;
+	for (i = 0; i < TERRAIN_HEXES; i++)
+	{
+		if (all_the_hexes[i].getToken() == dice_number)
+		{
+			hex[0] = all_the_hexes[i].getPositionInMap();
+			break;
+		}
+	}
+	for (int j = i; i < TERRAIN_HEXES; j++)
+	{
+		if (all_the_hexes[j].getPositionInMap() != hex[0])
+		{
+			if (all_the_hexes[j].getToken() == dice_number)
+			{
+				hex[1] = all_the_hexes[j].getPositionInMap();
+				break;
+			}
+		}
+	}
 }
 
 void Board ::

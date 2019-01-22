@@ -61,39 +61,42 @@ bool Game::
 checkSettlement(settlement_t settlement)
 {
 	bool ret = false;
-	//si el contrincante o el jugador ya construyeron ahi, no se puede hacer nada, devuelve false
-	if (!(oponent->searchBuilding(settlement)) && !(player->searchBuilding(settlement))) 
+	if (board->inNodes(settlement)) //si se introdujo un nodo que no existe, devuelve false
 	{
-		//busco nodos adyacentes
-		coord_t adjacent_nodes[3];
-		getAdjacentNodes(settlement, adjacent_nodes);
-		
-		//si el contrincante o el jugador ya construyeron en los adyacentes, no se puede hacer nada, devuelve false
-		if (!(oponent->searchBuilding(adjacent_nodes[0])) && !(player->searchBuilding(adjacent_nodes[0])) &&
-			!(oponent->searchBuilding(adjacent_nodes[1])) && !(player->searchBuilding(adjacent_nodes[1])) &&
-			!(oponent->searchBuilding(adjacent_nodes[2])) && !(player->searchBuilding(adjacent_nodes[2])))
+		//si el contrincante o el jugador ya construyeron ahi, no se puede hacer nada, devuelve false
+		if (!(oponent->searchBuilding(settlement)) && !(player->searchBuilding(settlement)))
 		{
-			//busco calles adyacentes --- EN EL PRIMER TURNO ESTO NO SE TIENE QUE TENER EN CUENTA
-			if (!(turnCounter < 3))
+			//busco nodos adyacentes
+			coord_t adjacent_nodes[3];
+			getAdjacentNodes(settlement, adjacent_nodes);
+
+			//si el contrincante o el jugador ya construyeron en los adyacentes, no se puede hacer nada, devuelve false
+			if (!(oponent->searchBuilding(adjacent_nodes[0])) && !(player->searchBuilding(adjacent_nodes[0])) &&
+				!(oponent->searchBuilding(adjacent_nodes[1])) && !(player->searchBuilding(adjacent_nodes[1])) &&
+				!(oponent->searchBuilding(adjacent_nodes[2])) && !(player->searchBuilding(adjacent_nodes[2])))
 			{
-				road_t adjacent_roads[3];
-				getNodeAdjacentRoads(settlement, adjacent_roads);
-				
-				//si hay una calle del jugador en las aristas adyacentes(lo que teniendo en cuenta
-				//que no puede haber un settlement en los nodos adyacentes significa que hay al menos dos caminos)
-				//entonces se puede construir
-				if (player->searchRoad(adjacent_roads[0]) || 
-					player->searchRoad(adjacent_roads[1]) || 
-					player->searchRoad(adjacent_roads[2]))
+				//busco calles adyacentes --- EN EL PRIMER TURNO ESTO NO SE TIENE QUE TENER EN CUENTA
+				if (!(turnCounter < 3))
+				{
+					road_t adjacent_roads[3];
+					getNodeAdjacentRoads(settlement, adjacent_roads);
+
+					//si hay una calle del jugador en las aristas adyacentes(lo que teniendo en cuenta
+					//que no puede haber un settlement en los nodos adyacentes significa que hay al menos dos caminos)
+					//entonces se puede construir
+					if (player->searchRoad(adjacent_roads[0]) ||
+						player->searchRoad(adjacent_roads[1]) ||
+						player->searchRoad(adjacent_roads[2]))
+					{
+						ret = true;
+					}
+				}
+				else
 				{
 					ret = true;
 				}
+
 			}
-			else
-			{
-				ret = true;
-			}
-			
 		}
 	}
 	return ret;
@@ -115,26 +118,33 @@ bool Game::
 checkRoad(char x, char y, char z)
 {
 	bool ret = false;
-	if (!(oponent->searchRoad(x, y, z)) && !(player->searchRoad(x,y,z))) //si el contrincante o el jugador ya construyeron ahi, no se puede hacer nada, devuelve false
+	if (board->inEdges({ x, y, z })) //si se introdujo una calle que no existe, chau, false
 	{
-		//primer turno
-		if (turnCounter < 3)
+		if (!(oponent->searchRoad(x, y, z)) && !(player->searchRoad(x, y, z))) //si el contrincante o el jugador ya construyeron ahi, no se puede hacer nada, devuelve false
 		{
-			//FALTA PARA EL PRIMER TURNO! (es decir, que solo necesite un settlement en uno de los dos nodos adyacentes a esa calle)
-		}
-		//resto
-		else
-		{
-			//buscar calles adyacentes
-			road_t adjacent_roads[] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-			getAdjacentRoads({ x, y, z }, adjacent_roads);
-			for (int i = 0; i < 4; i++)
+			//primer turno
+			if (turnCounter < 3)
 			{
-				ret = (ret || player->searchRoad(adjacent_roads[i]));
+				coord_t adjacent_nodes[2];
+				getRoadAdjacentNodes({ x, y, z }, adjacent_nodes);
+				if (player->searchBuilding(adjacent_nodes[0]) || player->searchBuilding(adjacent_nodes[1]))
+				{
+					ret = true;
+				}
+			}
+			//resto(a partir de los primeros turnos, todos los settlements tienen calles saliendo de ellos, asi que con fijarse las calles adyacentes es suficiente)
+			else
+			{
+				//buscar calles adyacentes
+				road_t adjacent_roads[] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+				getAdjacentRoads({ x, y, z }, adjacent_roads);
+				for (int i = 0; i < 4; i++)
+				{
+					ret = (ret || player->searchRoad(adjacent_roads[i]));
+				}
 			}
 		}
 	}
-
 	return ret;
 }
 
@@ -908,6 +918,143 @@ getAdjacentNodes(settlement_t settlement, coord_t * adjacent_nodes)
 void Game::
 getRoadAdjacentNodes(road_t road, coord_t * adjacent_nodes)
 {
+	BoardComponent *X, *Y, *Z;		//punteros a las piezas del tablero
+	X = board->getPiece(road.x);
+	Y = board->getPiece(road.y);
+	Z = board->getPiece(road.z);
+
+	coord_t node1, node2;		//nodos a guardar
+
+	//primero pongo todos los elementos de adjacent_nodes en {0,0,0}
+	for (int i = 0; i < 2; i++)
+	{
+		*(adjacent_nodes + i) = { 0, 0, 0 };
+	}
+
+	//si la calles esta solo entre dos hexagonos es mas simple
+	if ((road.x >= 'A' && road.x <= 'S') &&
+		(road.y >= 'A' && road.y <= 'S') &&
+		(road.z == 0))
+	{
+		//me fijo las coincidencias entre x e y
+		char c1, c2;
+
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		{
+			c1 = X->getAdjacentPiece(i);
+			for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+			{
+				if (c1 == Y->getAdjacentPiece(j))
+				{
+					break;		//una vez que encontre un par, salgo
+				}
+			}
+		}
+		for (char i = TOP_LEFT; i < ADJACENT_HEX; i++)
+		{
+			c2 = X->getAdjacentPiece(i);
+			if (c2 != c1)			//ya se que una coincidencia va a ser c1
+			{
+				for (int j = TOP_LEFT; j < ADJACENT_HEX; j++)
+				{
+					if (c1 == Y->getAdjacentPiece(j))
+					{
+						break;		//una vez que encontre un par, salgo
+					}
+				}
+			}
+		}
+		
+		//por comodidad, hago que c1 sea la coincidencia menor
+		if (c1 > c2)
+		{
+			swap(c1, c2);
+		}
+
+		//los nodos entonces son los siguientes
+		node1 = { min(c1, road.x), min(max(c1, road.x), road.y), max(max(c1, road.x), road.y) };
+		node2 = { min(c2, road.x), min(max(c2, road.x), road.y), max(max(c2, road.x), road.y) };
+		if (board->inNodes(node1))
+		{
+			adjacent_nodes[0] = node1;
+		}
+		//else ERROR
+		if (board->inNodes(node2))
+		{
+			adjacent_nodes[1] = node2;
+		}
+		//else ERROR		
+	}
+	//si esta entre mar y hexagono y z no es 0, tambien siguien una regla bastanate facil
+	else if ((road.x >= '0' && road.x <= '5') &&
+			 (road.y >= 'A' && road.y <= 'S') && 
+			 (road.z != 0))
+	{
+		//uno de los nodos va a ser solo (x,y)
+		node1 = { road.x, road.y, 0 };
+
+		//el otro va a ser {x, y, z} ordenados de menor a mayor
+		node2 = { min(min(road.x, road.y), road.z), min(max(road.x, road.y), road.z), max(max(road.x, road.y), road.z) };
+
+		if (board->inNodes(node1))
+		{
+			adjacent_nodes[0] = node1;
+		}
+		//else ERROR
+		if (board->inNodes(node2))
+		{
+			adjacent_nodes[1] = node2;
+		}
+		//else ERROR
+	}
+	//solo quedan 6 calles que son entre mar y hexagono con dos coordenadas (ya lo saben, sale switch case)
+	else
+	{
+		switch (road.x)
+		{
+			case '0':
+			{
+				node1 = { '0', 'B', 'C' };
+				node2 = { '0', '1', 'C' };
+			}break;
+			case '1':
+			{
+				node1 = { '1', 'G', 'L' };
+				node2 = { '1', '2', 'L' };
+			}break;
+			case '2':
+			{
+				node1 = { '2', 'P', 'S' };
+				node2 = { '2', '3', 'S' };
+			}break;
+			case '3':
+			{
+				node1 = { '3', 'Q', 'R' };
+				node2 = { '3', '4', 'Q' };
+			}break;
+			case '4':
+			{
+				node1 = { '4', '5', 'H' };
+				node2 = { '4', 'H', 'M' };
+			}break;
+			case '5':
+			{
+				node1 = { '5', 'A', 'D' };
+				node2 = { '0', '5', 'A' };
+			}break;
+		}
+		
+		if (board->inNodes(node1))
+		{
+			adjacent_nodes[0] = node1;
+		}
+		//else ERROR
+		if (board->inNodes(node2))
+		{
+			adjacent_nodes[1] = node2;
+		}
+		//else ERROR
+	}
 
 }
 
@@ -937,5 +1084,5 @@ moveRobber(char move_robber_here)
 {
 	TerrainHexes * hex = (TerrainHexes *)board->getPiece(move_robber_here); //ya se que va a ser un hexagono(el robber no puede ir en pieza de mar
 
-	moveRobber(*hex);
+	return moveRobber(*hex);
 }

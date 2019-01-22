@@ -18,7 +18,7 @@ class Board
 		Board();	//new con los hexagonos y las piezas de mar, todo en 0
 		void initToStartGame();	//inicializa cada componente del tablero
 		
-		void searchResource(int dice_number);
+		void searchResource(char dice_number, char * hex); //devuelve en hex que hexagonos tienen el token correspondiente a dice_number
 		
 		/************* FALTA UNO COMO EL DE ABAJO PARA LOS RECURSOS Y LOS PUERTOS (?) ***************/	//lo uso en el init
 		void createRandomTokens(char* random_tokens);	//crea una lista con los tokens al azahar 
