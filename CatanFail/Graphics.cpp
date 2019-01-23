@@ -3,7 +3,7 @@
 Graphics::
 Graphics()
 {
-	al_init_primitives_addon();
+	//al_init_primitives_addon();
 }
 
 Graphics::
