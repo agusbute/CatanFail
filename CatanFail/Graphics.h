@@ -31,5 +31,4 @@ class Graphics
 		Player * opponent;
 		Board * board;
 		Input * input;
-
 };
