@@ -419,7 +419,7 @@ maritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeTyp
 
 	if (trade == THREE_X_ONE)	//me fijo que tipo de intercambio marítimo es ((((( se supone que llamo a este método si desde el tablero pued hacerlo )))))
 	{
-		//checkTrade()
+
 		switch (my_r_card)	//y a partir de eso veo si tengo la cantidad de cartas necesarias para intercambiar
 		{
 			case LUMBER:

@@ -41,7 +41,7 @@ class Game
 		bool checkSettlement(settlement_t settlement);	//justo antes de player->buildSettlement(x,y,z);
 		bool checkSettlement(char x, char y, char z = 0);
 
-		bool checkMaritmeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade);	//se fija si se puede hacer un intercambio maritimo
+		bool checkMaritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade);	//se fija si se puede hacer un intercambio maritimo
 
 		bool moveRobber(TerrainHexes &place_robber_here);
 		bool moveRobber(char place_robber_here);

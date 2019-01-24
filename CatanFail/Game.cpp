@@ -177,6 +177,101 @@ checkRoad(char x, char y, char z)
 }
 
 bool Game::
+checkMaritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade)
+{
+	coord_t node;
+	switch (trade)
+	{
+		case THREE_X_ONE:
+		{
+			for (int i = 0; i < SEA_FRAME_TILES; i++)
+			{
+				if (board->all_the_sea_frames[i].getPorts().port1.port == ports::ANY)
+				{
+					node = board->all_the_sea_frames[i].getPorts().port1.node1;
+					if (player->searchBuilding(node))
+					{
+						player->maritimeTrade(my_r_card, the_r_card_i_want, trade);
+						break;
+					}
+					else
+					{
+						node = board->all_the_sea_frames[i].getPorts().port1.node2;
+						if (player->searchBuilding(node))
+						{
+							player->maritimeTrade(my_r_card, the_r_card_i_want, trade);
+							break;
+						}
+					}
+				}
+				else if (board->all_the_sea_frames[i].getPorts().port2.port == ports::ANY)
+				{
+					node = board->all_the_sea_frames[i].getPorts().port2.node1;
+					if (player->searchBuilding(node))
+					{
+						player->maritimeTrade(my_r_card, the_r_card_i_want, trade);
+						break;
+					}
+					else
+					{
+						node = board->all_the_sea_frames[i].getPorts().port2.node2;
+						if (player->searchBuilding(node))
+						{
+							player->maritimeTrade(my_r_card, the_r_card_i_want, trade);
+							break;
+						}
+					}
+				}
+			}
+		} break;
+	
+		case TWO_X_ONE:
+		{
+			for (int i = 0; i < SEA_FRAME_TILES; i++)
+			{
+				if (board->all_the_sea_frames[i].getPorts().port1.port == my_r_card)
+				{
+					node = board->all_the_sea_frames[i].getPorts().port1.node1;
+					if (player->searchBuilding(node))
+					{
+						player->maritimeTrade(my_r_card, the_r_card_i_want, trade);
+						break;
+					}
+					else
+					{
+						node = board->all_the_sea_frames[i].getPorts().port1.node2;
+						if (player->searchBuilding(node))
+						{
+							player->maritimeTrade(my_r_card, the_r_card_i_want, trade);
+							break;
+						}
+					}
+				}
+				else if (board->all_the_sea_frames[i].getPorts().port2.port == my_r_card)
+				{
+					node = board->all_the_sea_frames[i].getPorts().port2.node1;
+					if (player->searchBuilding(node))
+					{
+						player->maritimeTrade(my_r_card, the_r_card_i_want, trade);
+						break;
+					}
+					else
+					{
+						node = board->all_the_sea_frames[i].getPorts().port2.node2;
+						if (player->searchBuilding(node))
+						{
+							player->maritimeTrade(my_r_card, the_r_card_i_want, trade);
+							break;
+						}
+					}
+				}
+			}
+		}
+	
+	}
+}
+
+bool Game::
 checkLongestRoad(char x, char y, char z) //chequear si la calle es mas larga
 {
 	vector <road_t> roads;

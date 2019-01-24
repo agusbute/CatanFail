@@ -18,7 +18,7 @@
 #define BOTTOM_LEFT 4
 #define LEFT 5
 
-enum Resources {LUMBER, BRICK, ORE, GRAIN, WOOL, DESERT, NOTHING }; //Resource Cards: Lumber, Brick, Ore, Grain, Wool; Desert and Nothing se usan para los hexágonos
+
 enum PieceType {ROAD, SETTLEMENT, CITY};	//tipos de piezas para construir
 
 using namespace std;

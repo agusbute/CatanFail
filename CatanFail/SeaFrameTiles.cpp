@@ -91,6 +91,12 @@ setPorts(char ports)		//devuelve true si no hubo errores
 	return ret;
 }
 
+ports_t SeaFrameTiles::
+getPorts()
+{
+	return this->myPorts;
+}
+
 void SeaFrameTiles::
 defineAdjacentPieces(char left, char bottom_left, char bottom, char bottom_right, char right)
 {

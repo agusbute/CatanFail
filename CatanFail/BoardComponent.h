@@ -12,6 +12,8 @@
 
 using namespace std;
 
+enum Resources { LUMBER, BRICK, ORE, GRAIN, WOOL, DESERT, NOTHING }; //Resource Cards: Lumber, Brick, Ore, Grain, Wool; Desert and Nothing se usan para los hexágonos
+
 typedef struct coord_t
 {
 	char x;

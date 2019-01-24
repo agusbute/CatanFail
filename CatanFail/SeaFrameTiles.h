@@ -19,7 +19,15 @@
 using namespace std;
 
 namespace ports {
-	enum PORT { NONE, WOOL, LUMBER, ORE, BRICK, GRAIN, ANY };
+	typedef enum PORT { NONE, WOOL, LUMBER, ORE, BRICK, GRAIN, ANY };
+	bool operator== (PORT &port, Resources &resource)
+	{
+		return ((port == LUMBER && resource == LUMBER) || 
+				(port == WOOL && resource == WOOL) || 
+				(port == ORE && resource == ORE) || 
+				(port == BRICK && resource == BRICK) || 
+				(port == GRAIN && resource == GRAIN));
+	}
 }
 
 typedef struct {
@@ -31,7 +39,7 @@ typedef struct {
 
 typedef struct {
 	portData_t port1;
-	portData_t port2 = { { 0, 0, 0 }, ports::NONE };
+	portData_t port2 = { { 0, 0, 0 }, { 0, 0, 0 }, ports::NONE };
 }ports_t;
 
 class SeaFrameTiles : public BoardComponent
@@ -41,6 +49,7 @@ class SeaFrameTiles : public BoardComponent
 		SeaFrameTiles(char position_in_map = 0); 
 		bool setPorts(char ports); //char ports son que puertos tiene (identificado por 'N', 'T', 'O', 'L', 'P', 'M')
 		
+		ports_t getPorts(); //getter de los puertos
 		
 		virtual bool setAdjacentPieces();
 		virtual char getAdjacentPiece(char position);	//le mando la position con los defines y devuelve que pieza tiene al lado
