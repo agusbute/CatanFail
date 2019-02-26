@@ -16,9 +16,6 @@
     <Filter Include="Networking">
       <UniqueIdentifier>{0e901596-d2ab-4527-a8e0-777a229f99d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Networking\Server">
-      <UniqueIdentifier>{3681c910-2f71-4a40-8750-61d940861ea4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Networking\Client">
       <UniqueIdentifier>{fe8da5f9-1640-448c-b7ba-a20be1ceecec}</UniqueIdentifier>
     </Filter>
@@ -94,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="DevelopmentCard.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketControl.cpp">
+      <Filter>Networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
