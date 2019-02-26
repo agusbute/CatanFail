@@ -152,10 +152,11 @@
     <ClInclude Include="DevelopmentCard.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="SocketControl.h" />
+    <ClInclude Include="Packets.h" />
     <ClInclude Include="SeaFrameTiles.h" />
     <ClInclude Include="TerrainHexes.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="Network.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -169,7 +170,6 @@
     <ClCompile Include="SeaFrameTiles.cpp" />
     <ClCompile Include="TerrainHexes.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Network.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>

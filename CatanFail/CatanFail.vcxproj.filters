@@ -13,12 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Networking">
+      <UniqueIdentifier>{0e901596-d2ab-4527-a8e0-777a229f99d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Networking\Server">
+      <UniqueIdentifier>{3681c910-2f71-4a40-8750-61d940861ea4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Networking\Client">
+      <UniqueIdentifier>{fe8da5f9-1640-448c-b7ba-a20be1ceecec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Networking\Packets">
+      <UniqueIdentifier>{1bdb7879-ffa5-414e-9b69-b2a509bd54e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Network.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Board.h">
@@ -48,6 +57,12 @@
     <ClInclude Include="DevelopmentCard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Packets.h">
+      <Filter>Networking\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketControl.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CatanFail.cpp">
@@ -63,9 +78,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Network.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
