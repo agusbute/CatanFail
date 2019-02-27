@@ -60,6 +60,9 @@
     <ClInclude Include="SocketControl.h">
       <Filter>Networking</Filter>
     </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CatanFail.cpp">
@@ -93,6 +96,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SocketControl.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
   </ItemGroup>
