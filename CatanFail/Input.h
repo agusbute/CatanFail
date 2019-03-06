@@ -12,8 +12,9 @@
 #define WIDTH 640
 #define HEIGHT 480
 #define MOUSE_LEFT_BOTTON 1
+#define FPS 20
 
-enum AL_ERROR { INIT_ERROR, DIS_ERROR, NONE};
+enum AL_ERROR { INIT_ERROR, DIS_ERROR, TIMER_ERROR, EV_Q_ERROR, NONE };
 
 typedef struct
 {
@@ -23,19 +24,21 @@ typedef struct
 
 class Input
 {
-	public:
-		Input();
-		void evDispatcher(void);
-		bool exitGame(void);
-		~Input();
+public:
+	Input();
+	void evDispatcher(void);
+	bool exitGame(void);
+	~Input();
 
-	private:
-		ALLEGRO_EVENT_QUEUE * event_queue;
-		ALLEGRO_DISPLAY * display;
-		ALLEGRO_EVENT event;
-		
-		mouse_coords mouse_position;
-		
-		bool exit_game;
-		AL_ERROR error;
+private:
+	ALLEGRO_EVENT_QUEUE * event_queue;
+	ALLEGRO_DISPLAY * display;
+	ALLEGRO_EVENT event;
+	ALLEGRO_TIMER *timer;
+
+	mouse_coords mouse_position;
+
+	bool exit_game;
+	bool redraw;
+	AL_ERROR error;
 };
