@@ -63,6 +63,9 @@
     <ClInclude Include="Server.h">
       <Filter>Networking</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CatanFail.cpp">
@@ -100,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="Server.cpp">
       <Filter>Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

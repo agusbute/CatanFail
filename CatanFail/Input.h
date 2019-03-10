@@ -8,6 +8,8 @@
 #include <allegro5/bitmap.h>
 #include <iostream>
 
+using namespace std;
+
 // medidas del display
 #define WIDTH 640
 #define HEIGHT 480
