@@ -3,6 +3,7 @@
 #include "boost/asio.hpp"
 #include <string>
 #include <iostream>
+#include <chrono>
 
 using namespace std;
 
@@ -18,6 +19,7 @@ class NetworkSocket : server
 		bool Connect();
 		bool SendString(string Message);
 		bool RecieveNoots(string Message);
+		
 
 	protected:
 		Mode modo;

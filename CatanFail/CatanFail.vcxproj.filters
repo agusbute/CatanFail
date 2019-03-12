@@ -16,9 +16,6 @@
     <Filter Include="Networking">
       <UniqueIdentifier>{0e901596-d2ab-4527-a8e0-777a229f99d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Networking\Client">
-      <UniqueIdentifier>{fe8da5f9-1640-448c-b7ba-a20be1ceecec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Networking\Packets">
       <UniqueIdentifier>{1bdb7879-ffa5-414e-9b69-b2a509bd54e8}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,9 @@
     <ClInclude Include="Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CatanFail.cpp">
@@ -106,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

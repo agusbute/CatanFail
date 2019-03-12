@@ -1,10 +1,15 @@
 #pragma once
 #include "Server.h"
 #include "SocketControl.h"
+#include "Client.h"
+
+using namespace std;
 
 NetworkSocket :: NetworkSocket()
 {
 	this->modo = CLIENT;			//siempre se iniciara como client
+	server();
+	client();
 
 }
 
@@ -15,15 +20,24 @@ bool NetworkSocket :: Connect()
 		
 	if (modo == CLIENT)
 	{
-		//hacer cosas de cliente
+		
+		int n = rand() % 3000 + 2000;
+		chrono::steady_clock::time_point tend = std::chrono::steady_clock::now() + std::chrono::seconds(n);
+		while (chrono::steady_clock::now() < tend)
+		{
+
+			Connect();
+
+		}
+
 		//intentar conexao con el sv con la ip que nos dieron
-		bool ret = startConnection();
+		bool ret = 
 		if (ret)
 		{
 			this->NTurno = RECIEVING;	//poner que si hubo conex estoy en recibir info	
 			return ret;
 		}
-		std:cout << "error en la conexion " << std:endl;
+		cout << "error en la conexion " << endl;
 		return false;
 	}
 	else if (modo == SERVER)
@@ -47,7 +61,13 @@ bool NetworkSocket::SendString(string Message)
 												//la idea es que esto le mande mensaje al otro
 }
 
-bool Network :: RecieveNoots(string Message)
+bool NetworkSocket :: RecieveNoots(string Message)
 {
 												//esto recibe mensajes del que manda
+}
+
+bool NetworkSocket::tryConnection(string IP) 
+{
+
+
 }
