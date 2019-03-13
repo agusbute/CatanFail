@@ -1,6 +1,6 @@
 #include "Server.h"
 
-bool server::startConnection()
+bool server::startListening()
 {
 	bool ret = true;
 	server_acceptor->non_blocking(true);

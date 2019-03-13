@@ -13,7 +13,7 @@ class server
 {
 public:
 	server();
-	bool startConnection();		//devuelve true si se conecto
+	bool startListening();		//devuelve true si se conecto
 	void send_message(FILE*, char*);
 	void send_404();
 	char * recieve_message();

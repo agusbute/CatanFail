@@ -9,7 +9,7 @@ NetworkSocket :: NetworkSocket()
 {
 	this->modo = CLIENT;			//siempre se iniciara como client
 	server();
-	client();
+	connected = false;
 
 }
 
@@ -22,28 +22,33 @@ bool NetworkSocket :: Connect()
 	{
 		
 		int n = rand() % 3000 + 2000;
-		chrono::steady_clock::time_point tend = std::chrono::steady_clock::now() + std::chrono::seconds(n);
-		while (chrono::steady_clock::now() < tend)
+		bool ret;
+		chrono::steady_clock::time_point tend = std::chrono::steady_clock::now() + std::chrono::milliseconds(n);
+		while ((chrono::steady_clock::now() < tend) || ret != true )
 		{
-
-			Connect();
-
+			ret = startConnection(TargetIP.c_str());
 		}
 
-		//intentar conexao con el sv con la ip que nos dieron
-		bool ret = 
 		if (ret)
 		{
 			this->NTurno = RECIEVING;	//poner que si hubo conex estoy en recibir info	
 			return ret;
 		}
-		cout << "error en la conexion " << endl;
-		return false;
+		else
+		{
+			cout << "No se pudo conectar al server" << endl;
+			modo = SERVER;
+			return false;
+
+		}
 	}
 	else if (modo == SERVER)
 	{
-		//hacer cosas de server
-
+		
+		while (connected == false)
+		{
+			connected = startListening();
+		}
 		
 		this->NTurno = SENDING;	//si hay conex entonces mando info
 		return true;
@@ -58,16 +63,115 @@ bool NetworkSocket :: Connect()
 
 bool NetworkSocket::SendString(string Message)
 {
-												//la idea es que esto le mande mensaje al otro
+	if (modo == CLIENT)
+	{
+		char * buf = new char[Message.size() + 1];
+		strcpy(buf, Message.c_str());
+		bool ret = true;
+		size_t len = 0;
+		boost::system::error_code error;
+
+		do
+		{
+			len += socket_forClient->write_some(boost::asio::buffer(buf, strlen(buf)), error);
+		} while ((error.value() == WSAEWOULDBLOCK) && len < strlen(buf));				//lo mando y me fijo que sea todo entero
+		if (error)
+		{
+			std::cout << "Error while trying to connect to server " << error.message() << std::endl;
+			ret = false;
+		}
+		return ret;
+
+	}
+	else if (modo == SERVER)
+	{
+
+		char * buf = new char[Message.size() + 1];
+		strcpy(buf, Message.c_str());
+
+		size_t len = 0;
+		boost::system::error_code error;
+
+		do
+		{
+			len += socket_forServer->write_some(boost::asio::buffer(buf, strlen(buf)), error);
+		} while ((error.value() == WSAEWOULDBLOCK) && len < strlen(buf));
+		if (error)
+		{
+			std::cout << "Error while trying to connect to server " << error.message() << std::endl;
+		}
+	}
 }
 
-bool NetworkSocket :: RecieveNoots(string Message)
+
+char * NetworkSocket :: RecieveNoots(string Message)
 {
-												//esto recibe mensajes del que manda
+	if (modo == CLIENT)
+	{
+		boost::system::error_code error;
+		char buf[1024];
+		size_t len = 0;
+		do
+		{
+			len = socket_forClient->read_some(boost::asio::buffer(buf), error);
+			if (!error)
+			{
+				buf[len] = '\0';
+			}
+		} while (error.value() == WSAEWOULDBLOCK);
+		if (!error)
+		{
+			return &buf[0];
+		}
+		else
+		{
+			cout << "Error while trying to connect to server " << error.message() << std::endl;
+			return NULL;
+		}
+
+	}
+	else if (modo == SERVER)
+	{
+		boost::system::error_code error;
+		char buf[1024];
+		size_t len = 0;
+		do
+		{
+			len = socket_forServer->read_some(boost::asio::buffer(buf), error);
+			if (!error)
+			{
+				buf[len] = '\0';
+			}
+		} while (error.value() == WSAEWOULDBLOCK);
+		if (!error)
+		{
+			return &buf[0];
+		}
+		else
+		{
+			cout << "Error while trying to connect to client. " << error.message() << std::endl;
+			return NULL;
+		}
+	}
 }
 
-bool NetworkSocket::tryConnection(string IP) 
+bool NetworkSocket::startConnection(const char* host)
 {
+	bool ret = true;
+	endpoint = client_resolver->resolve(boost::asio::ip::tcp::resolver::query(host, PORT));
+	boost::system::error_code error;
+	boost::asio::connect(*socket_forClient, endpoint, error);
 
+	if (error)
+	{
+		cout << "Error connecting to: " << host << " Error Message: " << error.message() << endl;
+		if (error.value() == boost::asio::error::connection_refused)
+		{
+			cout << host << " is not listening." << endl;
+			ret = false;
+		}
 
+	}
+	socket_forClient->non_blocking(true);
+	return ret;
 }
