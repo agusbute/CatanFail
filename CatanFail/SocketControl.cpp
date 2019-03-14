@@ -50,6 +50,7 @@ bool NetworkSocket :: Connect()
 			connected = startListening();
 		}
 		
+		connected = true;
 		this->NTurno = SENDING;	//si hay conex entonces mando info
 		return true;
 	}
