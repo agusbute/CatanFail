@@ -176,7 +176,7 @@ checkRoad(char x, char y, char z)
 	return ret;
 }
 
-bool Game::
+void Game::
 checkMaritimeTrade(Resources my_r_card, Resources the_r_card_i_want, MaritimeTradeType trade)
 {
 	coord_t node;
