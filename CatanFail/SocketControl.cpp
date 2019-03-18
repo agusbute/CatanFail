@@ -158,8 +158,9 @@ char * NetworkSocket :: RecieveNoots(string Message)
 bool NetworkSocket::startConnection(const char* host)
 {
 	bool ret = true;
-	endpoint = client_resolver->resolve(boost::asio::ip::tcp::resolver::query(host, PORT));
-	boost::system::error_code error;
+	string hostip = host;
+	endpoint = client_resolver->resolve(boost::asio::ip::tcp::resolver::query(host,PORT));
+	boost::system::error_code error;	
 	boost::asio::connect(*socket_forClient, endpoint, error);
 
 	if (error)

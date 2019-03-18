@@ -1,6 +1,6 @@
 #pragma once
 #include "Client.h"
-
+/*
 
 client::client()
 {
@@ -62,3 +62,4 @@ char * client::receive_message()
 	}
 
 }
+*/

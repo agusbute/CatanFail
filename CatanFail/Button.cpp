@@ -16,9 +16,9 @@ Button(string type, float size_x, float size_y, float centre_pos_x, float centre
 	this->size_y = size_y;
 	this->centre_pos_x = centre_pos_x;
 	this->centre_pos_y = centre_pos_y;
-	this->main_image = main_image;
-	this->hover_image = hover_image;
-	this->click_image = click_image;
+	this->main_image = al_load_bitmap(main_image);
+	this->hover_image = al_load_bitmap(hover_image);
+	this->click_image = al_load_bitmap(click_image);
 	this->show_button = show_button;
 }
 

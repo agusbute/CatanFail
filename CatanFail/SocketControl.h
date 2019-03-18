@@ -31,7 +31,6 @@ class NetworkSocket : server
 		boost::asio::ip::tcp::socket* socket_forClient;
 		boost::asio::ip::tcp::resolver* client_resolver;
 		boost::asio::ip::tcp::resolver::iterator endpoint;
-		boost::asio::io_service*  IO_handler;
 		boost::asio::ip::tcp::socket* socket_forServer;
 		boost::asio::ip::tcp::acceptor* server_acceptor;
 };
