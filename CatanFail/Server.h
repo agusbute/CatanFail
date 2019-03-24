@@ -7,7 +7,7 @@
 #include <cstring>
 
 
-#define PORT 13225
+#define PORT "13225"
 
 class server
 {

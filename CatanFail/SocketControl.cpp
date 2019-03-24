@@ -88,7 +88,7 @@ bool NetworkSocket::SendString(string Message)
 
 		char * buf = new char[Message.size() + 1];
 		strcpy(buf, Message.c_str());
-
+		bool ret = true;
 		size_t len = 0;
 		boost::system::error_code error;
 
@@ -99,7 +99,9 @@ bool NetworkSocket::SendString(string Message)
 		if (error)
 		{
 			std::cout << "Error while trying to connect to server " << error.message() << std::endl;
+			ret = false;
 		}
+		return ret;
 	}
 }
 
@@ -158,8 +160,8 @@ char * NetworkSocket :: RecieveNoots(string Message)
 bool NetworkSocket::startConnection(const char* host)
 {
 	bool ret = true;
-	string hostip = host;
-	endpoint = client_resolver->resolve(boost::asio::ip::tcp::resolver::query(host,PORT));
+	boost::asio::ip::tcp::resolver::query query(host, PORT);
+	endpoint = client_resolver->resolve(query);
 	boost::system::error_code error;	
 	boost::asio::connect(*socket_forClient, endpoint, error);
 
