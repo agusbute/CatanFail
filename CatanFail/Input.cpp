@@ -54,7 +54,7 @@ evDispatcher(void)
 		break;
 
 	case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-		if (event.mouse.button & MOUSE_LEFT_BOTTON)	//si hice click izquierdo
+		if (event.mouse.button & MOUSE_LEFT_BUTTON)	//si hice click izquierdo
 		{
 			mouse_position.pos_x = event.mouse.x;
 			mouse_position.pos_y = event.mouse.y;

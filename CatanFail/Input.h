@@ -13,7 +13,7 @@ using namespace std;
 // medidas del display
 #define WIDTH 800
 #define HEIGHT 600
-#define MOUSE_LEFT_BOTTON 1
+#define MOUSE_LEFT_BUTTON 1
 #define FPS 20
 
 enum AL_ERROR { INIT_ERROR, DIS_ERROR, TIMER_ERROR, EV_Q_ERROR, NONE };
