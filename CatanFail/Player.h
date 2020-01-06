@@ -32,8 +32,11 @@ class Player
 {
 	public:
 		Player();	//settea todo en cero para comenzar
+
 		void setName(string name);	//settea el nombre del jugador
 		string getName(void);	//devuelve el nombre del jugador
+		void setType(string type); //type: player u opponent
+		string getType(void); // devuelve el tipo de jugador
 		unsigned int getVictoryPoints(void);	//devuelve los victory points
 		bool setVictoryPoints(unsigned int v_points, Actions action);	//suma o resta victory points, devuelve true si se pudo hacer sino el error es NEG_VP
 		unsigned int getRoadsBuilt(void);	//devuleve la cantidad de caminos que construí
@@ -86,6 +89,7 @@ class Player
 		void grabResourceCard(Resources resource, PieceType piece);
 
 		string name;
+		string type;
 
 		Board * board;
 

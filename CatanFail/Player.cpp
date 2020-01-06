@@ -34,6 +34,19 @@ getName(void)
 	return this->name;
 }
 
+
+void Player::
+setType(string type)
+{
+	this->type = type;
+}
+
+string Player::
+getType(void)
+{
+	return this->type;
+}
+
 void Player::
 setBoard(Board * board_)
 {
