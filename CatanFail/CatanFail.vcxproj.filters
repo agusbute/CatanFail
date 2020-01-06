@@ -66,6 +66,9 @@
     <ClInclude Include="Client.h">
       <Filter>Networking</Filter>
     </ClInclude>
+    <ClInclude Include="Networking.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CatanFail.cpp">
@@ -109,6 +112,12 @@
     </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Networking.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Packeter.cpp">
+      <Filter>Networking\Packets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

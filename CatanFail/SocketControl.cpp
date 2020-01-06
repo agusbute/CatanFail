@@ -48,6 +48,7 @@ bool NetworkSocket :: Connect()
 		while (connected == false)
 		{
 			connected = startListening();
+			server.send_message()
 		}
 		
 		this->NTurno = SENDING;	//si hay conex entonces mando info

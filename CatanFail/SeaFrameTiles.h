@@ -20,7 +20,7 @@ using namespace std;
 
 namespace ports {
 	typedef enum PORT { NONE, WOOL, LUMBER, ORE, BRICK, GRAIN, ANY };
-	bool operator== (PORT &port, Resources &resource)
+	bool operator == (PORT &port, Resources &resource)
 	{
 		return ((port == LUMBER && resource == LUMBER) || 
 				(port == WOOL && resource == WOOL) || 

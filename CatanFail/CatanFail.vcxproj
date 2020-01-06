@@ -154,6 +154,7 @@
     <ClInclude Include="DevelopmentCard.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Networking.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="SocketControl.h" />
     <ClInclude Include="Packets.h" />
@@ -175,6 +176,8 @@
     <ClCompile Include="SeaFrameTiles.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="SocketControl.cpp" />
+    <ClCompile Include="Networking.cpp" />
+    <ClCompile Include="Packeter.cpp" />
     <ClCompile Include="TerrainHexes.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Player.cpp" />
