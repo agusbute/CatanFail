@@ -14,9 +14,8 @@ class server
 public:
 	server();
 	bool startListening();		//devuelve true si se conecto
-	void send_message(FILE*, char*);
-	void send_404();
-	char * recieve_message();
+	void send_message(char* message);
+	char * receive_message();	//devuelve el message
 	~server();
 
 private:

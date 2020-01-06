@@ -1,6 +1,6 @@
 #pragma once
 #include "Client.h"
-/*
+
 
 client::client()
 {
@@ -17,7 +17,7 @@ client::~client()
 	delete IO_handler;
 }
 
-bool client::startConnection(const char* host)
+bool client::tryConnection(const char* host)
 {
 	bool ret = true;
 	endpoint = client_resolver->resolve(boost::asio::ip::tcp::resolver::query(host, PORT));
@@ -62,4 +62,24 @@ char * client::receive_message()
 	}
 
 }
-*/
+
+void client::send_message(char* message)
+{
+	
+	string str = message;
+
+	char* buf = new char[str.size() + 1];
+	strcpy(buf, str.c_str());
+
+	size_t len = 0;
+	boost::system::error_code error;
+
+	do
+	{
+		len += socket_forClient->write_some(boost::asio::buffer(buf, strlen(buf)), error);
+	} while ((error.value() == WSAEWOULDBLOCK) && len < strlen(buf));
+	if (error)
+	{
+		std::cout << "Error while trying to connect to server " << error.message() << std::endl;
+	}
+}
