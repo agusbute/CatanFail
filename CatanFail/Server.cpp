@@ -17,3 +17,47 @@ bool server::startListening()
 	socket_forServer->non_blocking(true);
 	return ret;
 }
+
+char* server::receive_message()
+{
+	boost::system::error_code error;
+	char buf[1500];
+	size_t len = 0;
+	do
+	{
+		len = socket_forServer->read_some(boost::asio::buffer(buf), error);
+		if (!error)
+		{
+			buf[len] = '\0';
+		}
+	} while (error.value() == WSAEWOULDBLOCK);
+	if (!error)
+	{
+		return &buf[0];
+	}
+	else
+	{
+		cout << "Error while trying to connect to server " << error.message() << std::endl;
+		return NULL;
+	}
+
+	void server::send_message(char* message)
+	{
+
+		string str = message;
+
+		char* buf = new char[str.size() + 1];
+		strcpy(buf, str.c_str());
+
+		size_t len = 0;
+		boost::system::error_code error;
+
+		do
+		{
+			len += socket_forServer->write_some(boost::asio::buffer(buf, strlen(buf)), error);
+		} while ((error.value() == WSAEWOULDBLOCK) && len < strlen(buf));
+		if (error)
+		{
+			std::cout << "Error while trying to connect to server " << error.message() << std::endl;
+		}
+	}
