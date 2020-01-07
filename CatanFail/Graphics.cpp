@@ -3,31 +3,36 @@
 #include "Graphics.h"
 
 Graphics::
-Graphics(Board * board_, Player * player_, Player * opponent_ , Button * buttons_) // probablemente despues se modifique buttons
+Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Button* buttons_) // probablemente despues se modifique buttons
 {
 	this->board = board_;
 	this->player = player_;
 	this->opponent = opponent_;
-	this->buttons = buttons_;
+	this->input = input_;
 
-	if (al_init_primitives_addon)
+	if (al_init_primitives_addon() && al_init_image_addon() && al_init_font_addon())
 	{
-		setGraphics(board, player, opponent, buttons);
+		//setGraphics(board, player, opponent, buttons);
+		al_flip_display();
 	}
 	else
 	{
-		al_shutdown_primitives_addon;
+		al_shutdown_primitives_addon();
+		al_shutdown_image_addon();
+		al_shutdown_font_addon();
 	}
 }
 
 void Graphics::
 setGraphics(Board * board_, Player * player_, Player * opponent_, Button * buttons_)
 {
+	al_clear_to_color(al_map_rgb(255, 253, 208));
 	drawBoard();
 	drawTiles(board_);
 	drawPlayer(player_);
 	drawPlayer(opponent_);
 	drawButtons(buttons_);
+	al_flip_display();
 }
 
 void Graphics:: 
@@ -61,5 +66,7 @@ drawButtons(Button * buttons_)
 Graphics::
 ~Graphics()
 {
-	al_shutdown_primitives_addon;
+	al_shutdown_primitives_addon();
+	al_shutdown_image_addon();
+	al_shutdown_font_addon();
 }

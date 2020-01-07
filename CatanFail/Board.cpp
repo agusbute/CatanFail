@@ -201,8 +201,8 @@ getAdjacentRoads(road_t main_road, road_t * adjacent_roads)
 	SeaFrameTiles * X_sea;		//si y es un borde, este apunta a el
 	BoardComponent * Xsearch = getPiece(main_road.x);
 	BoardComponent * Ysearch = getPiece(main_road.y);
-	char X_side, Y_side;							//X_side: de que lado para x esta y - Y_side:de que lado para y esta x
-	char coin1, coin2;								//las dos piezas con las que coinciden x e y
+	char X_side = 0, Y_side = 0;							//X_side: de que lado para x esta y - Y_side:de que lado para y esta x
+	char coin1 = 0, coin2 = 0;								//las dos piezas con las que coinciden x e y
 	if (main_road.x >= 'A' && main_road.x <= 'S')				//si x es un hexagono, me fijo los adyacentes a el
 	{															//hasta encontrar de que lado esta y
 		X = (TerrainHexes *)Xsearch;

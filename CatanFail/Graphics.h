@@ -17,7 +17,7 @@ class Graphics
 {
 	public:
 		
-		Graphics(Board * board_, Player * player_, Player * opponent_, Button * buttons_);
+		Graphics(Board * board_, Player * player_, Player * opponent_, Input * input_, Button * buttons_);
 		~Graphics();
 		
 		void setGraphics(Board * board_, Player * player_, Player * opponent_, Button * buttons_);
@@ -30,7 +30,7 @@ class Graphics
 		Player * opponent;
 		Board * board;
 		Input * input;
-		Button * buttons; // esto puede que cambie
+		Button * buttons;
 
 		void drawBoard(void); // borde						\__ estos dos no se deberían
 		void drawTiles(Board * board_); // interior (fijo)	/   redibujar porque no cambian en toda la partida

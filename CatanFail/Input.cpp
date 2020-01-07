@@ -34,8 +34,12 @@ Input()
 				{
 					al_register_event_source(event_queue, al_get_display_event_source(display));	//registra los eventos del display
 					al_register_event_source(event_queue, al_get_timer_event_source(timer));	//registra los eventos del timer
-					al_install_mouse();	//para usar el mouse
-					al_register_event_source(event_queue, al_get_mouse_event_source());	//registra los eventos del mouse
+					
+					if(al_install_mouse() && al_install_keyboard())	//para usar el mouse y el teclado
+					{
+						al_register_event_source(event_queue, al_get_mouse_event_source());	//registra los eventos del mouse
+						al_register_event_source(event_queue, al_get_keyboard_event_source()); //registra los eventos del teclado
+					}
 					al_start_timer(timer);
 					error = NONE;
 				}
@@ -49,11 +53,11 @@ evDispatcher(void)
 {
 	switch (event.type)
 	{
-	case ALLEGRO_EVENT_DISPLAY_CLOSE:
+		case ALLEGRO_EVENT_DISPLAY_CLOSE:
 		exit_game = true;
 		break;
 
-	case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+		case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
 		if (event.mouse.button & MOUSE_LEFT_BUTTON)	//si hice click izquierdo
 		{
 			mouse_position.pos_x = event.mouse.x;
@@ -62,11 +66,11 @@ evDispatcher(void)
 		}
 		break;
 
-	case ALLEGRO_EVENT_TIMER:
+		case ALLEGRO_EVENT_TIMER:
 		redraw = true;
 		break;
 
-	default:break;
+		default:break;
 	}
 }
 
@@ -82,6 +86,8 @@ Input::
 	al_destroy_timer(timer);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
+	al_uninstall_keyboard();
+	al_uninstall_mouse();
 }
 
 /*
