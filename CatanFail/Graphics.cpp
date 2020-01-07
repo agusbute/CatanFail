@@ -23,7 +23,7 @@ Graphics(Board * board_, Player * player_, Player * opponent_ , Button * buttons
 void Graphics::
 setGraphics(Board * board_, Player * player_, Player * opponent_, Button * buttons_)
 {
-	drawBoard(board_);
+	drawBoard();
 	drawTiles(board_);
 	drawPlayer(player_);
 	drawPlayer(opponent_);
@@ -31,9 +31,9 @@ setGraphics(Board * board_, Player * player_, Player * opponent_, Button * butto
 }
 
 void Graphics:: 
-drawBoard(Board * board_)
+drawBoard(void)
 {
-	const float points[12] = { WIDTH*0.3, HEIGHT*0.1, WIDTH*0.8, HEIGHT*0.1, WIDTH*0.3, HEIGHT*0.9, WIDTH*0.8, HEIGHT*0.9, WIDTH*0.25, HEIGHT*0.5, WIDTH*0.25, HEIGHT*0.5};
+	const float points[12] = { WIDTH * 0.35, HEIGHT * 0.15, WIDTH * 0.65, HEIGHT * 0.15, WIDTH * 0.775, HEIGHT * 0.5, WIDTH * 0.65, HEIGHT * 0.85, WIDTH * 0.35, HEIGHT * 0.85, WIDTH * 0.225, HEIGHT * 0.5 };
 	al_draw_polygon(points, 6, ALLEGRO_LINE_JOIN_MITER, al_map_rgb(255,255,255), 1, 1);
 }
 
@@ -46,7 +46,10 @@ drawTiles(Board * board_)
 void Graphics::
 drawPlayer(Player * player_) // debería chequear si es el oponente y en base a eso muestra en el display
 {
+	if (player_->getType() == "player")
+	{
 
+	}
 }
 
 void Graphics::

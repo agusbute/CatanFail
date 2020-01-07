@@ -11,7 +11,7 @@
 using namespace std;
 
 // medidas del display
-#define WIDTH 800
+#define WIDTH 1000
 #define HEIGHT 600
 #define MOUSE_LEFT_BUTTON 1
 #define FPS 20
