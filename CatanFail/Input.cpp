@@ -40,6 +40,8 @@ Input()
 						al_register_event_source(event_queue, al_get_keyboard_event_source()); //registra los eventos del teclado
 					}
 					//al_start_timer(timer);
+					al_init_font_addon();
+					al_init_ttf_addon();
 					error = NONE;
 				}
 			}
@@ -82,7 +84,16 @@ exitGame(void)
 string Input::
 inputName(void)
 {
-	string name = NULL;
+	/*esto de acá hay que modificar o no se si está bien y yo no se donde poner el archivo*/
+
+	//ALLEGRO_FONT* font = al_load_ttf_font("RINGM___.ttf", 55, 0);
+
+	//if (!font) {
+	//	fprintf(stderr, "Could not load font'.\n");
+	//	return -1;
+	//}
+
+	string name = "";
 	bool exit = false;
 	int i = 0;
 
@@ -245,7 +256,11 @@ inputName(void)
 			}
 		}
 
-		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH*0.5, HEIGHT*0.5, ALLEGRO_ALIGN_CENTRE, name.c_str());
+		/*y acá hay que cambiar el primer parámetro de los al_draw_text por el tipo de font para cada uno*/
+
+		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH * 0.3, HEIGHT * 0.43, ALLEGRO_ALIGN_LEFT, "What's your name?");
+		al_draw_filled_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, al_map_rgb(255, 255, 255)); // esto está bien
+		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH * 0.305, HEIGHT * 0.5, ALLEGRO_ALIGN_LEFT, name.c_str());
 		al_flip_display();
 	}
 
@@ -254,7 +269,7 @@ inputName(void)
 
 string Input::inputIP(void)
 {
-	string ip = NULL;
+	string ip = "";
 	bool exit = false;
 	unsigned int i = 0;
 
@@ -372,12 +387,29 @@ string Input::inputIP(void)
 			}
 		}
 
-		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH * 0.5, HEIGHT * 0.5, ALLEGRO_ALIGN_CENTRE, ip.c_str());
+		/*y acá hay que cambiar el primer parámetro de los al_draw_text por el tipo de font para cada uno*/
+
+		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH * 0.3, HEIGHT * 0.43, ALLEGRO_ALIGN_LEFT, "What's your IP Address?");
+		al_draw_filled_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, al_map_rgb(255, 255, 255)); // esto está bien
+		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH * 0.305, HEIGHT * 0.5, ALLEGRO_ALIGN_LEFT, ip.c_str());
 		al_flip_display();
 	}
 
 	return ip;
 }
+
+string Input:: 
+getInputName(void)
+{
+	return inputName();
+}
+
+string Input::
+getInputIP(void)
+{
+	return inputIP();
+}
+
 
 Input::
 ~Input()
@@ -387,6 +419,7 @@ Input::
 	al_destroy_event_queue(event_queue);
 	al_uninstall_keyboard();
 	al_uninstall_mouse();
+	//al_destroy_font(font);
 }
 
 /*

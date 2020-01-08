@@ -30,7 +30,12 @@ public:
 	Input();
 	void evDispatcher(void);
 	bool exitGame(void);
+
+	string getInputName(void);
+	string getInputIP(void);
+
 	~Input();
+
 
 private:
 	ALLEGRO_EVENT_QUEUE * event_queue;

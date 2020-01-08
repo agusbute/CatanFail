@@ -9,10 +9,11 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 	this->player = player_;
 	this->opponent = opponent_;
 	this->input = input_;
+	this->buttons = buttons_;
 
-	if (al_init_primitives_addon() && al_init_image_addon() && al_init_font_addon())
+	if (al_init_primitives_addon() && al_init_image_addon())
 	{
-		//setGraphics(board, player, opponent, buttons);
+		setfirstGraphics(input);
 		al_flip_display();
 	}
 	else
@@ -24,9 +25,18 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 }
 
 void Graphics::
-setGraphics(Board * board_, Player * player_, Player * opponent_, Button * buttons_)
+setfirstGraphics(Input* input_)
 {
-	al_clear_to_color(al_map_rgb(255, 253, 208));
+	al_clear_to_color(al_map_rgb(253, 223, 163));
+	al_flip_display();
+
+	input_->getInputName();
+	input_->getInputIP();
+}
+
+void Graphics::
+setGraphicsGame(Board * board_, Player * player_, Player * opponent_, Button * buttons_)
+{
 	drawBoard();
 	drawTiles(board_);
 	drawPlayer(player_);

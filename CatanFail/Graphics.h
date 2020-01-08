@@ -20,7 +20,8 @@ class Graphics
 		Graphics(Board * board_, Player * player_, Player * opponent_, Input * input_, Button * buttons_);
 		~Graphics();
 		
-		void setGraphics(Board * board_, Player * player_, Player * opponent_, Button * buttons_);
+		void setfirstGraphics(Input* input); // display que pide nombre e ip
+		void setGraphicsGame(Board * board_, Player * player_, Player * opponent_, Button * buttons_); // display con el tablero y todo eso
 		
 		void updateDisplay();
 	
