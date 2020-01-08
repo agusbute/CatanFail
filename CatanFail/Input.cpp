@@ -11,13 +11,12 @@ Input()
 	}
 	else
 	{
-		timer = al_create_timer(1.0 / FPS);
+		/*timer = al_create_timer(1.0 / FPS);
 		if (!timer)
 		{
 			error = TIMER_ERROR;
 		}
-		else
-		{
+		else*/
 			display = al_create_display(WIDTH, HEIGHT);	//creo el display
 			if (!display)	//testeo el display
 			{
@@ -33,18 +32,18 @@ Input()
 				else
 				{
 					al_register_event_source(event_queue, al_get_display_event_source(display));	//registra los eventos del display
-					al_register_event_source(event_queue, al_get_timer_event_source(timer));	//registra los eventos del timer
+					//al_register_event_source(event_queue, al_get_timer_event_source(timer));	//registra los eventos del timer
 					
 					if(al_install_mouse() && al_install_keyboard())	//para usar el mouse y el teclado
 					{
 						al_register_event_source(event_queue, al_get_mouse_event_source());	//registra los eventos del mouse
 						al_register_event_source(event_queue, al_get_keyboard_event_source()); //registra los eventos del teclado
 					}
-					al_start_timer(timer);
+					//al_start_timer(timer);
 					error = NONE;
 				}
 			}
-		}
+		
 	}
 }
 
@@ -78,6 +77,306 @@ bool Input::
 exitGame(void)
 {
 	return this->exit_game;
+}
+
+string Input::
+inputName(void)
+{
+	string name = NULL;
+	bool exit = false;
+	int i = 0;
+
+	while (exit == false)
+	{
+		if (i > 254)
+		{
+			exit = true;
+		}
+		else if (al_get_next_event(event_queue, &event))
+		{
+			if (event.type == ALLEGRO_EVENT_KEY_DOWN)
+			{
+				switch (event.keyboard.keycode)
+				{
+				case ALLEGRO_KEY_A:
+					name += 'A';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_B:
+					name += 'B';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_C:
+					name += 'C';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_D:
+					name += 'D';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_E:
+					name += 'E';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_F:
+					name += 'F';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_G:
+					name += 'G';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_H:
+					name += 'H';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_I:
+					name += 'I';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_J:
+					name += 'J';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_K:
+					name += 'K';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_L:
+					name += 'L';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_M:
+					name += 'M';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_N:
+					name += 'N';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_O:
+					name += 'O';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_P:
+					name += 'P';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_Q:
+					name += 'Q';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_R:
+					name += 'R';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_S:
+					name += 'S';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_T:
+					name += 'T';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_U:
+					name += 'U';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_V:
+					name += 'V';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_W:
+					name += 'W';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_X:
+					name += 'X';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_Y:
+					name += 'Y';
+					i++;
+					break;
+				case ALLEGRO_KEY_Z:
+					name += 'Z';
+					i++;
+					break;
+
+				case ALLEGRO_KEY_ENTER:
+					exit = true;
+					break;
+
+				case ALLEGRO_KEY_BACKSPACE:
+					if (i > 0)
+					{
+						name.pop_back();
+						i--;
+					}
+					break;
+
+				default: break;
+				}
+
+			}
+		}
+
+		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH*0.5, HEIGHT*0.5, ALLEGRO_ALIGN_CENTRE, name.c_str());
+		al_flip_display();
+	}
+
+	return name;
+}
+
+string Input::inputIP(void)
+{
+	string ip = NULL;
+	bool exit = false;
+	unsigned int i = 0;
+
+	while (exit == false)
+	{
+		if (al_get_next_event(event_queue, &event))
+		{
+			if (event.type == ALLEGRO_EVENT_KEY_DOWN && (i < 15))
+			{
+				switch (event.keyboard.keycode)
+				{
+					case ALLEGRO_KEY_0:
+						ip += '0';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_1:
+						ip += '1';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_2:
+						ip += '2';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_3:
+						ip += '3';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_4:
+						ip += '4';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_5:
+						ip += '5';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_6:
+						ip += '6';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_7:
+						ip += '7';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_8:
+						ip += '8';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_9:
+						ip += '9';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_L:
+						ip += 'l';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_O:
+						ip += 'o';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_C:
+						ip += 'c';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_A:
+						ip += 'a';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_H:
+						ip += 'h';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_S:
+						ip += 's';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_T:
+						ip += 't';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_FULLSTOP:
+						ip += '.';
+						i++;
+						break;
+
+					case ALLEGRO_KEY_ENTER:
+						exit = true;
+						break;
+
+					case ALLEGRO_KEY_BACKSPACE:
+						if (i > 0)
+						{
+							ip.pop_back();
+							i--;
+						}
+						break;
+				}
+
+			}
+		}
+
+		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH * 0.5, HEIGHT * 0.5, ALLEGRO_ALIGN_CENTRE, ip.c_str());
+		al_flip_display();
+	}
+
+	return ip;
 }
 
 Input::

@@ -43,4 +43,7 @@ private:
 	bool exit_game;
 	bool redraw;
 	AL_ERROR error;
+
+	string inputName(void); // Player debería llamar a esta función para obtener el nombre del jugador
+	string inputIP(void);
 };
