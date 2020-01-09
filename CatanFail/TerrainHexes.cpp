@@ -35,7 +35,7 @@ setToken(char my_token)
 	this->token = my_token;
 }
 
-char TerrainHexes::
+int TerrainHexes::
 getToken(void)
 {
 	return token;

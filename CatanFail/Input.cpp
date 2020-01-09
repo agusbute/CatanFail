@@ -21,9 +21,10 @@ Input()
 			if (!display)	//testeo el display
 			{
 				error = DIS_ERROR;
-			}
+			}		
 			else
 			{
+
 				event_queue = al_create_event_queue();	//creo la cola de eventos
 				if (!event_queue)
 				{
@@ -32,7 +33,7 @@ Input()
 				else
 				{
 					al_register_event_source(event_queue, al_get_display_event_source(display));	//registra los eventos del display
-					//al_register_event_source(event_queue, al_get_timer_event_source(timer));	//registra los eventos del timer
+					//al_register_event_source(event_queue, al_get_timer_event_source(timer));	//registra los eventos del timer AHORA LO VAMOS A INICIALIZAR EN GRAPHICS!
 					
 					if(al_install_mouse() && al_install_keyboard())	//para usar el mouse y el teclado
 					{
@@ -86,12 +87,12 @@ inputName(void)
 {
 	/*esto de acá hay que modificar o no se si está bien y yo no se donde poner el archivo*/
 
-	//ALLEGRO_FONT* font = al_load_ttf_font("RINGM___.ttf", 55, 0);
+	font = al_load_ttf_font("Files/RINGM___.ttf", 15, 0);
 
-	//if (!font) {
-	//	fprintf(stderr, "Could not load font'.\n");
-	//	return -1;
-	//}
+	if (font == NULL)
+	{
+		fprintf(stderr, "Could not load font'.\n");	
+	}
 
 	string name = "";
 	bool exit = false;
@@ -258,16 +259,19 @@ inputName(void)
 
 		/*y acá hay que cambiar el primer parámetro de los al_draw_text por el tipo de font para cada uno*/
 
-		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH * 0.3, HEIGHT * 0.43, ALLEGRO_ALIGN_LEFT, "What's your name?");
+		al_draw_text(font, al_map_rgb(255, 255, 255), WIDTH * 0.3, HEIGHT * 0.4, ALLEGRO_ALIGN_LEFT, "What's your name?");
 		al_draw_filled_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, al_map_rgb(255, 255, 255)); // esto está bien
-		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH * 0.305, HEIGHT * 0.5, ALLEGRO_ALIGN_LEFT, name.c_str());
+		al_draw_rounded_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, 10.0, 10.0, al_map_rgb(0, 0, 0), 5.0);
+		al_draw_rounded_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, 10.0, 10.0, al_map_rgb(255, 255, 255), 3.0);
+		al_draw_text(font, al_map_rgb(0, 0, 0), WIDTH * 0.33, HEIGHT * 0.48, ALLEGRO_ALIGN_LEFT, name.c_str());
 		al_flip_display();
 	}
 
 	return name;
 }
 
-string Input::inputIP(void)
+string Input::
+inputIP(void)
 {
 	string ip = "";
 	bool exit = false;
@@ -389,9 +393,11 @@ string Input::inputIP(void)
 
 		/*y acá hay que cambiar el primer parámetro de los al_draw_text por el tipo de font para cada uno*/
 
-		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH * 0.3, HEIGHT * 0.43, ALLEGRO_ALIGN_LEFT, "What's your IP Address?");
+		al_draw_text(font, al_map_rgb(255, 255, 255), WIDTH * 0.3, HEIGHT * 0.4, ALLEGRO_ALIGN_LEFT, "What's your IP?");
 		al_draw_filled_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, al_map_rgb(255, 255, 255)); // esto está bien
-		al_draw_text(al_create_builtin_font(), al_map_rgb(0, 0, 0), WIDTH * 0.305, HEIGHT * 0.5, ALLEGRO_ALIGN_LEFT, ip.c_str());
+		al_draw_rounded_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, 10.0, 10.0, al_map_rgb(0, 0, 0), 5.0);
+		al_draw_rounded_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, 10.0, 10.0, al_map_rgb(255, 255, 255), 3.0);
+		al_draw_text(font, al_map_rgb(0, 0, 0), WIDTH * 0.33, HEIGHT * 0.48, ALLEGRO_ALIGN_LEFT, ip.c_str());
 		al_flip_display();
 	}
 
@@ -410,6 +416,11 @@ getInputIP(void)
 	return inputIP();
 }
 
+ALLEGRO_FONT * Input::
+getFont()
+{
+	return this->font;
+}
 
 Input::
 ~Input()
@@ -419,7 +430,7 @@ Input::
 	al_destroy_event_queue(event_queue);
 	al_uninstall_keyboard();
 	al_uninstall_mouse();
-	//al_destroy_font(font);
+	al_destroy_font(font);
 }
 
 /*

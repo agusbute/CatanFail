@@ -10,8 +10,8 @@ Game()
 	player->setBoard(board);
 	opponent->setBoard(board);
 	
-	network = new Network;
-	graphics = new Graphics;
+	//network = new Network;
+	//graphics = new Graphics;
 }
 
 Game::
@@ -19,8 +19,8 @@ Game::
 {
 	delete player;
 	delete opponent;
-	delete graphics;
-	delete network;
+	//delete graphics;
+	//delete network;
 	delete board;
 }
 

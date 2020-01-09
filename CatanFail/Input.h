@@ -34,6 +34,8 @@ public:
 	string getInputName(void);
 	string getInputIP(void);
 
+	ALLEGRO_FONT* getFont();
+
 	~Input();
 
 
@@ -42,6 +44,8 @@ private:
 	ALLEGRO_DISPLAY * display;
 	ALLEGRO_EVENT event;
 	ALLEGRO_TIMER *timer;
+
+	ALLEGRO_FONT* font;
 
 	mouse_coords mouse_position;
 

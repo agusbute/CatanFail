@@ -1,5 +1,5 @@
 #include <exception>
-
+/*
 const char*
 CatanNetwork::StateString[18] = {
 	"DISCONNECTED", "LISTENING", "WAIT_SYNC", "SYNC", "IDLE", "NET_ERROR",
@@ -9,7 +9,7 @@ CatanNetwork::StateString[18] = {
 
 CatanNetwork::
 CatanNetworking(CatanGame& _game) : Observer(), game(_game) {
-	/* Inicializacion */
+	// Inicializacion 
 	this->ip = "";
 	this->port = port;
 	this->socket = nullptr;
@@ -17,7 +17,7 @@ CatanNetworking(CatanGame& _game) : Observer(), game(_game) {
 	this->msg = "";
 	this->currState = nullptr;
 
-	/* Creo todos los estados */
+	// Creo todos los estados 
 	states.clear();
 	states = {
 		allocate(States::DISCONNECTED, Disconnected, *this),
@@ -28,7 +28,7 @@ CatanNetworking(CatanGame& _game) : Observer(), game(_game) {
 		allocate(States::NET_ERROR, NetError, *this)
 	};
 
-	/* Mensaje de inicio */
+	// Mensaje de inicio 
 	setInfo("[Networking] - Closed -> Esperando ordenes de conexion.");
 }
 
@@ -154,22 +154,22 @@ CatanNetwork::changeState(NetworkState* state, string _info) {
 void
 CatanNetwork::start(void) {
 
-	/* Estado inicial */
+	// Estado inicial 
 	changeState(States::DISCONNECTED, "[Networking] - Disconnected -> Abriendo socket TCP, intentando establecer conexion...");
 }
 
 void
 CatanNetwork::reset(void) {
 
-	/* Estado cerrado */
+	// Estado cerrado 
 	changeState(States::CLOSED);
 
-	/* Mensaje informativo! */
+	// Mensaje informativo! 
 	setInfo("[Networking] - Closed -> Networking cerrado! A la espera de reconexion.");
 
-	/* Reinicio y reinicializo el estado de todas las variables
-	* y objetos contenidos por CatanNetworking.
-	*/
+	// Reinicio y reinicializo el estado de todas las variables
+	// y objetos contenidos por CatanNetworking.
+	
 	if (socket) {
 		delete socket;
 		socket = nullptr;
@@ -179,31 +179,31 @@ CatanNetwork::reset(void) {
 void
 CatanNetwork::run() {
 
-	/* Verifico estado del Networking */
+	// Verifico estado del Networking 
 	verifyStatus();
 
-	/* Actualizo el socket */
+	// Actualizo el socket 
 	if (this->socket) {
 
-		/* Si esta conectado */
+		// Si esta conectado 
 		if (socket->isConnected()) {
-			/* Corro las colas de emision y recepcion de Tcp */
+			// Corro las colas de emision y recepcion de Tcp
 			socket->run();
 
-			/* Verifico estado del socket */
+			// Verifico estado del socket 
 			if (!socket->good()) {
 				setError(socket->getError());
 			}
 		}
 	}
 
-	/* Ejecuto el run del estado */
+	// Ejecuto el run del estado 
 	if (this->good()) {
 
-		/*
-		* Verifico estado de error por timeout de la etapa
-		* del proceso networking
-		*/
+		//
+		// Verifico estado de error por timeout de la etapa
+		// del proceso networking
+		//
 		if (this->currState->timeoutStatus()) {
 			this->currState->run();
 		}
@@ -216,22 +216,22 @@ CatanNetwork::run() {
 
 void
 CatanNetwork::update() {
-	/* Verifico estado del Networking */
+	// Verifico estado del Networking 
 	verifyStatus();
 
-	/* Hay algun evento? */
+	// Hay algun evento? 
 	if (game.hasEvents()) {
 
-		/* Busco el evento del juego */
+		// Busco el evento del juego 
 		CatanEvent* event = game.getNextEvent();
 
-		/* Verifico que sea para mi, y no un echo! */
+		// Verifico que sea para mi, y no un echo!
 		if (event->getSource() != CatanEvent::Sources::NETWORKING) {
 
-			/*
-			* Surgieron o puede surgir, eventos que sean de interes para otras partes del programa
-			* pero no asi para el Networking, con lo cual, se presupone que los deberia ignorar el programa
-			*/
+			//
+			// Surgieron o puede surgir, eventos que sean de interes para otras partes del programa
+			// pero no asi para el Networking, con lo cual, se presupone que los deberia ignorar el programa
+			/
 			this->currState->update();
 		}
 	}
@@ -240,15 +240,15 @@ CatanNetwork::update() {
 NetworkPacket*
 CatanNetwork::getEventPacket(CatanEvent* event) {
 
-	/*
-	* Para NO PERDERSER... recordar lo siguiente respecto de este metodo.
-	* Este METODO representa todos aquellos eventos de CatanGame, que le son
-	* de interes al networking para poder correr sus protocolos, ninguna otra cosa debe
-	* parsearse, y cualquier cosa que falte, hara inutil el protocolo.
-	*
-	* Reitero. Conversion de los eventos de CATAN que al networking le son de INTERES
-	* en paquete de datos para transmitirlos!
-	*/
+	
+	// Para NO PERDERSER... recordar lo siguiente respecto de este metodo.
+	// Este METODO representa todos aquellos eventos de CatanGame, que le son
+	// de interes al networking para poder correr sus protocolos, ninguna otra cosa debe
+	// parsearse, y cualquier cosa que falte, hara inutil el protocolo.
+	//
+	// Reitero. Conversion de los eventos de CATAN que al networking le son de INTERES
+	// en paquete de datos para transmitirlos!
+	
 
 	switch (event->getEvent()) {
 	case CatanEvent::Events::THROW_DICES:
@@ -315,3 +315,4 @@ CatanNetwork::getEventPacket(CatanEvent* event) {
 
 	return nullptr;
 }
+*/

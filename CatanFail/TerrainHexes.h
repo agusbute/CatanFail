@@ -36,7 +36,7 @@ class TerrainHexes : public BoardComponent
 	public:
 		TerrainHexes(char position_in_map = 0, Resources resource = NOTHING, int token = 0);	//inicializa todo en cero
 		void setToken(char my_token);
-		char getToken(void);
+		int getToken(void);
 		void setResource(Resources my_resource);
 		Resources getResource(void);
 		bool hasRobber();			//devuelve el estado del Robber bool
