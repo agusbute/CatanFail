@@ -1,6 +1,9 @@
 #pragma once
 
 #include "boost/asio.hpp"
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
+#include "Server.h"
 #include <string>
 #include <iostream>
 #include <chrono>

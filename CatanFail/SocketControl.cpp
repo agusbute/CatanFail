@@ -7,9 +7,10 @@ using namespace std;
 
 NetworkSocket :: NetworkSocket()
 {
-	this->modo = CLIENT;			//siempre se iniciara como client
-	server();
-	connected = false;
+	modo = CLIENT;			//siempre se iniciara como client
+	IO_handler = new boost::asio::io_service();
+	socket_forClient = new boost::asio::ip::tcp::socket(*IO_handler);
+	client_resolver = new boost::asio::ip::tcp::resolver(*IO_handler);
 
 }
 
@@ -48,16 +49,14 @@ bool NetworkSocket :: Connect()
 		while (connected == false)
 		{
 			connected = startListening();
-			server.send_message()
 		}
 		
-		this->NTurno = SENDING;	//si hay conex entonces mando info
+		NTurno = SENDING;	//si hay conex entonces mando info
 		return true;
 	}
 	else
 	{
 		std::cout << "WTF ERROR EN EL MODO DE NETWORK SOCKET" << std::endl;
-		getchar();
 		return false;
 	}
 }
@@ -162,7 +161,7 @@ bool NetworkSocket::startConnection(const char* host)
 {
 	bool ret = true;
 	boost::asio::ip::tcp::resolver::query query(host, PORT);
-	endpoint = client_resolver->resolve(query);
+	this->endpoint = client_resolver->resolve(query);
 	boost::system::error_code error;	
 	boost::asio::connect(*socket_forClient, endpoint, error);
 

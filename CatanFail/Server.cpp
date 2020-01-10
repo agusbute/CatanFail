@@ -60,5 +60,5 @@ bool server::startListening()
 		{
 			cout << "Error while trying to connect to server " << error.message() << std::endl;
 			return NULL;
+		}
 	}
-

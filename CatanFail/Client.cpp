@@ -82,4 +82,5 @@ void client::send_message(char* message)
 	{
 		std::cout << "Error while trying to connect to server " << error.message() << std::endl;
 	}
+
 }

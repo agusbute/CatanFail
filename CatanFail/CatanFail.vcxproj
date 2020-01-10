@@ -160,7 +160,6 @@
     <ClInclude Include="DevelopmentCard.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
-    <ClInclude Include="Networking.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="SocketControl.h" />
     <ClInclude Include="Packets.h" />
@@ -182,7 +181,6 @@
     <ClCompile Include="SeaFrameTiles.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="SocketControl.cpp" />
-    <ClCompile Include="Networking.cpp" />
     <ClCompile Include="Packeter.cpp" />
     <ClCompile Include="TerrainHexes.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -237,6 +235,8 @@
     <Import Project="..\packages\boost_wserialization-vc141.1.71.0.0\build\boost_wserialization-vc141.targets" Condition="Exists('..\packages\boost_wserialization-vc141.1.71.0.0\build\boost_wserialization-vc141.targets')" />
     <Import Project="..\packages\boost_zlib-vc141.1.71.0.0\build\boost_zlib-vc141.targets" Condition="Exists('..\packages\boost_zlib-vc141.1.71.0.0\build\boost_zlib-vc141.targets')" />
     <Import Project="..\packages\boost-vc141.1.71.0.0\build\boost-vc141.targets" Condition="Exists('..\packages\boost-vc141.1.71.0.0\build\boost-vc141.targets')" />
+    <Import Project="..\packages\boost_system-vc140.1.71.0.0\build\boost_system-vc140.targets" Condition="Exists('..\packages\boost_system-vc140.1.71.0.0\build\boost_system-vc140.targets')" />
+    <Import Project="..\packages\boost_date_time-vc142.1.71.0.0\build\boost_date_time-vc142.targets" Condition="Exists('..\packages\boost_date_time-vc142.1.71.0.0\build\boost_date_time-vc142.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -286,5 +286,7 @@
     <Error Condition="!Exists('..\packages\boost_wserialization-vc141.1.71.0.0\build\boost_wserialization-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_wserialization-vc141.1.71.0.0\build\boost_wserialization-vc141.targets'))" />
     <Error Condition="!Exists('..\packages\boost_zlib-vc141.1.71.0.0\build\boost_zlib-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_zlib-vc141.1.71.0.0\build\boost_zlib-vc141.targets'))" />
     <Error Condition="!Exists('..\packages\boost-vc141.1.71.0.0\build\boost-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost-vc141.1.71.0.0\build\boost-vc141.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_system-vc140.1.71.0.0\build\boost_system-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system-vc140.1.71.0.0\build\boost_system-vc140.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_date_time-vc142.1.71.0.0\build\boost_date_time-vc142.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_date_time-vc142.1.71.0.0\build\boost_date_time-vc142.targets'))" />
   </Target>
 </Project>

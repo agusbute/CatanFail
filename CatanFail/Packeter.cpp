@@ -3,7 +3,7 @@
 
 using namespace std;
 
-string PacketMaker(PacketHeader Header, char* data);
+string PacketMaker(PacketHeader Header, string data);
 const char* getHeader(PacketHeader);
 
 string PacketMaker(PacketHeader Header, string data)
@@ -15,9 +15,11 @@ string PacketMaker(PacketHeader Header, string data)
         Packet += data;
     }
 
+    return Packet;
+
 }
 
-const char* getHeader(PacketHeader Header)
+const char * getHeader(PacketHeader Header)
 {
 	
     switch (Header)

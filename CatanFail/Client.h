@@ -11,7 +11,7 @@ public:
 	client();
 	bool tryConnection(const char * ip);
 	char * receive_message();
-	bool send_message(char*);
+	void send_message(char*);
 	~client();
 
 private:
@@ -19,5 +19,4 @@ private:
 	boost::asio::ip::tcp::socket* socket_forClient;
 	boost::asio::ip::tcp::resolver* client_resolver;
 	boost::asio::ip::tcp::resolver::iterator endpoint;
-	boost::asio::deadline_timer deadline;
 };
