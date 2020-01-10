@@ -28,7 +28,6 @@ bool NetworkSocket :: Connect()
 
 		if (ret)
 		{
-			this->NTurno = RECEIVING;	//poner que si hubo conex estoy en recibir info	
 			return ret;
 		}
 		else
@@ -47,7 +46,6 @@ bool NetworkSocket :: Connect()
 			connected = startListening();
 		}
 		
-		NTurno = SENDING;	//si hay conex entonces mando info
 		return true;
 	}
 	else
@@ -129,10 +127,7 @@ Mode NetworkSocket::getMode()
 	return modo;
 }
 
-NStatus NetworkSocket::getStatus()
-{
-	return NTurno;
-}
+
 
 bool NetworkSocket::send_message(string str)
 {

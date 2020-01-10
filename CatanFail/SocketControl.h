@@ -25,7 +25,6 @@ class NetworkSocket
 		bool startConnection(const char* host);
 		bool startListening();
 		Mode getMode();
-		NStatus getStatus();
 		
 
 	protected:
@@ -33,7 +32,7 @@ class NetworkSocket
 		Mode modo;
 		bool connected;
 		string TargetIP;
-		NStatus NTurno;					//esto intica si recibo o envio data.
+							//esto intica si recibo o envio data.
 		boost::asio::io_service* IO_handler;
 		boost::asio::ip::tcp::socket* socket_forClient;
 		boost::asio::ip::tcp::resolver* client_resolver;
