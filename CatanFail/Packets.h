@@ -38,4 +38,3 @@ enum PacketHeader : unsigned char {
 	HEADER_ERROR = 0xFE,
 	QUIT
 };
-
