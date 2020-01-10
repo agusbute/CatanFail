@@ -53,6 +53,8 @@
 #define HEX_WIDTH 221
 #define HEX_HEIGHT 257
 
+#define TOTALDICE 6
+
 class Graphics
 {
 	public:
@@ -77,6 +79,8 @@ class Graphics
 		ALLEGRO_BITMAP** Frames;
 		ALLEGRO_BITMAP** Tokens;
 
+		ALLEGRO_BITMAP** Dices;
+
 		void drawBoard(void); // borde						\__ estos dos no se deberían
 		void drawTiles(Board * board_); // interior (fijo)	/   redibujar porque no cambian en toda la partida
 		void drawBoardComponents();
@@ -86,7 +90,8 @@ class Graphics
 		void boardComponentsCount(Player* player_); // casas y caminos con contadores (no sobre el tablero)
 		void drawBoardComps(); //lo que va sobre el tablero (casas y  caminos)
 		void drawRobber();
-		void drawDices();
+		void drawDices(dices_t dices);
+		void drawDices(unsigned int dice1, unsigned int dice2);
 		void showMessage(); 
 
 		string getPlayerName();

@@ -10,6 +10,9 @@ Player()
 	my_r_cards.ore = 0;
 	my_r_cards.wool = 0;
 
+	dices.first_dice = 0;
+	dices.second_dice = 0;
+
 	//setteo longest = 0
 	myLongest = 0;
 
@@ -694,11 +697,16 @@ addDevelopmentCard(DevelopmentCard new_card)
 void Player::
 throwTheDices(void)
 {
-	unsigned int first_dice = 0, second_dice = 0;
 	srand(time(NULL));	//inicializo la semilla
-	first_dice = rand() % 6 + 1;	//tiro el primer dado
-	second_dice = rand() % 6 + 1;	//tiro el segundo dado
-	dice_number = first_dice + second_dice;	//guardo lo que suman ambos
+	dices.first_dice = rand() % 6 + 1;	//tiro el primer dado
+	dices.second_dice = rand() % 6 + 1;	//tiro el segundo dado
+	dice_number = dices.first_dice + dices.second_dice;	//guardo lo que suman ambos
+}
+
+dices_t Player::
+getDices()
+{
+	return dices;
 }
 
 bool Player::

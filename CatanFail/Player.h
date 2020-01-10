@@ -27,6 +27,11 @@ typedef struct
 	unsigned int wool;
 } myResourseCards_t;	//son todas las resource cards que tengo
 
+typedef struct
+{
+	unsigned int first_dice;
+	unsigned int second_dice;
+} dices_t;
 
 class Player
 {
@@ -44,6 +49,7 @@ class Player
 		unsigned int getCitiesBuilt(void);	//devuelve la cantidad de ciudades que construí
 		bool useDevelopmentCard(DevelopmentCards d_card);	//"usa" la development card que quiero usar, devuelve true si se pudo hacer sino el error es NO_DCARD
 		unsigned int getDiceNumber(void);	//devuelve el número que salío al tirar los dados
+		dices_t getDices();
 
 		unsigned int getResourceCards();
 
@@ -109,6 +115,8 @@ class Player
 		vector <DevelopmentCard> my_d_cards;
 
 		unsigned int dice_number;
+
+		dices_t dices;
 
 		Player_Error error;	//está re basico, podría mejorarse
 
