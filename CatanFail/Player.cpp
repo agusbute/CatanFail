@@ -139,8 +139,14 @@ useDevelopmentCard(DevelopmentCards d_card)
 	return successfully_used;
 }
 
-unsigned int Player::
+myResourseCards_t Player::
 getResourceCards()
+{
+	return my_r_cards;
+}
+
+unsigned int Player::
+getTotalResourceCards()
 {
 	unsigned int total = 0;
 	

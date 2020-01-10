@@ -51,7 +51,9 @@ class Player
 		unsigned int getDiceNumber(void);	//devuelve el número que salío al tirar los dados
 		dices_t getDices();
 
-		unsigned int getResourceCards();
+		unsigned int getTotalResourceCards();
+
+		myResourseCards_t getResourceCards();
 
 		void setBoard(Board * board_);	//IMPORTANTE!!!!
 

@@ -17,50 +17,50 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 
 	this->Dices = new ALLEGRO_BITMAP * [TOTALDICE];
 
-	if (al_init_primitives_addon() && al_init_image_addon())
-	{
-		setfirstGraphics();
-		
-		Hexes[DESERT1] = al_load_bitmap("Files/Hexes/DESERT.png");
-		Hexes[BRICK1] = al_load_bitmap("Files/Hexes/BRICK.png");
-		Hexes[GRAIN1] = al_load_bitmap("Files/Hexes/GRAIN.png");
-		Hexes[LUMBER1] = al_load_bitmap("Files/Hexes/LUMBER.png");
-		Hexes[ORE1] = al_load_bitmap("Files/Hexes/ORE.png");
-		Hexes[WOOL1] = al_load_bitmap("Files/Hexes/WOOL.png");
+	this->ResourceCards = new ALLEGRO_BITMAP * [TOTAL_RESOURCES];
 
-		Frames[ANY_PORT] = al_load_bitmap("Files/SeaFrames/ANY_PORT.png");
-		Frames[BRICK_PORT] = al_load_bitmap("Files/SeaFrames/BRICK_PORT.png");
-		Frames[WOOD_PORT] = al_load_bitmap("Files/SeaFrames/WOOD_PORT.png");
-		Frames[WOOL_PORT] = al_load_bitmap("Files/SeaFrames/WOOL_PORT.png");
-		Frames[STONE_PORT] = al_load_bitmap("Files/SeaFrames/STONE_PORT.png");
-		Frames[GRAIN_PORT] = al_load_bitmap("Files/SeaFrames/GRAIN_PORT.png");
+	setfirstGraphics();
 
-		Tokens[NUM2] = al_load_bitmap("Files/Tokens/NUM2.png");
-		Tokens[NUM3] = al_load_bitmap("Files/Tokens/NUM3.png");
-		Tokens[NUM4] = al_load_bitmap("Files/Tokens/NUM4.png");
-		Tokens[NUM5] = al_load_bitmap("Files/Tokens/NUM5.png");
-		Tokens[NUM6] = al_load_bitmap("Files/Tokens/NUM6.png");
-		Tokens[NUM8] = al_load_bitmap("Files/Tokens/NUM8.png");
-		Tokens[NUM9] = al_load_bitmap("Files/Tokens/NUM9.png");
-		Tokens[NUM10] = al_load_bitmap("Files/Tokens/NUM10.png");
-		Tokens[NUM11] = al_load_bitmap("Files/Tokens/NUM11.png");
-		Tokens[NUM12] = al_load_bitmap("Files/Tokens/NUM12.png");
-		Tokens[EMPTY] = al_load_bitmap("Files/Tokens/EMPTY.png");
-		Tokens[ROBBER] = al_load_bitmap("Files/Tokens/Robber.png");
+	Hexes[DESERT1] = al_load_bitmap("Files/Hexes/DESERT.png");
+	Hexes[BRICK1] = al_load_bitmap("Files/Hexes/BRICK.png");
+	Hexes[GRAIN1] = al_load_bitmap("Files/Hexes/GRAIN.png");
+	Hexes[LUMBER1] = al_load_bitmap("Files/Hexes/LUMBER.png");
+	Hexes[ORE1] = al_load_bitmap("Files/Hexes/ORE.png");
+	Hexes[WOOL1] = al_load_bitmap("Files/Hexes/WOOL.png");
 
-		Dices[0] = al_load_bitmap("Files/Dices/Dice1.png");
-		Dices[1] = al_load_bitmap("Files/Dices/Dice2.png");
-		Dices[2] = al_load_bitmap("Files/Dices/Dice3.png");
-		Dices[3] = al_load_bitmap("Files/Dices/Dice4.png");
-		Dices[4] = al_load_bitmap("Files/Dices/Dice5.png");
-		Dices[5] = al_load_bitmap("Files/Dices/Dice6.png");
-	}
-	else
-	{
-		al_shutdown_primitives_addon();
-		al_shutdown_image_addon();
-		al_shutdown_font_addon();
-	}
+	Frames[ANY_PORT] = al_load_bitmap("Files/SeaFrames/ANY_PORT.png");
+	Frames[BRICK_PORT] = al_load_bitmap("Files/SeaFrames/BRICK_PORT.png");
+	Frames[WOOD_PORT] = al_load_bitmap("Files/SeaFrames/WOOD_PORT.png");
+	Frames[WOOL_PORT] = al_load_bitmap("Files/SeaFrames/WOOL_PORT.png");
+	Frames[STONE_PORT] = al_load_bitmap("Files/SeaFrames/STONE_PORT.png");
+	Frames[GRAIN_PORT] = al_load_bitmap("Files/SeaFrames/GRAIN_PORT.png");
+
+	Tokens[NUM2] = al_load_bitmap("Files/Tokens/NUM2.png");
+	Tokens[NUM3] = al_load_bitmap("Files/Tokens/NUM3.png");
+	Tokens[NUM4] = al_load_bitmap("Files/Tokens/NUM4.png");
+	Tokens[NUM5] = al_load_bitmap("Files/Tokens/NUM5.png");
+	Tokens[NUM6] = al_load_bitmap("Files/Tokens/NUM6.png");
+	Tokens[NUM8] = al_load_bitmap("Files/Tokens/NUM8.png");
+	Tokens[NUM9] = al_load_bitmap("Files/Tokens/NUM9.png");
+	Tokens[NUM10] = al_load_bitmap("Files/Tokens/NUM10.png");
+	Tokens[NUM11] = al_load_bitmap("Files/Tokens/NUM11.png");
+	Tokens[NUM12] = al_load_bitmap("Files/Tokens/NUM12.png");
+	Tokens[EMPTY] = al_load_bitmap("Files/Tokens/EMPTY.png");
+	Tokens[ROBBER] = al_load_bitmap("Files/Tokens/Robber.png");
+
+	Dices[0] = al_load_bitmap("Files/Dices/Dice1.png");
+	Dices[1] = al_load_bitmap("Files/Dices/Dice2.png");
+	Dices[2] = al_load_bitmap("Files/Dices/Dice3.png");
+	Dices[3] = al_load_bitmap("Files/Dices/Dice4.png");
+	Dices[4] = al_load_bitmap("Files/Dices/Dice5.png");
+	Dices[5] = al_load_bitmap("Files/Dices/Dice6.png");
+
+	ResourceCards[BRICK1] = al_load_bitmap("Files/Cards/BRICK_CARD.png");
+	ResourceCards[GRAIN1] = al_load_bitmap("Files/Cards/GRAIN_CARD.png");
+	ResourceCards[WOOL1] = al_load_bitmap("Files/Cards/WOOL_CARD.png");
+	ResourceCards[LUMBER1] = al_load_bitmap("Files/Cards/LUMBER_CARD.png");
+	ResourceCards[ORE1] = al_load_bitmap("Files/Cards/ORE_CARD.png");
+
 }
 
 void Graphics::
@@ -84,9 +84,9 @@ void Graphics::
 setGraphicsGame()
 {
 	drawBoard();
-	drawTiles(board);
-	drawPlayer(player);
-	drawPlayer(opponent);
+
+	drawPlayer();
+	drawPlayer();
 	drawButtons(buttons);
 	al_flip_display();
 }
@@ -390,18 +390,54 @@ drawBoard(void)
 }
 
 void Graphics::
-drawTiles(Board* board_)
+drawPlayer() // debería chequear si es el oponente y en base a eso muestra en el display
 {
-
-}
-
-void Graphics::
-drawPlayer(Player* player_) // debería chequear si es el oponente y en base a eso muestra en el display
-{
-	if (player_->getType() == "player")
+	if (player->getType() == "player")
 	{
 
 	}
+}
+
+void Graphics::
+drawCards()
+{
+	float cx = al_get_bitmap_width(ResourceCards[0]) / 2.0;
+	float cy = al_get_bitmap_height(ResourceCards[0]) / 2.0;
+
+	float dx = 0.06 * WIDTH;
+	float dy = 0.2 * HEIGHT;
+	
+	string number = "";
+	
+	for (int i = 0; i < 5; i++)
+	{
+		al_draw_scaled_rotated_bitmap(ResourceCards[i], cx, cy, dx, dy + i * cx * 1.25, 0.4, 0.4, 0.0, NULL);
+		switch (i)
+		{
+		case ORE1:
+		{
+
+		}break;
+		case GRAIN1:
+		{
+
+		}break;
+		case WOOL1:
+		{
+
+		}break;
+		case LUMBER1:
+		{
+
+		}break;
+		case BRICK1:
+		{
+
+		}break;
+		default:break;
+		}
+	}
+	al_flip_display();
 }
 
 void Graphics::
@@ -417,8 +453,9 @@ Graphics::
 	delete[] this->Frames;
 	delete[] this->Tokens;
 	delete[] this->Dices;
+	delete[] this->ResourceCards;
 	al_shutdown_primitives_addon();
-	al_shutdown_image_addon();
+	
 	al_shutdown_font_addon();
 }
 
