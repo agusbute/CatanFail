@@ -1,5 +1,9 @@
 #pragma once
 
+string PacketMaker(PacketHeader Header, string data = "");
+
+const char* getHeader(PacketHeader);
+
 enum PacketHeader : unsigned char {
 	OTHER = 0x00,
 	ACK = 0x01,
@@ -34,3 +38,4 @@ enum PacketHeader : unsigned char {
 	HEADER_ERROR = 0xFE,
 	QUIT
 };
+

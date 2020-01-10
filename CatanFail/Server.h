@@ -11,7 +11,7 @@ using namespace std;
 
 #define PORT "13225"
 
-class server : NetworkSocket
+class server : public NetworkSocket
 {
 public:
 	server();

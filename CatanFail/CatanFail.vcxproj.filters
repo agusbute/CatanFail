@@ -66,6 +66,9 @@
     <ClInclude Include="Client.h">
       <Filter>Networking</Filter>
     </ClInclude>
+    <ClInclude Include="NFSM.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CatanFail.cpp">
@@ -112,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="Packeter.cpp">
       <Filter>Networking\Packets</Filter>
+    </ClCompile>
+    <ClCompile Include="NFSM.cpp">
+      <Filter>Networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -24,6 +24,8 @@ class NetworkSocket
 		bool send_message(string message);
 		bool startConnection(const char* host);
 		bool startListening();
+		Mode getMode();
+		NStatus getStatus();
 		
 
 	protected:

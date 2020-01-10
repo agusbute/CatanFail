@@ -160,6 +160,7 @@
     <ClInclude Include="DevelopmentCard.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="NFSM.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="SocketControl.h" />
     <ClInclude Include="Packets.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="SocketControl.cpp" />
     <ClCompile Include="Packeter.cpp" />
+    <ClCompile Include="NFSM.cpp" />
     <ClCompile Include="TerrainHexes.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Player.cpp" />

@@ -3,18 +3,53 @@
 
 using namespace std;
 
-string PacketMaker(PacketHeader Header, string data);
-const char* getHeader(PacketHeader);
 
 string PacketMaker(PacketHeader Header, string data)
 {
     string Packet(getHeader(Header)); 
-    if (Header == NAME)
+    switch (Header)
     {
-        Packet += data.length();
-        Packet += data;
+        case NAME_IS:
+            Packet += data.length();
+            Packet += data;
+            break;
+        case MAP_IS:
+            Packet += data;
+            break;
+        case CIRCULAR_TOKENS:
+            Packet += data;
+            break;
+    //    case PLAY_WITH_DEV: 
+     //      break;                                                 will be eliminated
+   //     case DEV_CARDS:
+    //        break;
+        case DICES_ARE:
+            Packet += data;
+            break;
+        case ROBBER_CARDS:
+            Packet += data;
+            break;
+        case CARD_IS:
+            break;
+        case ROBBER_MOVE:
+            Packet += data;
+            break;
+        case SETTLEMENT:
+            Packet += data;
+            break;
+        case ROAD:
+            Packet += data; 
+            break;
+        case CITY:
+            Packet += data;
+            break;
+        case BANK_TRADE:
+            Packet += data;
+            break;
+        case OFFER_TRADE:
+            Packet += data;
+            break;
     }
-
     return Packet;
 
 }

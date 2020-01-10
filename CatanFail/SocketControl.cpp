@@ -124,6 +124,16 @@ bool NetworkSocket::startListening()
 	return ret;
 }
 
+Mode NetworkSocket::getMode()
+{
+	return modo;
+}
+
+NStatus NetworkSocket::getStatus()
+{
+	return NTurno;
+}
+
 bool NetworkSocket::send_message(string str)
 {
 	bool ret = true;

@@ -6,7 +6,7 @@
 using namespace std;
 
 
-class client: NetworkSocket
+class client: public NetworkSocket
 {
 public:
 	client();
