@@ -11,6 +11,7 @@ class client: public NetworkSocket
 public:
 	client();
 	~client();
+	NStatus estado;
 
 protected:
 

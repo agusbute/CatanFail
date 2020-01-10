@@ -4,7 +4,7 @@
 #include "SocketControl.h"
 #include "Packets.h"
 
-enum ConnectionStatus : char { INITIATION, READY , DISCONNECTED};
+enum ConnectionStatus : char { INITIATION, READY , DISCONNECTED , SEND, RECEIVE};
 
 
 bool verifyPacket(PacketHeader,unsigned char* data);

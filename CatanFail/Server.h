@@ -16,5 +16,6 @@ class server : public NetworkSocket
 public:
 	server();
 	~server();
+	NStatus estado;
 };
 

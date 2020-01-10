@@ -7,6 +7,7 @@ void networkFSM()
 	ConnectionStatus status = DISCONNECTED;
 	client NewClient;
 	bool error = false;
+
 	while (status != READY)
 	{
 		switch (status)
@@ -36,37 +37,47 @@ void networkFSM()
 								NewClient.send_message(PacketMaker(NAME));
 								NewClient.receive_message();					// aca recibo el nombre del otro participante, guardar en algun lado.
 								NewClient.send_message(PacketMaker(ACK));
-								NewClient.receive_message();					//revisar que sea un ACK
+								if (NewClient.receive_message() != getHeader(ACK))
+								{
+									cout << "ERROR ME MANDARON CUALQUIER COSA" << endl;
+								}												//revisar que sea un ACK
 								NewClient.send_message(PacketMaker(NAME_IS, NOMBRE DEL QUE ESTA USANDO EL SERVER));
-								NewClient.receive_message();				//ACK
+								if (NewClient.receive_message() != getHeader(ACK))
+								{
+									cout << "ERROR ME MANDARON CUALQUIER COSA" << endl;
+								}
+								NewClient.estado = SENDING;
 							}
-							else if (NewClient.getMode() == CLIENT)
-							{
+							else if (NewClient.getMode() == CLIENT)							{
 								
 								if (NewClient.receive_message() != getHeader(NAME))
 								{
 									cout << "ERROR ME MANDARON CUALQUIER COSA" << endl;
 								}
 								NewClient.send_message(PacketMaker(NAME_IS, ACA VA EL NOMBRE QUE NO ME LO DIERON TODAVIA));	//PONER EL NOMBRE
-							}
+								if (NewClient.receive_message() != getHeader(ACK))
+								{
+									cout << "ERROR ME MANDARON CUALQUIER COSA" << endl;
+								}
+								NewClient.estado = RECEIVING;
 
+							}
+							status = READY;
 
 						}
 		}
+
+		if (error == true)
+		{
+			return;
+		}
+
 	}
 
 	
 
 	
-	if (NewClient.getMode() == SERVER)
-	{
-		NewClient.send_message(PacketMaker(NAME));
-	}
-	else if (NewClient.getMode() == CLIENT)
-	{
-
-	}
-
+	
 
 }
 
