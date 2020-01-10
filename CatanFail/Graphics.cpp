@@ -90,33 +90,33 @@ drawBoard(void)
 		{
 			case '0':
 			{
-				//dx = ;
-				//dy = ;
+				dx = 0.45*WIDTH;
+				dy = 0.225*HEIGHT;
 			}break;
 			case '1':
 			{
-				//dx = ;
-				//dy = ;
+				dx = 0.7583*WIDTH;
+				dy = 0.2773*HEIGHT;
 			}break;
 			case '2':
 			{
-				//dx = ;
-				//dy = ;
+				dx = 0.8133*WIDTH;
+				dy = 0.6273*HEIGHT;
 			}break;
 			case '3':
 			{
-				//dx = ;
-				//dy = ;
+				dx = 0.55*WIDTH;
+				dy = 0.775*HEIGHT;
 			}break;
 			case '4':
 			{
-				//dx = ;
-				//dy = ;
+				dx = 0.2417*WIDTH;
+				dy = 0.7727*HEIGHT;
 			}break;
 			case '5':
 			{
-				//dx = ;
-				//dy = ;
+				dx = 0.1867*WIDTH;
+				dy = 0.37727*HEIGHT;
 			}break;
 			default: break;
 		}
