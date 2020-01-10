@@ -79,8 +79,8 @@ drawBoard(void)
 		float middle_x = FRAME_WIDTH / 2.0;
 		float middle_y = FRAME_HEIGHT / 2.0;
 
-		float x_scale = 1.0;
-		float y_scale = 1.0;
+		float x_scale = (0.3*WIDTH)/FRAME_WIDTH;
+		float y_scale = (0.15*HEIGHT)/FRAME_HEIGHT;
 
 		float angle = ToRadians(((i * 60.0) + 180.0));
 
