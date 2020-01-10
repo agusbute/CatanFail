@@ -15,6 +15,8 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 	this->Frames = new ALLEGRO_BITMAP * [SEA_FRAME_TILES];
 	this->Tokens = new ALLEGRO_BITMAP * [TOKENS];
 
+	this->Dices = new ALLEGRO_BITMAP * [TOTALDICE];
+
 	if (al_init_primitives_addon() && al_init_image_addon())
 	{
 		setfirstGraphics();
@@ -45,6 +47,13 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 		Tokens[NUM12] = al_load_bitmap("Files/Tokens/NUM12.png");
 		Tokens[EMPTY] = al_load_bitmap("Files/Tokens/EMPTY.png");
 		Tokens[ROBBER] = al_load_bitmap("Files/Tokens/Robber.png");
+
+		Dices[0] = al_load_bitmap("Files/Dices/Dice1.png");
+		Dices[1] = al_load_bitmap("Files/Dices/Dice2.png");
+		Dices[2] = al_load_bitmap("Files/Dices/Dice3.png");
+		Dices[3] = al_load_bitmap("Files/Dices/Dice4.png");
+		Dices[4] = al_load_bitmap("Files/Dices/Dice5.png");
+		Dices[5] = al_load_bitmap("Files/Dices/Dice6.png");
 	}
 	else
 	{
@@ -407,7 +416,28 @@ Graphics::
 	delete[] this->Hexes;
 	delete[] this->Frames;
 	delete[] this->Tokens;
+	delete[] this->Dices;
 	al_shutdown_primitives_addon();
 	al_shutdown_image_addon();
 	al_shutdown_font_addon();
+}
+
+void Graphics::
+drawDices(dices_t dices)
+{
+	drawDices(dices.first_dice, dices.second_dice);
+}
+void Graphics::
+drawDices(unsigned int dice1, unsigned int dice2)
+{
+	float dx1, dy1, dx2, dy2;
+
+	dx1 = 0.85 * WIDTH - 5.0 - al_get_bitmap_width(Dices[dice1 - 1]) / 2.0;
+	dx2 = 0.85 * WIDTH + 5.0 + al_get_bitmap_width(Dices[dice1 - 1]) / 2.0;
+
+	dy1 = 0.15 * HEIGHT;
+	dy2 = dy1;
+	
+	al_draw_scaled_rotated_bitmap(Dices[dice1 - 1], al_get_bitmap_width(Dices[dice1 - 1]) / 2.0, al_get_bitmap_height(Dices[dice1 - 1]) / 2.0, dx1, dy1, 1.0 / 2.0, 1.0 / 2.0, 0.0, NULL);
+	al_draw_scaled_rotated_bitmap(Dices[dice2 - 1], al_get_bitmap_width(Dices[dice2 - 1]) / 2.0, al_get_bitmap_height(Dices[dice2 - 1]) / 2.0, dx2, dy2, 1.0 / 2.0, 1.0 / 2.0, 0.0, NULL);
 }
