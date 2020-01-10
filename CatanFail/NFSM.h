@@ -7,3 +7,5 @@
 enum ConnectionStatus : char { INITIATION, READY , DISCONNECTED};
 
 
+bool verifyPacket(PacketHeader,unsigned char* data);
+

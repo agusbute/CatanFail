@@ -1,10 +1,12 @@
 #include "NFSM.h"
+#include "Input.h"
 
 
 void networkFSM()
 {
 	ConnectionStatus status = DISCONNECTED;
 	client NewClient;
+	bool error = false;
 	while (status != READY)
 	{
 		switch (status)
@@ -29,7 +31,26 @@ void networkFSM()
 						 break;
 		case INITIATION:
 						{
-							//send name
+							if (NewClient.getMode() == SERVER)
+							{
+								NewClient.send_message(PacketMaker(NAME));
+								NewClient.receive_message();					// aca recibo el nombre del otro participante, guardar en algun lado.
+								NewClient.send_message(PacketMaker(ACK));
+								NewClient.receive_message();					//revisar que sea un ACK
+								NewClient.send_message(PacketMaker(NAME_IS, NOMBRE DEL QUE ESTA USANDO EL SERVER));
+								NewClient.receive_message();				//ACK
+							}
+							else if (NewClient.getMode() == CLIENT)
+							{
+								
+								if (NewClient.receive_message() != getHeader(NAME))
+								{
+									cout << "ERROR ME MANDARON CUALQUIER COSA" << endl;
+								}
+								NewClient.send_message(PacketMaker(NAME_IS, ACA VA EL NOMBRE QUE NO ME LO DIERON TODAVIA));	//PONER EL NOMBRE
+							}
+
+
 						}
 		}
 	}
@@ -47,4 +68,18 @@ void networkFSM()
 	}
 
 
+}
+
+
+
+
+bool verifyPacket(PacketHeader header, PacketHeader data)
+{
+	bool ret = false;
+	if (header == data)
+	{
+		ret = true;
+
+	}
+	return ret;
 }
