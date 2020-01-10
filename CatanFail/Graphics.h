@@ -32,6 +32,21 @@
 #define LUMBER1 4
 #define WOOL1 5
 
+#define NUM2 0
+#define NUM3 1
+#define NUM4 2
+#define NUM5 3
+#define NUM6 4
+#define NUM8 5
+#define NUM9 6
+#define NUM10 7
+#define NUM11 8
+#define NUM12 9
+#define EMPTY 10
+#define ROBBER 11
+
+#define TOKENS 12
+
 #define FRAME_WIDTH 810
 #define FRAME_HEIGHT 240
 
@@ -60,6 +75,7 @@ class Graphics
 
 		ALLEGRO_BITMAP** Hexes;
 		ALLEGRO_BITMAP** Frames;
+		ALLEGRO_BITMAP** Tokens;
 
 		void drawBoard(void); // borde						\__ estos dos no se deberían
 		void drawTiles(Board * board_); // interior (fijo)	/   redibujar porque no cambian en toda la partida

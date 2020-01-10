@@ -13,6 +13,7 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 
 	this->Hexes = new ALLEGRO_BITMAP * [TOTAL_RESOURCES + 1];
 	this->Frames = new ALLEGRO_BITMAP * [SEA_FRAME_TILES];
+	this->Tokens = new ALLEGRO_BITMAP * [TOKENS];
 
 	if (al_init_primitives_addon() && al_init_image_addon())
 	{
@@ -31,6 +32,19 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 		Frames[WOOL_PORT] = al_load_bitmap("Files/SeaFrames/WOOL_PORT.png");
 		Frames[STONE_PORT] = al_load_bitmap("Files/SeaFrames/STONE_PORT.png");
 		Frames[GRAIN_PORT] = al_load_bitmap("Files/SeaFrames/GRAIN_PORT.png");
+
+		Tokens[NUM2] = al_load_bitmap("Files/Tokens/NUM2.png");
+		Tokens[NUM3] = al_load_bitmap("Files/Tokens/NUM3.png");
+		Tokens[NUM4] = al_load_bitmap("Files/Tokens/NUM4.png");
+		Tokens[NUM5] = al_load_bitmap("Files/Tokens/NUM5.png");
+		Tokens[NUM6] = al_load_bitmap("Files/Tokens/NUM6.png");
+		Tokens[NUM8] = al_load_bitmap("Files/Tokens/NUM8.png");
+		Tokens[NUM9] = al_load_bitmap("Files/Tokens/NUM9.png");
+		Tokens[NUM10] = al_load_bitmap("Files/Tokens/NUM10.png");
+		Tokens[NUM11] = al_load_bitmap("Files/Tokens/NUM11.png");
+		Tokens[NUM12] = al_load_bitmap("Files/Tokens/NUM12.png");
+		Tokens[EMPTY] = al_load_bitmap("Files/Tokens/EMPTY.png");
+		Tokens[ROBBER] = al_load_bitmap("Files/Tokens/Robber.png");
 	}
 	else
 	{
@@ -304,12 +318,64 @@ drawBoard(void)
 		}
 
 		al_draw_scaled_rotated_bitmap(Hexes[img], middle_x, middle_y, dx, dy, x_scale, y_scale, 0.0, NULL);
+		
+		int img2 = 0;
+		//el token define el numero que tiene arriba
+		switch (board->all_the_hexes[i].getToken())
+		{
+			case 2:
+			{
+				img2 = NUM2;
+			}break;
+			case 3:
+			{
+				img2 = NUM3;
+			}break;
+			case 4:
+			{
+				img2 = NUM4;
+			}break;
+			case 5:
+			{
+				img2 = NUM5;
+			}break;
+			case 6:
+			{
+				img2 = NUM6;
+			}break;
+			case 8:
+			{
+				img2 = NUM8;
+			}break;
+			case 9:
+			{
+				img2 = NUM9;
+			}break;
+			case 10:
+			{
+				img2 = NUM10;
+			}break;
+			case 11:
+			{
+				img2 = NUM11;
+			}break;
+			case 12:
+			{
+				img2 = NUM12;
+			}break;
+			default: 
+			{
+				img2 = EMPTY;
+			}break;
+		}
+		
+		al_draw_scaled_rotated_bitmap(Tokens[img2], al_get_bitmap_width(Tokens[img2]) / 2.0, al_get_bitmap_height(Tokens[img2]) / 2.0, dx, dy, 1.0 / 4.0, 1.0 / 4.0, 0.0, NULL);
 
-		al_draw_circle(dx, dy, 15, al_map_rgb(0, 0, 0), 3.0);
-		al_draw_filled_circle(dx, dy, 15, al_map_rgb(255, 253, 208));
-		string number = "";
-		number += to_string(board->all_the_hexes[i].getToken());
-		al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx - 5.0, dy - 8.0, ALLEGRO_ALIGN_LEFT, number.c_str());
+		if (board->all_the_hexes[i].hasRobber())
+		{
+			al_draw_scaled_rotated_bitmap(Tokens[ROBBER], al_get_bitmap_width(Tokens[img2]) / 2.0, al_get_bitmap_height(Tokens[img2]) / 2.0, dx, dy, 1.0 / 16.885, 1.0 / 16.885, 0.0, NULL);
+		}
+
 		al_flip_display();
 	}
 }
@@ -340,6 +406,7 @@ Graphics::
 {
 	delete[] this->Hexes;
 	delete[] this->Frames;
+	delete[] this->Tokens;
 	al_shutdown_primitives_addon();
 	al_shutdown_image_addon();
 	al_shutdown_font_addon();
