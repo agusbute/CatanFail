@@ -76,12 +76,12 @@ drawBoard(void)
 
 	for (int i = 0; i < SEA_FRAME_TILES; i++)
 	{
-		float middle_x = FRAME_WIDTH / 2.0;
-		float middle_y = FRAME_HEIGHT / 2.0;
+		float middle_x = al_get_bitmap_width(Frames[i]) / 2.0;
+		float middle_y = al_get_bitmap_height(Frames[i]) / 2.0;
 
-		float x_scale = (0.3*WIDTH)/FRAME_WIDTH;
-		float y_scale = (0.15*HEIGHT)/FRAME_HEIGHT;
-
+		float x_scale = (0.3*WIDTH)/ al_get_bitmap_width(Frames[i]);
+		float y_scale = x_scale;
+		
 		float angle = ToRadians(((i * 60.0) + 180.0));
 
 		float dx = 0, dy = 0;
@@ -90,33 +90,33 @@ drawBoard(void)
 		{
 			case '0':
 			{
-				dx = 0.45*WIDTH;
-				dy = 0.225*HEIGHT;
+				dx = 0.45 * WIDTH; //OK!
+				dy = 0.15 * HEIGHT; //OK!
 			}break;
 			case '1':
 			{
-				dx = 0.7583*WIDTH;
-				dy = 0.2773*HEIGHT;
+				dx = 0.686 * WIDTH;
+				dy = 0.263 * HEIGHT;
 			}break;
 			case '2':
 			{
-				dx = 0.8133*WIDTH;
-				dy = 0.6273*HEIGHT;
+				dx = 0.736 * WIDTH;
+				dy = 0.619 * HEIGHT;
 			}break;
 			case '3':
 			{
-				dx = 0.55*WIDTH;
-				dy = 0.775*HEIGHT;
+				dx = 0.549 * WIDTH; //OK!
+				dy = 0.8586 * HEIGHT; //OK!
 			}break;
 			case '4':
 			{
-				dx = 0.2417*WIDTH;
-				dy = 0.7727*HEIGHT;
+				dx = 0.312 * WIDTH;
+				dy = 0.7429 * HEIGHT;
 			}break;
 			case '5':
 			{
-				dx = 0.1867*WIDTH;
-				dy = 0.37727*HEIGHT;
+				dx = 0.265 * WIDTH;
+				dy = 0.39 * HEIGHT;
 			}break;
 			default: break;
 		}
@@ -336,8 +336,8 @@ drawButtons(Button* buttons_)
 Graphics::
 ~Graphics()
 {
-	delete this->Hexes;
-	delete this->Frames;
+	delete[] this->Hexes;
+	delete[] this->Frames;
 	al_shutdown_primitives_addon();
 	al_shutdown_image_addon();
 	al_shutdown_font_addon();
