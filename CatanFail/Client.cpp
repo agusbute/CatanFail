@@ -7,16 +7,17 @@ client::client()
 	IO_handler = new boost::asio::io_service();
 	socket_forClient = new boost::asio::ip::tcp::socket(*IO_handler);
 	client_resolver = new boost::asio::ip::tcp::resolver(*IO_handler);
+	modo = CLIENT;
 }
 
 client::~client()
 {
 	socket_forClient->close();
-	delete client_resolver;
+	delete client_resolver;	
 	delete socket_forClient;
 	delete IO_handler;
 }
-
+/*
 bool client::tryConnection(const char* host)
 {
 	bool ret = true;
@@ -84,3 +85,4 @@ void client::send_message(char* message)
 	}
 
 }
+*/

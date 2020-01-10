@@ -7,10 +7,6 @@ using namespace std;
 
 NetworkSocket :: NetworkSocket()
 {
-	modo = CLIENT;			//siempre se iniciara como client
-	IO_handler = new boost::asio::io_service();
-	socket_forClient = new boost::asio::ip::tcp::socket(*IO_handler);
-	client_resolver = new boost::asio::ip::tcp::resolver(*IO_handler);
 
 }
 
@@ -23,7 +19,7 @@ bool NetworkSocket :: Connect()
 	{
 		
 		int n = rand() % 3000 + 2000;
-		bool ret;
+		bool ret = false;
 		chrono::steady_clock::time_point tend = std::chrono::steady_clock::now() + std::chrono::milliseconds(n);
 		while ((chrono::steady_clock::now() < tend) || ret != true )
 		{
@@ -32,7 +28,7 @@ bool NetworkSocket :: Connect()
 
 		if (ret)
 		{
-			this->NTurno = RECIEVING;	//poner que si hubo conex estoy en recibir info	
+			this->NTurno = RECEIVING;	//poner que si hubo conex estoy en recibir info	
 			return ret;
 		}
 		else
@@ -61,101 +57,32 @@ bool NetworkSocket :: Connect()
 	}
 }
 
-bool NetworkSocket::SendString(string Message)
+char* NetworkSocket::receive_message()
 {
-	if (modo == CLIENT)
+	boost::system::error_code error;
+	char buf[1500];
+	size_t len = 0;
+	do
 	{
-		char * buf = new char[Message.size() + 1];
-		strcpy(buf, Message.c_str());
-		bool ret = true;
-		size_t len = 0;
-		boost::system::error_code error;
-
-		do
+		len = socket_forClient->read_some(boost::asio::buffer(buf), error);
+		if (!error)
 		{
-			len += socket_forClient->write_some(boost::asio::buffer(buf, strlen(buf)), error);
-		} while ((error.value() == WSAEWOULDBLOCK) && len < strlen(buf));				//lo mando y me fijo que sea todo entero
-		if (error)
-		{
-			std::cout << "Error while trying to connect to server " << error.message() << std::endl;
-			ret = false;
+			buf[len] = '\0';
 		}
-		return ret;
-
-	}
-	else if (modo == SERVER)
+	} while (error.value() == WSAEWOULDBLOCK);
+	if (!error)
 	{
-
-		char * buf = new char[Message.size() + 1];
-		strcpy(buf, Message.c_str());
-		bool ret = true;
-		size_t len = 0;
-		boost::system::error_code error;
-
-		do
-		{
-			len += socket_forServer->write_some(boost::asio::buffer(buf, strlen(buf)), error);
-		} while ((error.value() == WSAEWOULDBLOCK) && len < strlen(buf));
-		if (error)
-		{
-			std::cout << "Error while trying to connect to server " << error.message() << std::endl;
-			ret = false;
-		}
-		return ret;
+		return &buf[0];
 	}
+	else
+	{
+		cout << "Error while trying to connect to server " << error.message() << std::endl;
+		return NULL;
+	}
+
 }
 
 
-char * NetworkSocket :: RecieveNoots(string Message)
-{
-	if (modo == CLIENT)
-	{
-		boost::system::error_code error;
-		char buf[1024];
-		size_t len = 0;
-		do
-		{
-			len = socket_forClient->read_some(boost::asio::buffer(buf), error);
-			if (!error)
-			{
-				buf[len] = '\0';
-			}
-		} while (error.value() == WSAEWOULDBLOCK);
-		if (!error)
-		{
-			return &buf[0];
-		}
-		else
-		{
-			cout << "Error while trying to connect to server " << error.message() << std::endl;
-			return NULL;
-		}
-
-	}
-	else if (modo == SERVER)
-	{
-		boost::system::error_code error;
-		char buf[1024];
-		size_t len = 0;
-		do
-		{
-			len = socket_forServer->read_some(boost::asio::buffer(buf), error);
-			if (!error)
-			{
-				buf[len] = '\0';
-			}
-		} while (error.value() == WSAEWOULDBLOCK);
-		if (!error)
-		{
-			return &buf[0];
-		}
-		else
-		{
-			cout << "Error while trying to connect to client. " << error.message() << std::endl;
-			return NULL;
-		}
-	}
-}
 
 bool NetworkSocket::startConnection(const char* host)
 {
@@ -176,5 +103,45 @@ bool NetworkSocket::startConnection(const char* host)
 
 	}
 	socket_forClient->non_blocking(true);
+	return ret;
+}
+
+bool NetworkSocket::startListening()
+{
+	bool ret = true;
+	server_acceptor->non_blocking(true);
+	boost::system::error_code error;
+	do
+	{
+		server_acceptor->accept(*socket_forServer, error);
+	} while ((error.value() == WSAEWOULDBLOCK));
+	if (error)
+	{
+		std::cout << "Error while trying to listen to " << PORT << "Port " << error.message() << std::endl;
+		ret = false;
+	}
+	socket_forServer->non_blocking(true);
+	return ret;
+}
+
+bool NetworkSocket::send_message(string str)
+{
+	bool ret = true;
+	char* buf = new char[str.size() + 1];
+	strcpy(buf, str.c_str());
+
+	size_t len = 0;
+	boost::system::error_code error;
+
+	do
+	{
+		len += socket_forClient->write_some(boost::asio::buffer(buf, strlen(buf)), error);
+	} while ((error.value() == WSAEWOULDBLOCK) && len < strlen(buf));				//lo mando y me fijo que sea todo entero
+	if (error)
+	{
+		std::cout << "Error while trying to connect to server " << error.message() << std::endl;
+		ret = false;
+	}
+
 	return ret;
 }

@@ -1,22 +1,17 @@
 #pragma once
 #include "boost/asio.hpp"
 #include <iostream>
+#include "SocketControl.h"
 #define PORT "13225"
 using namespace std;
 
 
-class client
+class client: NetworkSocket
 {
 public:
 	client();
-	bool tryConnection(const char * ip);
-	char * receive_message();
-	void send_message(char*);
 	~client();
 
-private:
-	boost::asio::io_service* IO_handler;
-	boost::asio::ip::tcp::socket* socket_forClient;
-	boost::asio::ip::tcp::resolver* client_resolver;
-	boost::asio::ip::tcp::resolver::iterator endpoint;
+protected:
+
 };

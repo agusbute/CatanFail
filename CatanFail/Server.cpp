@@ -1,5 +1,5 @@
 #include "Server.h"
-
+/*
 bool server::startListening()
 {
 	bool ret = true;
@@ -18,7 +18,7 @@ bool server::startListening()
 	return ret;
 }
 
-	void server:: send_message(char* message)
+void server:: send_message(char* message)
 	{
 
 		string str = message;
@@ -39,7 +39,7 @@ bool server::startListening()
 		}
 	}
 
-	char* server::receive_message()
+char* server::receive_message()
 	{
 		boost::system::error_code error;
 		char buf[1500];
@@ -61,4 +61,22 @@ bool server::startListening()
 			cout << "Error while trying to connect to server " << error.message() << std::endl;
 			return NULL;
 		}
+	}
+	*/
+	server::server()
+	{
+		IO_handler = new boost::asio::io_service();
+		boost::asio::ip::tcp::endpoint ep(boost::asio::ip::tcp::v4(), PORT);
+		socket_forServer = new boost::asio::ip::tcp::socket(*IO_handler);
+		server_acceptor = new boost::asio::ip::tcp::acceptor(*IO_handler, ep);
+		modo = SERVER;
+	}
+
+	server::~server()
+	{
+		server_acceptor->close();
+		socket_forServer->close();
+		delete server_acceptor;
+		delete socket_forServer;
+		delete IO_handler;
 	}

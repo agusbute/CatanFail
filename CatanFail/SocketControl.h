@@ -13,19 +13,21 @@ using namespace std;
 #define BUFFER_SIZE	1024
 
 enum Mode : int { CLIENT, SERVER };		//modos a funcionar
-enum NStatus : int { RECIEVING, SENDING };
+enum NStatus : int { RECEIVING, SENDING };
 
-class NetworkSocket : server
+class NetworkSocket
 {
 	public:
-		NetworkSocket();				//constructor inicializa en modo client
+		NetworkSocket();				
 		bool Connect();
-		bool SendString(string Message);
-		char * RecieveNoots(string Message);
+		char* receive_message();
+		bool send_message(string message);
 		bool startConnection(const char* host);
+		bool startListening();
 		
 
 	protected:
+
 		Mode modo;
 		bool connected;
 		string TargetIP;
