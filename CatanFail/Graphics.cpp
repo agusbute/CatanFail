@@ -412,27 +412,29 @@ drawCards()
 	for (int i = 0; i < 5; i++)
 	{
 		al_draw_scaled_rotated_bitmap(ResourceCards[i], cx, cy, dx, dy + i * cx * 1.25, 0.4, 0.4, 0.0, NULL);
+		al_draw_filled_circle(dx + cx * 0.6, dy + i * cx * 1.25, 10, al_map_rgb(255, 243, 154));
+		al_draw_circle(dx + cx * 0.6, dy + i * cx * 1.25, 10, al_map_rgb(0, 0, 0), 3);
 		switch (i)
 		{
 		case ORE1:
 		{
-
+			al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx + cx * 0.6 - 5.0, dy + i * cx * 1.25 - 9.0, ALLEGRO_ALIGN_LEFT, to_string(player->getResourceCards().ore).c_str());
 		}break;
 		case GRAIN1:
 		{
-
+			al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx + cx * 0.6 - 5.0, dy + i * cx * 1.25 - 9.0, ALLEGRO_ALIGN_LEFT, to_string(player->getResourceCards().grain).c_str());
 		}break;
 		case WOOL1:
 		{
-
+			al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx + cx * 0.6 - 5.0, dy + i * cx * 1.25 - 9.0, ALLEGRO_ALIGN_LEFT, to_string(player->getResourceCards().wool).c_str());
 		}break;
 		case LUMBER1:
 		{
-
+			al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx + cx * 0.6 - 5.0, dy + i * cx * 1.25 - 9.0, ALLEGRO_ALIGN_LEFT, to_string(player->getResourceCards().lumber).c_str());
 		}break;
 		case BRICK1:
 		{
-
+			al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx + cx * 0.6 - 5.0, dy + i * cx * 1.25 - 9.0, ALLEGRO_ALIGN_LEFT, to_string(player->getResourceCards().brick).c_str());
 		}break;
 		default:break;
 		}
