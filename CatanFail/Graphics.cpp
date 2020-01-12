@@ -86,7 +86,7 @@ setGraphicsGame()
 	drawBoard();
 
 	drawPlayer();
-	drawPlayer();
+	drawOpponent();
 	drawButtons(buttons);
 	al_flip_display();
 }
@@ -390,12 +390,17 @@ drawBoard(void)
 }
 
 void Graphics::
-drawPlayer() // debería chequear si es el oponente y en base a eso muestra en el display
+drawPlayer()
 {
-	if (player->getType() == "player")
-	{
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.06 * WIDTH, 0.15 * HEIGHT, ALLEGRO_ALIGN_LEFT, player->getName().c_str());
+	drawCards();
+	//falta dibujar las piezas que todavia no construyo
+}
 
-	}
+void Graphics::
+drawOpponent()
+{
+
 }
 
 void Graphics::

@@ -88,6 +88,7 @@ class Graphics
 		void drawBoardComponents();
 		void drawButtons(Button* buttons_); // esto se redibuja para efectos
 		void drawPlayer();
+		void drawOpponent();
 		void drawCards(); //dibuja las cartas con contador (se usa solo para el player)
 		void boardComponentsCount(Player* player_); // casas y caminos con contadores (no sobre el tablero)
 		void drawBoardComps(); //lo que va sobre el tablero (casas y  caminos)
