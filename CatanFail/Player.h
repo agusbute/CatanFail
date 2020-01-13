@@ -11,6 +11,10 @@
 #include "DevelopmentCard.h"
 #include "Board.h"
 
+#define TOTAL_ROADS 15
+#define TOTAL_SETTLEMENTS 5
+#define TOTAL_CITIES 4
+
 using namespace std;
 
 enum Actions {ADD, SUBTRACT};

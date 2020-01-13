@@ -404,9 +404,32 @@ drawBoard(void)
 void Graphics::
 drawPlayer()
 {
-	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.06 * WIDTH, 0.15 * HEIGHT, ALLEGRO_ALIGN_LEFT, player->getName().c_str());
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.05 * WIDTH, 0.05 * HEIGHT, ALLEGRO_ALIGN_LEFT, player->getName().c_str());
 	drawCards();
-	//falta dibujar las piezas que todavia no construyo
+	
+	float cx_road = al_get_bitmap_width(Roads[PLAYER]) / 2.0;
+	float cy_road = al_get_bitmap_height(Roads[PLAYER]) / 2.0;
+
+	float cx_city = al_get_bitmap_width(Settlements[PLAYER]) / 2.0;
+	float cy_city = al_get_bitmap_height(Settlements[PLAYER]) / 2.0;
+
+	float cx_settlement = al_get_bitmap_width(Houses[PLAYER]) / 2.0;
+	float cy_settlement = al_get_bitmap_height(Houses[PLAYER]) / 2.0;
+
+	al_draw_scaled_rotated_bitmap(Roads[PLAYER], cx_road, cy_road, 0.06 * WIDTH, 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.06 * WIDTH, 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.06 * WIDTH, 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.06 * WIDTH - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_ROADS - player->getRoadsBuilt()).c_str());
+
+	al_draw_scaled_rotated_bitmap(Settlements[PLAYER], cx_city, cy_city, 0.06 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.06 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.06 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.06 * WIDTH + 0.5 * (cx_settlement + cx_city) - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_CITIES - player->getCitiesBuilt()).c_str());
+
+	al_draw_scaled_rotated_bitmap(Houses[PLAYER], cx_settlement, cy_settlement, 0.06 * WIDTH + cx_settlement * 0.5, 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.06 * WIDTH + cx_settlement * 0.5, 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.06 * WIDTH + cx_settlement * 0.5, 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.06 * WIDTH + cx_settlement * 0.5 - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_SETTLEMENTS - player->getSettlementsBuilt()).c_str());
 }
 
 void Graphics::
@@ -473,6 +496,9 @@ Graphics::
 	delete[] this->Tokens;
 	delete[] this->Dices;
 	delete[] this->ResourceCards;
+	delete[] this->Houses;
+	delete[] this->Settlements;
+	delete[] this->Roads;
 	al_shutdown_primitives_addon();
 	
 	al_shutdown_font_addon();

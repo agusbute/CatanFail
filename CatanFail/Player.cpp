@@ -17,9 +17,9 @@ Player()
 	myLongest = 0;
 
 	//setteo las piezas que tengo
-	total_roads = 15;
-	total_settlements = 5;
-	total_cities = 4;
+	total_roads = TOTAL_ROADS;
+	total_settlements = TOTAL_SETTLEMENTS;
+	total_cities = TOTAL_CITIES;
 
 	//setteo victory points = 0
 	victory_points = 0;
