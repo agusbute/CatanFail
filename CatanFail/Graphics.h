@@ -56,6 +56,9 @@
 
 #define TOTALDICE 6
 
+#define PLAYER 0
+#define OPPONENT 1
+
 class Graphics
 {
 	public:
@@ -83,6 +86,10 @@ class Graphics
 		ALLEGRO_BITMAP** Dices;
 
 		ALLEGRO_BITMAP** ResourceCards;
+
+		ALLEGRO_BITMAP** Houses;
+		ALLEGRO_BITMAP** Settlements;
+		ALLEGRO_BITMAP** Roads;
 
 		void drawBoard(void);
 		void drawBoardComponents();

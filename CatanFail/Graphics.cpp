@@ -19,6 +19,11 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 
 	this->ResourceCards = new ALLEGRO_BITMAP * [TOTAL_RESOURCES];
 
+	this->Houses = new ALLEGRO_BITMAP * [2];
+	this->Settlements = new ALLEGRO_BITMAP* [2];
+	this->Roads = new ALLEGRO_BITMAP * [2];
+
+
 	setfirstGraphics();
 
 	Hexes[DESERT1] = al_load_bitmap("Files/Hexes/DESERT.png");
@@ -60,6 +65,13 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 	ResourceCards[WOOL1] = al_load_bitmap("Files/Cards/WOOL_CARD.png");
 	ResourceCards[LUMBER1] = al_load_bitmap("Files/Cards/LUMBER_CARD.png");
 	ResourceCards[ORE1] = al_load_bitmap("Files/Cards/ORE_CARD.png");
+
+	Houses[PLAYER] = al_load_bitmap("Files/BoardPieces/House1.png");
+	Houses[OPPONENT] = al_load_bitmap("Files/BoardPieces/House2.png");
+	Settlements[PLAYER] = al_load_bitmap("Files/BoardPieces/Settlement1.png");
+	Settlements[OPPONENT] = al_load_bitmap("Files/BoardPieces/Settlement2.png");
+	Roads[PLAYER] = al_load_bitmap("Files/BoardPieces/Road1.png");
+	Roads[OPPONENT] = al_load_bitmap("Files/BoardPieces/Road2.png");
 
 }
 
