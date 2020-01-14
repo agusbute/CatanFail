@@ -84,7 +84,6 @@ class Graphics
 		ALLEGRO_BITMAP** Tokens;
 
 		ALLEGRO_BITMAP** Dices;
-
 		ALLEGRO_BITMAP** ResourceCards;
 
 		ALLEGRO_BITMAP** Houses;

@@ -525,6 +525,7 @@ Graphics::
 	delete[] this->Houses;
 	delete[] this->Settlements;
 	delete[] this->Roads;
+
 	al_shutdown_primitives_addon();
 	
 	al_shutdown_font_addon();
@@ -535,6 +536,7 @@ drawDices(dices_t dices)
 {
 	drawDices(dices.first_dice, dices.second_dice);
 }
+
 void Graphics::
 drawDices(unsigned int dice1, unsigned int dice2)
 {
