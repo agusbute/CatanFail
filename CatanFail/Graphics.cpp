@@ -435,7 +435,33 @@ drawPlayer()
 void Graphics::
 drawOpponent()
 {
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.775 * WIDTH, 0.75 * HEIGHT, ALLEGRO_ALIGN_LEFT, opponent->getName().c_str());
 
+	float cx_road = al_get_bitmap_width(Roads[OPPONENT]) / 2.0;
+	float cy_road = al_get_bitmap_height(Roads[OPPONENT]) / 2.0;
+
+	float cx_city = al_get_bitmap_width(Settlements[OPPONENT]) / 2.0;
+	float cy_city = al_get_bitmap_height(Settlements[OPPONENT]) / 2.0;
+
+	float cx_settlement = al_get_bitmap_width(Houses[OPPONENT]) / 2.0;
+	float cy_settlement = al_get_bitmap_height(Houses[OPPONENT]) / 2.0;
+
+	al_draw_scaled_rotated_bitmap(Roads[OPPONENT], cx_road, cy_road, 0.75 * WIDTH, 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.75 * WIDTH, 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.75 * WIDTH, 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.75 * WIDTH - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_ROADS - opponent->getRoadsBuilt()).c_str());
+
+	al_draw_scaled_rotated_bitmap(Settlements[OPPONENT], cx_city, cy_city, 0.75 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.75 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.75 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.75 * WIDTH + 0.5 * (cx_settlement + cx_city) - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_CITIES - opponent->getCitiesBuilt()).c_str());
+
+	al_draw_scaled_rotated_bitmap(Houses[OPPONENT], cx_settlement, cy_settlement, 0.75 * WIDTH + cx_settlement * 0.5, 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.75 * WIDTH + cx_settlement * 0.5, 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.75 * WIDTH + cx_settlement * 0.5, 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.75 * WIDTH + cx_settlement * 0.5 - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_SETTLEMENTS - opponent->getSettlementsBuilt()).c_str());
+
+	al_flip_display();
 }
 
 void Graphics::
