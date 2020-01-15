@@ -2,9 +2,17 @@
 
 #include <iostream>
 #include <string>
+#include <allegro5/allegro.h>
+#include <allegro5/bitmap.h>
+#include <allegro5/allegro_image.h>
 
-#include "Input.h"
+#define VISIBLE_BUTTONS 4
+#define TRADE_BUTTON 0
+#define PASS_BUTTON 1
+#define BUILD_BUTTON 2
+#define EXIT_BUTTON 3
 
+#define INVISIBLE_BUTTONS 0
 
 
 using namespace std;

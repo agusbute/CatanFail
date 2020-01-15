@@ -64,7 +64,7 @@ evDispatcher(void)
 		{
 			mouse_position.pos_x = event.mouse.x;
 			mouse_position.pos_y = event.mouse.y;
-			//acá llama a un metodo de graphics que según la posición del mouse se fija si ahí hay un botón y cual es
+			//Buttons->IsButtoninPosition();//acá llama a un metodo de graphics que según la posición del mouse se fija si ahí hay un botón y cual es
 		}
 		break;
 
@@ -85,8 +85,6 @@ exitGame(void)
 string Input::
 inputName(void)
 {
-	/*esto de acá hay que modificar o no se si está bien y yo no se donde poner el archivo*/
-
 	font = al_load_ttf_font("Files/RINGM___.ttf", 15, 0);
 
 	if (font == NULL)
@@ -398,8 +396,6 @@ inputIP(void)
 			}
 		}
 
-		/*y acá hay que cambiar el primer parámetro de los al_draw_text por el tipo de font para cada uno*/
-
 		al_draw_text(font, al_map_rgb(255, 255, 255), WIDTH * 0.3, HEIGHT * 0.4, ALLEGRO_ALIGN_LEFT, "What's your IP?");
 		al_draw_filled_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, al_map_rgb(255, 255, 255)); // esto está bien
 		al_draw_rounded_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, 10.0, 10.0, al_map_rgb(0, 0, 0), 5.0);
@@ -423,11 +419,18 @@ getInputIP(void)
 	return inputIP();
 }
 
+void Input::
+setVisibleButtons(void)
+{
+	Buttons[TRADE_BUTTON]; // ????????????????????????
+}
+
 ALLEGRO_FONT * Input::
 getFont()
 {
 	return this->font;
 }
+
 
 Input::
 ~Input()

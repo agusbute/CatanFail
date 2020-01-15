@@ -8,6 +8,8 @@
 #include <allegro5/bitmap.h>
 #include <iostream>
 
+#include "Button.h"
+
 using namespace std;
 
 // medidas del display
@@ -40,6 +42,9 @@ public:
 
 
 private:
+
+	Button* Buttons[VISIBLE_BUTTONS + INVISIBLE_BUTTONS];
+
 	ALLEGRO_EVENT_QUEUE * event_queue;
 	ALLEGRO_DISPLAY * display;
 	ALLEGRO_EVENT event;
@@ -55,4 +60,6 @@ private:
 
 	string inputName(void); // Player debería llamar a esta función para obtener el nombre del jugador
 	string inputIP(void);
+
+	void setVisibleButtons(void);
 };
