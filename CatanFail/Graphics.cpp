@@ -86,7 +86,7 @@ setfirstGraphics()	// display de inicio - nombre e ip
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_flip_display();
 
-	input->getInputIP(); // consultar con bute
+	this->input->getInputIP(); // consultar con bute
 
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_flip_display();
