@@ -35,7 +35,7 @@ Input()
 					al_register_event_source(event_queue, al_get_display_event_source(display));	//registra los eventos del display
 					//al_register_event_source(event_queue, al_get_timer_event_source(timer));	//registra los eventos del timer AHORA LO VAMOS A INICIALIZAR EN GRAPHICS!
 					
-					if(al_install_mouse() && al_install_keyboard())	//para usar el mouse y el teclado
+					if (al_install_mouse() && al_install_keyboard() && al_init_image_addon() &&al_init_primitives_addon())	//para usar el mouse y el teclado
 					{
 						al_register_event_source(event_queue, al_get_mouse_event_source());	//registra los eventos del mouse
 						al_register_event_source(event_queue, al_get_keyboard_event_source()); //registra los eventos del teclado
@@ -64,7 +64,7 @@ evDispatcher(void)
 		{
 			mouse_position.pos_x = event.mouse.x;
 			mouse_position.pos_y = event.mouse.y;
-			//acá llama a un metodo de graphics que según la posición del mouse se fija si ahí hay un botón y cual es
+			//Buttons->IsButtoninPosition();//acá llama a un metodo de graphics que según la posición del mouse se fija si ahí hay un botón y cual es
 		}
 		break;
 
@@ -85,8 +85,6 @@ exitGame(void)
 string Input::
 inputName(void)
 {
-	/*esto de acá hay que modificar o no se si está bien y yo no se donde poner el archivo*/
-
 	font = al_load_ttf_font("Files/RINGM___.ttf", 15, 0);
 
 	if (font == NULL)
@@ -97,6 +95,9 @@ inputName(void)
 	string name = "";
 	bool exit = false;
 	int i = 0;
+	ALLEGRO_BITMAP* Title;
+	Title = al_load_bitmap("Files/settlers_title.png");
+	al_draw_scaled_rotated_bitmap(Title, al_get_bitmap_width(Title) / 2.0, al_get_bitmap_height(Title) / 2.0, WIDTH * 0.5, HEIGHT * 0.2, (0.3 * WIDTH) / 800, (0.3 * WIDTH) / 800, 0.0, NULL);
 
 	while (exit == false)
 	{
@@ -266,7 +267,7 @@ inputName(void)
 		al_draw_text(font, al_map_rgb(0, 0, 0), WIDTH * 0.33, HEIGHT * 0.48, ALLEGRO_ALIGN_LEFT, name.c_str());
 		al_flip_display();
 	}
-
+	al_destroy_bitmap(Title);
 	return name;
 }
 
@@ -276,6 +277,10 @@ inputIP(void)
 	string ip = "";
 	bool exit = false;
 	unsigned int i = 0;
+	
+	ALLEGRO_BITMAP* Title;
+	Title = al_load_bitmap("Files/settlers_title.png");
+	al_draw_scaled_rotated_bitmap(Title, al_get_bitmap_width(Title) / 2.0, al_get_bitmap_height(Title) / 2.0, WIDTH * 0.5, HEIGHT * 0.2, (0.3 * WIDTH) / 800, (0.3 * WIDTH) / 800, 0.0, NULL);
 
 	while (exit == false)
 	{
@@ -391,8 +396,6 @@ inputIP(void)
 			}
 		}
 
-		/*y acá hay que cambiar el primer parámetro de los al_draw_text por el tipo de font para cada uno*/
-
 		al_draw_text(font, al_map_rgb(255, 255, 255), WIDTH * 0.3, HEIGHT * 0.4, ALLEGRO_ALIGN_LEFT, "What's your IP?");
 		al_draw_filled_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, al_map_rgb(255, 255, 255)); // esto está bien
 		al_draw_rounded_rectangle(WIDTH * 0.3, HEIGHT * 0.45, WIDTH * 0.7, HEIGHT * 0.55, 10.0, 10.0, al_map_rgb(0, 0, 0), 5.0);
@@ -400,7 +403,7 @@ inputIP(void)
 		al_draw_text(font, al_map_rgb(0, 0, 0), WIDTH * 0.33, HEIGHT * 0.48, ALLEGRO_ALIGN_LEFT, ip.c_str());
 		al_flip_display();
 	}
-
+	al_destroy_bitmap(Title);
 	return ip;
 }
 
@@ -416,11 +419,18 @@ getInputIP(void)
 	return inputIP();
 }
 
+void Input::
+setVisibleButtons(void)
+{
+	Buttons[TRADE_BUTTON]; // ????????????????????????
+}
+
 ALLEGRO_FONT * Input::
 getFont()
 {
 	return this->font;
 }
+
 
 Input::
 ~Input()
@@ -428,6 +438,7 @@ Input::
 	al_destroy_timer(timer);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
+	al_shutdown_image_addon();
 	al_uninstall_keyboard();
 	al_uninstall_mouse();
 	al_destroy_font(font);

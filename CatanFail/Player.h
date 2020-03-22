@@ -11,6 +11,10 @@
 #include "DevelopmentCard.h"
 #include "Board.h"
 
+#define TOTAL_ROADS 15
+#define TOTAL_SETTLEMENTS 5
+#define TOTAL_CITIES 4
+
 using namespace std;
 
 enum Actions {ADD, SUBTRACT};
@@ -51,7 +55,9 @@ class Player
 		unsigned int getDiceNumber(void);	//devuelve el número que salío al tirar los dados
 		dices_t getDices();
 
-		unsigned int getResourceCards();
+		unsigned int getTotalResourceCards();
+
+		myResourseCards_t getResourceCards();
 
 		void setBoard(Board * board_);	//IMPORTANTE!!!!
 

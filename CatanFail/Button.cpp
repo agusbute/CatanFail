@@ -2,10 +2,10 @@
 
 Button::Button()
 {
-	this->show_button = false;
-	this->main_image = NULL;
-	this->hover_image = NULL;
-	this->click_image = NULL;
+	show_button = false;
+	main_image = NULL;
+	hover_image = NULL;
+	click_image = NULL;
 }
 
 Button::

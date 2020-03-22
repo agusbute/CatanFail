@@ -25,12 +25,13 @@
 #define WOOD_PORT 4
 #define WOOL_PORT 5
 
-#define DESERT1 0
-#define BRICK1 1
-#define GRAIN1 2
-#define ORE1 3
-#define LUMBER1 4
-#define WOOL1 5
+
+#define BRICK1 0
+#define GRAIN1 1
+#define ORE1 2
+#define LUMBER1 3
+#define WOOL1 4
+#define DESERT1 5
 
 #define NUM2 0
 #define NUM3 1
@@ -54,6 +55,9 @@
 #define HEX_HEIGHT 257
 
 #define TOTALDICE 6
+
+#define PLAYER 0
+#define OPPONENT 1
 
 class Graphics
 {
@@ -80,13 +84,18 @@ class Graphics
 		ALLEGRO_BITMAP** Tokens;
 
 		ALLEGRO_BITMAP** Dices;
+		ALLEGRO_BITMAP** ResourceCards;
 
-		void drawBoard(void); // borde						\__ estos dos no se deberían
-		void drawTiles(Board * board_); // interior (fijo)	/   redibujar porque no cambian en toda la partida
+		ALLEGRO_BITMAP** Houses;
+		ALLEGRO_BITMAP** Settlements;
+		ALLEGRO_BITMAP** Roads;
+
+		void drawBoard(void);
 		void drawBoardComponents();
 		void drawButtons(Button* buttons_); // esto se redibuja para efectos
-		void drawPlayer(Player * player_);
-		void drawCards(Player* player_); //dibuja las cartas con contador (se usa solo para el player)
+		void drawPlayer();
+		void drawOpponent();
+		void drawCards(); //dibuja las cartas con contador (se usa solo para el player)
 		void boardComponentsCount(Player* player_); // casas y caminos con contadores (no sobre el tablero)
 		void drawBoardComps(); //lo que va sobre el tablero (casas y  caminos)
 		void drawRobber();

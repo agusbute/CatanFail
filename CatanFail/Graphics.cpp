@@ -17,50 +17,62 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 
 	this->Dices = new ALLEGRO_BITMAP * [TOTALDICE];
 
-	if (al_init_primitives_addon() && al_init_image_addon())
-	{
-		setfirstGraphics();
-		
-		Hexes[DESERT1] = al_load_bitmap("Files/Hexes/DESERT.png");
-		Hexes[BRICK1] = al_load_bitmap("Files/Hexes/BRICK.png");
-		Hexes[GRAIN1] = al_load_bitmap("Files/Hexes/GRAIN.png");
-		Hexes[LUMBER1] = al_load_bitmap("Files/Hexes/LUMBER.png");
-		Hexes[ORE1] = al_load_bitmap("Files/Hexes/ORE.png");
-		Hexes[WOOL1] = al_load_bitmap("Files/Hexes/WOOL.png");
+	this->ResourceCards = new ALLEGRO_BITMAP * [TOTAL_RESOURCES];
 
-		Frames[ANY_PORT] = al_load_bitmap("Files/SeaFrames/ANY_PORT.png");
-		Frames[BRICK_PORT] = al_load_bitmap("Files/SeaFrames/BRICK_PORT.png");
-		Frames[WOOD_PORT] = al_load_bitmap("Files/SeaFrames/WOOD_PORT.png");
-		Frames[WOOL_PORT] = al_load_bitmap("Files/SeaFrames/WOOL_PORT.png");
-		Frames[STONE_PORT] = al_load_bitmap("Files/SeaFrames/STONE_PORT.png");
-		Frames[GRAIN_PORT] = al_load_bitmap("Files/SeaFrames/GRAIN_PORT.png");
+	this->Houses = new ALLEGRO_BITMAP * [2];
+	this->Settlements = new ALLEGRO_BITMAP* [2];
+	this->Roads = new ALLEGRO_BITMAP * [2];
 
-		Tokens[NUM2] = al_load_bitmap("Files/Tokens/NUM2.png");
-		Tokens[NUM3] = al_load_bitmap("Files/Tokens/NUM3.png");
-		Tokens[NUM4] = al_load_bitmap("Files/Tokens/NUM4.png");
-		Tokens[NUM5] = al_load_bitmap("Files/Tokens/NUM5.png");
-		Tokens[NUM6] = al_load_bitmap("Files/Tokens/NUM6.png");
-		Tokens[NUM8] = al_load_bitmap("Files/Tokens/NUM8.png");
-		Tokens[NUM9] = al_load_bitmap("Files/Tokens/NUM9.png");
-		Tokens[NUM10] = al_load_bitmap("Files/Tokens/NUM10.png");
-		Tokens[NUM11] = al_load_bitmap("Files/Tokens/NUM11.png");
-		Tokens[NUM12] = al_load_bitmap("Files/Tokens/NUM12.png");
-		Tokens[EMPTY] = al_load_bitmap("Files/Tokens/EMPTY.png");
-		Tokens[ROBBER] = al_load_bitmap("Files/Tokens/Robber.png");
 
-		Dices[0] = al_load_bitmap("Files/Dices/Dice1.png");
-		Dices[1] = al_load_bitmap("Files/Dices/Dice2.png");
-		Dices[2] = al_load_bitmap("Files/Dices/Dice3.png");
-		Dices[3] = al_load_bitmap("Files/Dices/Dice4.png");
-		Dices[4] = al_load_bitmap("Files/Dices/Dice5.png");
-		Dices[5] = al_load_bitmap("Files/Dices/Dice6.png");
-	}
-	else
-	{
-		al_shutdown_primitives_addon();
-		al_shutdown_image_addon();
-		al_shutdown_font_addon();
-	}
+	setfirstGraphics();
+
+	Hexes[DESERT1] = al_load_bitmap("Files/Hexes/DESERT.png");
+	Hexes[BRICK1] = al_load_bitmap("Files/Hexes/BRICK.png");
+	Hexes[GRAIN1] = al_load_bitmap("Files/Hexes/GRAIN.png");
+	Hexes[LUMBER1] = al_load_bitmap("Files/Hexes/LUMBER.png");
+	Hexes[ORE1] = al_load_bitmap("Files/Hexes/ORE.png");
+	Hexes[WOOL1] = al_load_bitmap("Files/Hexes/WOOL.png");
+
+	Frames[ANY_PORT] = al_load_bitmap("Files/SeaFrames/ANY_PORT.png");
+	Frames[BRICK_PORT] = al_load_bitmap("Files/SeaFrames/BRICK_PORT.png");
+	Frames[WOOD_PORT] = al_load_bitmap("Files/SeaFrames/WOOD_PORT.png");
+	Frames[WOOL_PORT] = al_load_bitmap("Files/SeaFrames/WOOL_PORT.png");
+	Frames[STONE_PORT] = al_load_bitmap("Files/SeaFrames/STONE_PORT.png");
+	Frames[GRAIN_PORT] = al_load_bitmap("Files/SeaFrames/GRAIN_PORT.png");
+
+	Tokens[NUM2] = al_load_bitmap("Files/Tokens/NUM2.png");
+	Tokens[NUM3] = al_load_bitmap("Files/Tokens/NUM3.png");
+	Tokens[NUM4] = al_load_bitmap("Files/Tokens/NUM4.png");
+	Tokens[NUM5] = al_load_bitmap("Files/Tokens/NUM5.png");
+	Tokens[NUM6] = al_load_bitmap("Files/Tokens/NUM6.png");
+	Tokens[NUM8] = al_load_bitmap("Files/Tokens/NUM8.png");
+	Tokens[NUM9] = al_load_bitmap("Files/Tokens/NUM9.png");
+	Tokens[NUM10] = al_load_bitmap("Files/Tokens/NUM10.png");
+	Tokens[NUM11] = al_load_bitmap("Files/Tokens/NUM11.png");
+	Tokens[NUM12] = al_load_bitmap("Files/Tokens/NUM12.png");
+	Tokens[EMPTY] = al_load_bitmap("Files/Tokens/EMPTY.png");
+	Tokens[ROBBER] = al_load_bitmap("Files/Tokens/Robber.png");
+
+	Dices[0] = al_load_bitmap("Files/Dices/Dice1.png");
+	Dices[1] = al_load_bitmap("Files/Dices/Dice2.png");
+	Dices[2] = al_load_bitmap("Files/Dices/Dice3.png");
+	Dices[3] = al_load_bitmap("Files/Dices/Dice4.png");
+	Dices[4] = al_load_bitmap("Files/Dices/Dice5.png");
+	Dices[5] = al_load_bitmap("Files/Dices/Dice6.png");
+
+	ResourceCards[BRICK1] = al_load_bitmap("Files/Cards/BRICK_CARD.png");
+	ResourceCards[GRAIN1] = al_load_bitmap("Files/Cards/GRAIN_CARD.png");
+	ResourceCards[WOOL1] = al_load_bitmap("Files/Cards/WOOL_CARD.png");
+	ResourceCards[LUMBER1] = al_load_bitmap("Files/Cards/LUMBER_CARD.png");
+	ResourceCards[ORE1] = al_load_bitmap("Files/Cards/ORE_CARD.png");
+
+	Houses[PLAYER] = al_load_bitmap("Files/BoardPieces/House1.png");
+	Houses[OPPONENT] = al_load_bitmap("Files/BoardPieces/House2.png");
+	Settlements[PLAYER] = al_load_bitmap("Files/BoardPieces/Settlement1.png");
+	Settlements[OPPONENT] = al_load_bitmap("Files/BoardPieces/Settlement2.png");
+	Roads[PLAYER] = al_load_bitmap("Files/BoardPieces/Road1.png");
+	Roads[OPPONENT] = al_load_bitmap("Files/BoardPieces/Road2.png");
+
 }
 
 void Graphics::
@@ -74,7 +86,7 @@ setfirstGraphics()	// display de inicio - nombre e ip
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_flip_display();
 
-	input->getInputIP(); // consultar con bute
+	this->input->getInputIP(); // consultar con bute
 
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_flip_display();
@@ -84,9 +96,9 @@ void Graphics::
 setGraphicsGame()
 {
 	drawBoard();
-	drawTiles(board);
-	drawPlayer(player);
-	drawPlayer(opponent);
+
+	drawPlayer();
+	drawOpponent();
 	drawButtons(buttons);
 	al_flip_display();
 }
@@ -390,18 +402,110 @@ drawBoard(void)
 }
 
 void Graphics::
-drawTiles(Board* board_)
+drawPlayer()
 {
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.05 * WIDTH, 0.05 * HEIGHT, ALLEGRO_ALIGN_LEFT, player->getName().c_str());
+	drawCards();
+	
+	float cx_road = al_get_bitmap_width(Roads[PLAYER]) / 2.0;
+	float cy_road = al_get_bitmap_height(Roads[PLAYER]) / 2.0;
 
+	float cx_city = al_get_bitmap_width(Settlements[PLAYER]) / 2.0;
+	float cy_city = al_get_bitmap_height(Settlements[PLAYER]) / 2.0;
+
+	float cx_settlement = al_get_bitmap_width(Houses[PLAYER]) / 2.0;
+	float cy_settlement = al_get_bitmap_height(Houses[PLAYER]) / 2.0;
+
+	al_draw_scaled_rotated_bitmap(Roads[PLAYER], cx_road, cy_road, 0.06 * WIDTH, 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.06 * WIDTH, 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.06 * WIDTH, 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.06 * WIDTH - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_ROADS - player->getRoadsBuilt()).c_str());
+
+	al_draw_scaled_rotated_bitmap(Settlements[PLAYER], cx_city, cy_city, 0.06 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.06 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.06 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.06 * WIDTH + 0.5 * (cx_settlement + cx_city) - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_CITIES - player->getCitiesBuilt()).c_str());
+
+	al_draw_scaled_rotated_bitmap(Houses[PLAYER], cx_settlement, cy_settlement, 0.06 * WIDTH + cx_settlement * 0.5, 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.06 * WIDTH + cx_settlement * 0.5, 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.06 * WIDTH + cx_settlement * 0.5, 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.06 * WIDTH + cx_settlement * 0.5 - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_SETTLEMENTS - player->getSettlementsBuilt()).c_str());
 }
 
 void Graphics::
-drawPlayer(Player* player_) // debería chequear si es el oponente y en base a eso muestra en el display
+drawOpponent()
 {
-	if (player_->getType() == "player")
-	{
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.775 * WIDTH, 0.75 * HEIGHT, ALLEGRO_ALIGN_LEFT, opponent->getName().c_str());
 
+	float cx_road = al_get_bitmap_width(Roads[OPPONENT]) / 2.0;
+	float cy_road = al_get_bitmap_height(Roads[OPPONENT]) / 2.0;
+
+	float cx_city = al_get_bitmap_width(Settlements[OPPONENT]) / 2.0;
+	float cy_city = al_get_bitmap_height(Settlements[OPPONENT]) / 2.0;
+
+	float cx_settlement = al_get_bitmap_width(Houses[OPPONENT]) / 2.0;
+	float cy_settlement = al_get_bitmap_height(Houses[OPPONENT]) / 2.0;
+
+	al_draw_scaled_rotated_bitmap(Roads[OPPONENT], cx_road, cy_road, 0.75 * WIDTH, 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.75 * WIDTH, 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.75 * WIDTH, 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.75 * WIDTH - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_ROADS - opponent->getRoadsBuilt()).c_str());
+
+	al_draw_scaled_rotated_bitmap(Settlements[OPPONENT], cx_city, cy_city, 0.75 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.75 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.75 * WIDTH + 0.5 * (cx_settlement + cx_city), 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.75 * WIDTH + 0.5 * (cx_settlement + cx_city) - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_CITIES - opponent->getCitiesBuilt()).c_str());
+
+	al_draw_scaled_rotated_bitmap(Houses[OPPONENT], cx_settlement, cy_settlement, 0.75 * WIDTH + cx_settlement * 0.5, 0.925 * HEIGHT, 0.15, 0.15, 0.0, NULL);
+	al_draw_filled_circle(0.75 * WIDTH + cx_settlement * 0.5, 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
+	al_draw_circle(0.75 * WIDTH + cx_settlement * 0.5, 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
+	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.75 * WIDTH + cx_settlement * 0.5 - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_SETTLEMENTS - opponent->getSettlementsBuilt()).c_str());
+
+	al_flip_display();
+}
+
+void Graphics::
+drawCards()
+{
+	float cx = al_get_bitmap_width(ResourceCards[0]) / 2.0;
+	float cy = al_get_bitmap_height(ResourceCards[0]) / 2.0;
+
+	float dx = 0.06 * WIDTH;
+	float dy = 0.2 * HEIGHT;
+	
+	string number = "";
+	
+	for (int i = 0; i < 5; i++)
+	{
+		al_draw_scaled_rotated_bitmap(ResourceCards[i], cx, cy, dx, dy + i * cx * 1.25, 0.4, 0.4, 0.0, NULL);
+		al_draw_filled_circle(dx + cx * 0.6, dy + i * cx * 1.25, 10, al_map_rgb(255, 243, 154));
+		al_draw_circle(dx + cx * 0.6, dy + i * cx * 1.25, 10, al_map_rgb(0, 0, 0), 3);
+		switch (i)
+		{
+		case ORE1:
+		{
+			al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx + cx * 0.6 - 5.0, dy + i * cx * 1.25 - 9.0, ALLEGRO_ALIGN_LEFT, to_string(player->getResourceCards().ore).c_str());
+		}break;
+		case GRAIN1:
+		{
+			al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx + cx * 0.6 - 5.0, dy + i * cx * 1.25 - 9.0, ALLEGRO_ALIGN_LEFT, to_string(player->getResourceCards().grain).c_str());
+		}break;
+		case WOOL1:
+		{
+			al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx + cx * 0.6 - 5.0, dy + i * cx * 1.25 - 9.0, ALLEGRO_ALIGN_LEFT, to_string(player->getResourceCards().wool).c_str());
+		}break;
+		case LUMBER1:
+		{
+			al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx + cx * 0.6 - 5.0, dy + i * cx * 1.25 - 9.0, ALLEGRO_ALIGN_LEFT, to_string(player->getResourceCards().lumber).c_str());
+		}break;
+		case BRICK1:
+		{
+			al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), dx + cx * 0.6 - 5.0, dy + i * cx * 1.25 - 9.0, ALLEGRO_ALIGN_LEFT, to_string(player->getResourceCards().brick).c_str());
+		}break;
+		default:break;
+		}
 	}
+	al_flip_display();
 }
 
 void Graphics::
@@ -417,8 +521,13 @@ Graphics::
 	delete[] this->Frames;
 	delete[] this->Tokens;
 	delete[] this->Dices;
+	delete[] this->ResourceCards;
+	delete[] this->Houses;
+	delete[] this->Settlements;
+	delete[] this->Roads;
+
 	al_shutdown_primitives_addon();
-	al_shutdown_image_addon();
+	
 	al_shutdown_font_addon();
 }
 
@@ -427,6 +536,7 @@ drawDices(dices_t dices)
 {
 	drawDices(dices.first_dice, dices.second_dice);
 }
+
 void Graphics::
 drawDices(unsigned int dice1, unsigned int dice2)
 {
