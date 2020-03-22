@@ -94,3 +94,8 @@ bool verifyPacket(PacketHeader header, PacketHeader data)
 	}
 	return ret;
 }
+
+bool verifyPacket(PacketHeader, unsigned char* data)
+{
+	return false;
+}
