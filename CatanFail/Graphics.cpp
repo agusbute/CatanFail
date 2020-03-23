@@ -26,6 +26,11 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 
 	setfirstGraphics();
 
+	Color_Nodes = al_load_bitmap("Files/Clicks/nodes.png");
+	Color_Roads = al_load_bitmap("Files/Clicks/roads.png");
+	Color_Buttons1 = al_load_bitmap("Files/Clicks/buttons.png");
+	Color_Buttons2 = al_load_bitmap("Files/Clicks/buttons2.png");
+
 	Hexes[DESERT1] = al_load_bitmap("Files/Hexes/DESERT.png");
 	Hexes[BRICK1] = al_load_bitmap("Files/Hexes/BRICK.png");
 	Hexes[GRAIN1] = al_load_bitmap("Files/Hexes/GRAIN.png");
@@ -95,6 +100,8 @@ setfirstGraphics()	// display de inicio - nombre e ip
 void Graphics::
 setGraphicsGame()
 {
+	al_clear_to_color(al_map_rgb(185, 180, 135));
+
 	drawBoard();
 
 	drawPlayer();
@@ -430,6 +437,14 @@ drawPlayer()
 	al_draw_filled_circle(0.06 * WIDTH + cx_settlement * 0.5, 0.86 * HEIGHT, 10, al_map_rgb(255, 243, 154));
 	al_draw_circle(0.06 * WIDTH + cx_settlement * 0.5, 0.86 * HEIGHT, 10, al_map_rgb(0, 0, 0), 3);
 	al_draw_text(input->getFont(), al_map_rgb(0, 0, 0), 0.06 * WIDTH + cx_settlement * 0.5 - 5.0, 0.86 * HEIGHT - 9.0, ALLEGRO_ALIGN_LEFT, to_string(TOTAL_SETTLEMENTS - player->getSettlementsBuilt()).c_str());
+
+	for (int i = 0; i < TOTAL_ROADS; i++)
+	{
+		al_draw_scaled_rotated_bitmap(Roads[PLAYER], cx_road, cy_road, player_roads[i].x, player_roads[i].y, 0.1, 0.1, 0.0, NULL);
+		al_draw_scaled_rotated_bitmap(Settlements[PLAYER], cx_city, cy_city, player_cities[i].x, player_cities[i].y, 0.1, 0.1, 0.0, NULL);
+		al_draw_scaled_rotated_bitmap(Houses[PLAYER], cx_settlement, cy_settlement, player_settlements[i].x, player_settlements[i].y, 0.1, 0.1, 0.0, NULL);
+	}
+
 }
 
 void Graphics::

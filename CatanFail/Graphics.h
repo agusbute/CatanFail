@@ -59,6 +59,12 @@
 #define PLAYER 0
 #define OPPONENT 1
 
+typedef struct
+{
+	int x;
+	int y = 1000;
+}disp_coord;
+
 class Graphics
 {
 	public:
@@ -79,6 +85,11 @@ class Graphics
 		Input * input;
 		Button * buttons;
 
+		ALLEGRO_BITMAP* Color_Nodes;
+		ALLEGRO_BITMAP* Color_Roads;
+		ALLEGRO_BITMAP* Color_Buttons1;
+		ALLEGRO_BITMAP* Color_Buttons2;
+
 		ALLEGRO_BITMAP** Hexes;
 		ALLEGRO_BITMAP** Frames;
 		ALLEGRO_BITMAP** Tokens;
@@ -89,6 +100,13 @@ class Graphics
 		ALLEGRO_BITMAP** Houses;
 		ALLEGRO_BITMAP** Settlements;
 		ALLEGRO_BITMAP** Roads;
+
+		disp_coord player_roads[TOTAL_ROADS];
+		disp_coord opponent_roads[TOTAL_ROADS];
+		disp_coord player_settlements[TOTAL_SETTLEMENTS];
+		disp_coord opponent_settlement[TOTAL_SETTLEMENTS];
+		disp_coord player_cities[TOTAL_CITIES];
+		disp_coord opponent_cities[TOTAL_CITIES];
 
 		void drawBoard(void);
 		void drawBoardComponents();
@@ -102,6 +120,6 @@ class Graphics
 		void drawDices(dices_t dices);
 		void drawDices(unsigned int dice1, unsigned int dice2);
 		void showMessage(); 
-
+		
 		string getPlayerName();
 };
