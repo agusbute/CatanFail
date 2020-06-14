@@ -3,6 +3,7 @@
 
 using namespace std;
 
+//le pone el prefijo a los packets, la idea de la funcion es que le pases el header y la data ,sea la que sea y te hace el packet
 
 string PacketMaker(PacketHeader Header, string data)
 {
