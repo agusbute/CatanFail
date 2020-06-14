@@ -1,5 +1,7 @@
 #include "Server.h"
-/*
+
+//literal esto lo saque del tp del webserver, me fije que ande y lo modifique para que nos sirva
+
 bool server::startListening()
 {
 	bool ret = true;
@@ -62,7 +64,7 @@ char* server::receive_message()
 			return NULL;
 		}
 	}
-	*/
+	
 	server::server()
 	{
 		IO_handler = new boost::asio::io_service();
