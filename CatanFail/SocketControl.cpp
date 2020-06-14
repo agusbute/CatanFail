@@ -5,6 +5,9 @@
 
 using namespace std;
 
+
+//esto funciona ya lo probé, la funcion connect se ocupa de lo del clock, usa chrono. si falla se vuelve a modo server y hace lo que tiene que hacer
+
 NetworkSocket :: NetworkSocket()
 {
 
