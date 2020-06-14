@@ -13,6 +13,9 @@
 
 using namespace std;
 
+//varias funciones de aca  las saque de lo de lucas para tener idea de que funciones uso el y basarme en eso
+
+
 /*
 * IMPORTANTE RECORDATORIO
 * Para entender el flujo de State pattern, recordar pensar que en cada estado,
