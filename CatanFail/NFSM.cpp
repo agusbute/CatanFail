@@ -1,6 +1,7 @@
 #include "NFSM.h"
 #include "Input.h"
 
+//networkfsm inicia la fms de la network tipo la de construir hace lo de que sea primero client o server 
 
 void networkFSM()
 {
