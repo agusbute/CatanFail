@@ -1,27 +1,40 @@
 #include "Game.h"
 
 Game::
-Game()
+Game(Board* board_, Player* player_, Player* opponent_, Input* input_, Graphics * graphics_)
 {
-	board = new Board;
+	graphics = graphics_;
+	player = player_;
+	opponent = opponent_;
+	board = board_;
+	input = input_;
 
-	player = new Player;
-	opponent = new Player;
 	player->setBoard(board);
 	opponent->setBoard(board);
-	
-	//network = new Network;
-	//graphics = new Graphics;
+
+	fsm_array[PLAYER_STATE][DEFAULT] = &player_default;
+	fsm_array[PLAYER_STATE][TRADE] = &player_trade;
+	fsm_array[PLAYER_STATE][DICES_7] = &player_dices_7;
+	fsm_array[PLAYER_STATE][BUILD] = &player_build;
+	fsm_array[PLAYER_STATE][PASS] = &player_pass;
+	fsm_array[PLAYER_STATE][EXIT] = &player_exit;
+
+	fsm_array[OPPONENT_STATE][DEFAULT] = &opponent_default;
+	fsm_array[OPPONENT_STATE][TRADE] = &opponent_trade;
+	fsm_array[OPPONENT_STATE][DICES_7] = &opponent_dices_7;
+	fsm_array[OPPONENT_STATE][BUILD] = &opponent_build;
+	fsm_array[OPPONENT_STATE][PASS] = &opponent_pass;
+	fsm_array[OPPONENT_STATE][EXIT] = &opponent_exit;
+
+	player_state = PLAYER_STATE;
+	turn_state = DEFAULT;
+
 }
 
 Game::
 ~Game()
 {
-	delete player;
-	delete opponent;
-	//delete graphics;
-	//delete network;
-	delete board;
+
 }
 
 void Game::
@@ -36,8 +49,6 @@ play()
 	network->begin(board, player);
 	graphics->setBoard(board, player, opponent);
 	opponent->setName(network->getOpponentName());//network guarda el nombre del oponente en un string
-
-
 	*/
 }
 
@@ -399,4 +410,6 @@ void Game::
 opponent_pass(void) {}
 
 void Game::
-exit(void) {}
+player_exit(void) {}
+void Game::
+opponent_exit(void) {}

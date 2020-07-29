@@ -27,7 +27,7 @@ enum turnState { DEFAULT, TRADE, DICES_7, BUILD, PASS, EXIT };
 class Game
 {
 	public:
-		Game();
+		Game(Board* board_, Player* player_, Player* opponent_, Input* input_, Graphics* graphics_);
 		~Game();
 		
 		void play();	//fsm global
@@ -56,7 +56,7 @@ class Game
 		unsigned int turnCounter;
 		
 		//fsm stuff
-		void (*fsm_array[OPPONENT_STATE + 1][EXIT + 1])(void);
+		void (Game::*fsm_array[OPPONENT_STATE + 1][EXIT + 1])(void);
 		
 		playerState player_state;
 		turnState turn_state;
@@ -76,7 +76,8 @@ class Game
 		void player_pass(void);
 		void opponent_pass(void);
 
-		void exit(void);
+		void player_exit(void);
+		void opponent_exit(void);
 
 		//game stuff
 		Graphics * graphics;

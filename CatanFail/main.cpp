@@ -9,8 +9,9 @@ int main(void)
 
 	Graphics graphics(&board, &player, &opponent, &input);
 
-	Game game();
-
-
+	Game game(&board, &player, &opponent, &input, &graphics);
+	
+	game.play();
+	
 	return 0;
 }
