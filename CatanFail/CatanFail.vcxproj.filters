@@ -119,6 +119,9 @@
     <ClCompile Include="NFSM.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

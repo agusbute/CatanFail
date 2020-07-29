@@ -371,3 +371,32 @@ getTurnCounter()
 {
 	return turnCounter;
 }
+
+//fsm functions
+void Game::
+player_default(void) {}
+void Game::
+opponent_default(void) {}
+
+void Game::
+player_trade(void) {}
+void Game::
+opponent_trade(void) {}
+
+void Game::
+player_dices_7(void) {}
+void Game::
+opponent_dices_7(void) {}
+
+void Game::
+player_build(void) {}
+void Game::
+opponent_build(void) {}
+
+void Game::
+player_pass(void) {}
+void Game::
+opponent_pass(void) {}
+
+void Game::
+exit(void) {}

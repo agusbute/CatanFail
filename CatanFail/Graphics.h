@@ -69,7 +69,7 @@ class Graphics
 {
 	public:
 
-		Graphics(Board * board_, Player * player_, Player * opponent_, Input * input_, Button * buttons_);
+		Graphics(Board * board_, Player * player_, Player * opponent_, Input * input_);
 		~Graphics();
 		
 		void setfirstGraphics(); // display que pide nombre e ip
@@ -101,6 +101,9 @@ class Graphics
 		ALLEGRO_BITMAP** Settlements;
 		ALLEGRO_BITMAP** Roads;
 
+		ALLEGRO_BITMAP* ButtonMain;
+		ALLEGRO_BITMAP* ButtonClick;
+
 		disp_coord player_roads[TOTAL_ROADS];
 		disp_coord opponent_roads[TOTAL_ROADS];
 		disp_coord player_settlements[TOTAL_SETTLEMENTS];
@@ -110,7 +113,8 @@ class Graphics
 
 		void drawBoard(void);
 		void drawBoardComponents();
-		void drawButtons(Button* buttons_); // esto se redibuja para efectos
+		void drawButtons(); // esto se redibuja para efectos
+		void drawBuildButtons();
 		void drawPlayer();
 		void drawOpponent();
 		void drawCards(); //dibuja las cartas con contador (se usa solo para el player)

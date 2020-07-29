@@ -21,6 +21,9 @@
 #define TOTAL_YEAR_OF_P_CARDS 2
 #define TOTAL_R_BUILDING_CARDS 2
 
+enum playerState { PLAYER_STATE, OPPONENT_STATE };
+enum turnState { DEFAULT, TRADE, DICES_7, BUILD, PASS, EXIT };
+
 class Game
 {
 	public:
@@ -51,7 +54,31 @@ class Game
 		bool inPreviousRoads(road_t road, vector <road_t> &previous_roads);	//devuelve true is road esta en previous_road
 
 		unsigned int turnCounter;
+		
+		//fsm stuff
+		void (*fsm_array[OPPONENT_STATE + 1][EXIT + 1])(void);
+		
+		playerState player_state;
+		turnState turn_state;
 
+		void player_default(void);
+		void opponent_default(void);
+
+		void player_trade(void);
+		void opponent_trade(void);
+
+		void player_dices_7(void);
+		void opponent_dices_7(void);
+
+		void player_build(void);
+		void opponent_build(void);
+
+		void player_pass(void);
+		void opponent_pass(void);
+
+		void exit(void);
+
+		//game stuff
 		Graphics * graphics;
 		Input * input;
 

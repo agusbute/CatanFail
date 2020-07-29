@@ -29,12 +29,15 @@ typedef struct
 class Input
 {
 public:
+
 	Input();
 	void evDispatcher(void);
 	bool exitGame(void);
 
 	string getInputName(void);
 	string getInputIP(void);
+
+	mouse_coords getMouseClick(void);
 
 	ALLEGRO_FONT* getFont();
 

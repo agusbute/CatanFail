@@ -3,13 +3,12 @@
 #include "Graphics.h"
 
 Graphics::
-Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Button* buttons_) // probablemente despues se modifique buttons
+Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_) // probablemente despues se modifique buttons
 {
 	this->board = board_;
 	this->player = player_;
 	this->opponent = opponent_;
 	this->input = input_;
-	this->buttons = buttons_;
 
 	this->Hexes = new ALLEGRO_BITMAP * [TOTAL_RESOURCES + 1];
 	this->Frames = new ALLEGRO_BITMAP * [SEA_FRAME_TILES];
@@ -22,7 +21,6 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 	this->Houses = new ALLEGRO_BITMAP * [2];
 	this->Settlements = new ALLEGRO_BITMAP* [2];
 	this->Roads = new ALLEGRO_BITMAP * [2];
-
 
 	setfirstGraphics();
 
@@ -78,6 +76,9 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_, Butto
 	Roads[PLAYER] = al_load_bitmap("Files/BoardPieces/Road1.png");
 	Roads[OPPONENT] = al_load_bitmap("Files/BoardPieces/Road2.png");
 
+	this->ButtonMain = al_load_bitmap("Files/Button/ButtonMain.png");
+	this->ButtonClick = al_load_bitmap("Files/Button/ButtonClick.png");
+
 }
 
 void Graphics::
@@ -106,7 +107,7 @@ setGraphicsGame()
 
 	drawPlayer();
 	drawOpponent();
-	drawButtons(buttons);
+	drawButtons();
 	al_flip_display();
 }
 
@@ -524,9 +525,40 @@ drawCards()
 }
 
 void Graphics::
-drawButtons(Button* buttons_)
+drawButtons()
 {
+	float cx_button, cy_button, dx_button, dy_button;
+	cx_button = al_get_bitmap_width(ButtonMain) / 2.0;
+	cy_button = al_get_bitmap_height(ButtonMain) / 2.0;
 
+	dx_button = 0.9 * WIDTH;
+	dy_button = 0.075 * HEIGHT;
+
+	al_draw_scaled_rotated_bitmap(ButtonMain, cx_button, cy_button, dx_button, dy_button, 0.75, 0.75, 0, NULL);
+	al_draw_text(this->input->getFont(), al_map_rgb(0, 100, 95), dx_button - 25, dy_button - 7.5, ALLEGRO_ALIGN_LEFT, "Trade");
+	//chequear cuanto va a ocupar la palabra con ese font
+	al_draw_scaled_rotated_bitmap(ButtonMain, cx_button, cy_button, dx_button, dy_button + al_get_bitmap_height(ButtonMain), 0.75, 0.75, 0, NULL);
+	al_draw_text(this->input->getFont(), al_map_rgb(0, 100, 95), dx_button - 25, dy_button + al_get_bitmap_height(ButtonMain) - 7.5, ALLEGRO_ALIGN_LEFT, "Pass");
+
+	al_draw_scaled_rotated_bitmap(ButtonMain, cx_button, cy_button, dx_button, dy_button + 2 * al_get_bitmap_height(ButtonMain), 0.75, 0.75, 0, NULL);
+	al_draw_text(this->input->getFont(), al_map_rgb(0, 100, 95), dx_button - 25, dy_button + 2 * al_get_bitmap_height(ButtonMain) - 7.5, ALLEGRO_ALIGN_LEFT, "Build");
+
+	al_draw_scaled_rotated_bitmap(ButtonMain, cx_button, cy_button, dx_button, dy_button + 3 * al_get_bitmap_height(ButtonMain), 0.75, 0.75, 0, NULL);
+	al_draw_text(this->input->getFont(), al_map_rgb(0, 100, 95), dx_button - 25, dy_button + 3 * al_get_bitmap_height(ButtonMain) - 7.5, ALLEGRO_ALIGN_LEFT, "Exit");
+}
+
+void Graphics::
+drawBuildButtons()
+{
+	al_draw_text(this->input->getFont(), al_map_rgb(255, 255, 255), WIDTH * 0.3, HEIGHT * 0.4, ALLEGRO_ALIGN_LEFT, "What do you wish to build?");
+	al_draw_filled_rectangle(WIDTH * 0.3, HEIGHT * 0.3, WIDTH * 0.7, HEIGHT * 0.7, al_map_rgb(255, 253, 208)); // esto está bien
+	al_draw_rounded_rectangle(WIDTH * 0.3, HEIGHT * 0.3, WIDTH * 0.7, HEIGHT * 0.7, 10.0, 10.0, al_map_rgb(0, 0, 0), 5.0);
+	al_draw_rounded_rectangle(WIDTH * 0.3, HEIGHT * 0.3, WIDTH * 0.7, HEIGHT * 0.7, 10.0, 10.0, al_map_rgb(255, 253, 208), 3.0);
+	al_draw_text(this->input->getFont(), al_map_rgb(0, 0, 0), WIDTH * 0.33, HEIGHT * 0.48, ALLEGRO_ALIGN_LEFT, "Road");
+	al_draw_text(this->input->getFont(), al_map_rgb(0, 0, 0), WIDTH * 0.46, HEIGHT * 0.48, ALLEGRO_ALIGN_LEFT, "Settlement");
+	al_draw_text(this->input->getFont(), al_map_rgb(0, 0, 0), WIDTH * 0.63, HEIGHT * 0.48, ALLEGRO_ALIGN_LEFT, "City");
+	al_draw_text(this->input->getFont(), al_map_rgb(0, 0, 0), WIDTH * 0.63, HEIGHT * 0.65, ALLEGRO_ALIGN_LEFT, "Cancel");
+	al_flip_display();
 }
 
 Graphics::

@@ -419,6 +419,12 @@ getInputIP(void)
 	return inputIP();
 }
 
+mouse_coords Input::
+getMouseClick(void) 
+{
+	return mouse_position;
+}
+
 void Input::
 setVisibleButtons(void)
 {
