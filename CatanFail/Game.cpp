@@ -1,13 +1,14 @@
 #include "Game.h"
 
 Game::
-Game(Board* board_, Player* player_, Player* opponent_, Input* input_, Graphics * graphics_)
+Game(Board* board_, Player* player_, Player* opponent_, Input* input_, Graphics * graphics_, Network * network_)
 {
 	graphics = graphics_;
 	player = player_;
 	opponent = opponent_;
 	board = board_;
 	input = input_;
+	network = network_;
 
 	player->setBoard(board);
 	opponent->setBoard(board);
@@ -50,6 +51,10 @@ play()
 	graphics->setBoard(board, player, opponent);
 	opponent->setName(network->getOpponentName());//network guarda el nombre del oponente en un string
 	*/
+	
+	
+	this->input->evDispatcher();
+
 }
 
 void Game::

@@ -27,7 +27,7 @@ enum turnState { DEFAULT, TRADE, DICES_7, BUILD, PASS, EXIT };
 class Game
 {
 	public:
-		Game(Board* board_, Player* player_, Player* opponent_, Input* input_, Graphics* graphics_);
+		Game(Board* board_, Player* player_, Player* opponent_, Input* input_, Graphics* graphics_, Network * network_);
 		~Game();
 		
 		void play();	//fsm global

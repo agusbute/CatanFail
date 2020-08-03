@@ -59,11 +59,20 @@
 #define PLAYER 0
 #define OPPONENT 1
 
+enum bmp_flag { BUILD, BUTTONS, ROADS, NODES };
+
 typedef struct
 {
 	int x;
 	int y = 1000;
 }disp_coord;
+
+typedef struct
+{
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+}rgb_click;
 
 class Graphics
 {
@@ -75,6 +84,15 @@ class Graphics
 		void setfirstGraphics(); // display que pide nombre e ip
 		void setGraphicsGame(); // display con el tablero y todo eso
 		
+		void tradeClicked();
+		void passClicked();
+		void buildClicked();
+		void exitClicked();
+
+		rgb_click getClickRGB(mouse_coords click_);
+
+		void setClickBMP(bmp_flag flag);
+
 		void updateDisplay();
 	
 	private:
@@ -83,12 +101,12 @@ class Graphics
 		Player * opponent;
 		Board * board;
 		Input * input;
-		Button * buttons;
 
 		ALLEGRO_BITMAP* Color_Nodes;
 		ALLEGRO_BITMAP* Color_Roads;
 		ALLEGRO_BITMAP* Color_Buttons1;
-		ALLEGRO_BITMAP* Color_Buttons2;
+		ALLEGRO_BITMAP* Build_Buttons;
+		ALLEGRO_BITMAP* Click_BMP;
 
 		ALLEGRO_BITMAP** Hexes;
 		ALLEGRO_BITMAP** Frames;

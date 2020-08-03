@@ -27,7 +27,8 @@ Graphics(Board* board_, Player* player_, Player* opponent_, Input* input_) // pr
 	Color_Nodes = al_load_bitmap("Files/Clicks/nodes.png");
 	Color_Roads = al_load_bitmap("Files/Clicks/roads.png");
 	Color_Buttons1 = al_load_bitmap("Files/Clicks/buttons.png");
-	Color_Buttons2 = al_load_bitmap("Files/Clicks/buttons2.png");
+	Build_Buttons = al_load_bitmap("Files/Clicks/build_buttons.png");
+	Click_BMP = Color_Buttons1;
 
 	Hexes[DESERT1] = al_load_bitmap("Files/Hexes/DESERT.png");
 	Hexes[BRICK1] = al_load_bitmap("Files/Hexes/BRICK.png");
@@ -597,4 +598,32 @@ drawDices(unsigned int dice1, unsigned int dice2)
 	
 	al_draw_scaled_rotated_bitmap(Dices[dice1 - 1], al_get_bitmap_width(Dices[dice1 - 1]) / 2.0, al_get_bitmap_height(Dices[dice1 - 1]) / 2.0, dx1, dy1, 1.0 / 2.0, 1.0 / 2.0, 0.0, NULL);
 	al_draw_scaled_rotated_bitmap(Dices[dice2 - 1], al_get_bitmap_width(Dices[dice2 - 1]) / 2.0, al_get_bitmap_height(Dices[dice2 - 1]) / 2.0, dx2, dy2, 1.0 / 2.0, 1.0 / 2.0, 0.0, NULL);
+}
+
+void Graphics::
+setClickBMP(bmp_flag flag)
+{
+	switch (flag)
+	{
+	case BUILD:
+		Click_BMP = Build_Buttons;
+	break;
+	case BUTTONS:
+		Click_BMP = Color_Buttons1;
+	break;
+	case ROADS:
+		Click_BMP = Color_Roads;
+	break;
+	case NODES:
+		Click_BMP = Color_Nodes;
+	break;
+	default:break;
+	}
+}
+
+rgb_click Graphics::
+getClickRGB(mouse_coords click_)
+{
+	rgb_click click;
+	al_unmap_rgb(al_get_pixel(Click_BMP, click_.pos_x, click_.pos_y), &(click.r), &(click.g), &(click.b));
 }

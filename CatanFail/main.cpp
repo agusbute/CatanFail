@@ -6,11 +6,12 @@ int main(void)
 	Player opponent;
 	Input input;
 	Board board;
+	Network network;
 
 	Graphics graphics(&board, &player, &opponent, &input);
 
-	Game game(&board, &player, &opponent, &input, &graphics);
-	
+	Game game(&board, &player, &opponent, &input, &graphics, &network);
+
 	game.play();
 	
 	return 0;
