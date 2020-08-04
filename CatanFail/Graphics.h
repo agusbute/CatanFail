@@ -8,6 +8,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/bitmap.h>
+#include <windows.h>
 
 #include "Board.h"
 #include "Player.h"
@@ -59,7 +60,8 @@
 #define PLAYER 0
 #define OPPONENT 1
 
-enum bmp_flag { BUILD, BUTTONS, ROADS, NODES };
+
+typedef enum bmp_flag { BUILD, BUTTONS, ROADS, NODES };
 
 typedef struct
 {
@@ -84,6 +86,7 @@ class Graphics
 		void setfirstGraphics(); // display que pide nombre e ip
 		void setGraphicsGame(); // display con el tablero y todo eso
 		
+		//animaciones de botones
 		void tradeClicked();
 		void passClicked();
 		void buildClicked();

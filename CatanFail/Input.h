@@ -33,6 +33,7 @@ public:
 	Input();
 	void evDispatcher(void);
 	bool exitGame(void);
+	void setExitGame(bool state);
 
 	string getInputName(void);
 	string getInputIP(void);

@@ -82,6 +82,12 @@ exitGame(void)
 	return this->exit_game;
 }
 
+void Input::
+setExitGame(bool state)
+{
+	this->exit_game = state;
+}
+
 string Input::
 inputName(void)
 {

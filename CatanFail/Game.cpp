@@ -13,19 +13,19 @@ Game(Board* board_, Player* player_, Player* opponent_, Input* input_, Graphics 
 	player->setBoard(board);
 	opponent->setBoard(board);
 
-	fsm_array[PLAYER_STATE][DEFAULT] = &player_default;
-	fsm_array[PLAYER_STATE][TRADE] = &player_trade;
-	fsm_array[PLAYER_STATE][DICES_7] = &player_dices_7;
-	fsm_array[PLAYER_STATE][BUILD] = &player_build;
-	fsm_array[PLAYER_STATE][PASS] = &player_pass;
-	fsm_array[PLAYER_STATE][EXIT] = &player_exit;
+	fsm_matrix[PLAYER_STATE][DEFAULT] = &player_default;
+	fsm_matrix[PLAYER_STATE][TRADE] = &player_trade;
+	fsm_matrix[PLAYER_STATE][DICES_7] = &player_dices_7;
+	fsm_matrix[PLAYER_STATE][BUILD] = &player_build;
+	fsm_matrix[PLAYER_STATE][PASS] = &player_pass;
+	fsm_matrix[PLAYER_STATE][EXIT] = &player_exit;
 
-	fsm_array[OPPONENT_STATE][DEFAULT] = &opponent_default;
-	fsm_array[OPPONENT_STATE][TRADE] = &opponent_trade;
-	fsm_array[OPPONENT_STATE][DICES_7] = &opponent_dices_7;
-	fsm_array[OPPONENT_STATE][BUILD] = &opponent_build;
-	fsm_array[OPPONENT_STATE][PASS] = &opponent_pass;
-	fsm_array[OPPONENT_STATE][EXIT] = &opponent_exit;
+	fsm_matrix[OPPONENT_STATE][DEFAULT] = &opponent_default;
+	fsm_matrix[OPPONENT_STATE][TRADE] = &opponent_trade;
+	fsm_matrix[OPPONENT_STATE][DICES_7] = &opponent_dices_7;
+	fsm_matrix[OPPONENT_STATE][BUILD] = &opponent_build;
+	fsm_matrix[OPPONENT_STATE][PASS] = &opponent_pass;
+	fsm_matrix[OPPONENT_STATE][EXIT] = &opponent_exit;
 
 	player_state = PLAYER_STATE;
 	turn_state = DEFAULT;
@@ -42,18 +42,19 @@ void Game::
 play()
 {
 	/*
-	player->setName(graphics->getPlayerName()); //funcion que con allegro le pida al jugador su nombre
-	
 	//network->begin recibe el tablero en blanco y el jugador para hacer la conexion
 	//decide si es client o server hace el intercambio de data
 	//y si somos server crea el tablero y se lo manda al otro jugador
-	network->begin(board, player);
-	graphics->setBoard(board, player, opponent);
 	opponent->setName(network->getOpponentName());//network guarda el nombre del oponente en un string
 	*/
 	
+
+	while (!input->exitGame())
+	{
+		this->input->evDispatcher();
+		*fsm_matrix[player_state][turn_state]();
+	}
 	
-	this->input->evDispatcher();
 
 }
 

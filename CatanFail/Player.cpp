@@ -217,6 +217,7 @@ searchRoad(char x, char y, char z)
 	}
 	return ret;
 }
+
 bool Player::
 searchRoad(road_t road)
 {
@@ -251,6 +252,7 @@ searchBuilding(coord_t coords)
 	}
 	return ret;
 }
+
 bool Player::
 searchBuilding(char x, char y, char z)
 {

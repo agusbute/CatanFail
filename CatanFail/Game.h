@@ -24,6 +24,8 @@
 enum playerState { PLAYER_STATE, OPPONENT_STATE };
 enum turnState { DEFAULT, TRADE, DICES_7, BUILD, PASS, EXIT };
 
+typedef void (Game::* fn_matrix[OPPONENT_STATE + 1][EXIT + 1])(void);
+
 class Game
 {
 	public:
@@ -56,7 +58,7 @@ class Game
 		unsigned int turnCounter;
 		
 		//fsm stuff
-		void (Game::*fsm_array[OPPONENT_STATE + 1][EXIT + 1])(void);
+		fn_matrix fsm_matrix;
 		
 		playerState player_state;
 		turnState turn_state;

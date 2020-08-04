@@ -2,7 +2,7 @@
 
 string PacketMaker(PacketHeader Header, string data = "");
 
-const char* getHeader(PacketHeader);
+const char* getHeader(PacketHeader Header);
 
 enum PacketHeader : unsigned char {
 	OTHER = 0x00,

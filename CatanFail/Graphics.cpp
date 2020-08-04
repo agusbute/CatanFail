@@ -626,4 +626,78 @@ getClickRGB(mouse_coords click_)
 {
 	rgb_click click;
 	al_unmap_rgb(al_get_pixel(Click_BMP, click_.pos_x, click_.pos_y), &(click.r), &(click.g), &(click.b));
+	return click;
+}
+
+void Graphics::
+tradeClicked()
+{
+	float cx_button, cy_button, dx_button, dy_button;
+	cx_button = al_get_bitmap_width(ButtonMain) / 2.0;
+	cy_button = al_get_bitmap_height(ButtonMain) / 2.0;
+
+	dx_button = 0.9 * WIDTH;
+	dy_button = 0.075 * HEIGHT;
+
+	al_draw_scaled_rotated_bitmap(ButtonClick, cx_button, cy_button, dx_button, dy_button, 0.75, 0.75, 0, NULL);
+	al_draw_text(input->getFont(), al_map_rgb(0, 200, 195), dx_button - 25, dy_button - 7.5, ALLEGRO_ALIGN_LEFT, "Trade");
+	al_flip_display();
+	Sleep(100);
+	al_draw_scaled_rotated_bitmap(ButtonMain, cx_button, cy_button, dx_button, dy_button, 0.75, 0.75, 0, NULL);
+	al_draw_text(input->getFont(), al_map_rgb(0, 100, 95), dx_button - 25, dy_button - 7.5, ALLEGRO_ALIGN_LEFT, "Trade");
+	al_flip_display();
+}
+void Graphics::
+passClicked()
+{
+	float cx_button, cy_button, dx_button, dy_button;
+	cx_button = al_get_bitmap_width(ButtonMain) / 2.0;
+	cy_button = al_get_bitmap_height(ButtonMain) / 2.0;
+
+	dx_button = 0.9 * WIDTH;
+	dy_button = 0.075 * HEIGHT;
+
+	al_draw_scaled_rotated_bitmap(ButtonClick, cx_button, cy_button, dx_button, dy_button + al_get_bitmap_height(ButtonMain), 0.75, 0.75, 0, NULL);
+	al_draw_text(input->getFont(), al_map_rgb(0, 200, 195), dx_button - 25, dy_button + al_get_bitmap_height(ButtonMain) - 7.5, ALLEGRO_ALIGN_LEFT, "Pass");
+	al_flip_display();
+	Sleep(100);
+	al_draw_scaled_rotated_bitmap(ButtonMain, cx_button, cy_button, dx_button, dy_button + al_get_bitmap_height(ButtonMain), 0.75, 0.75, 0, NULL);
+	al_draw_text(input->getFont(), al_map_rgb(0, 100, 95), dx_button - 25, dy_button + al_get_bitmap_height(ButtonMain) - 7.5, ALLEGRO_ALIGN_LEFT, "Pass");
+	al_flip_display();
+}
+void Graphics::
+buildClicked()
+{
+	float cx_button, cy_button, dx_button, dy_button;
+	cx_button = al_get_bitmap_width(ButtonMain) / 2.0;
+	cy_button = al_get_bitmap_height(ButtonMain) / 2.0;
+
+	dx_button = 0.9 * WIDTH;
+	dy_button = 0.075 * HEIGHT;
+
+	al_draw_scaled_rotated_bitmap(ButtonClick, cx_button, cy_button, dx_button, dy_button + 2 * al_get_bitmap_height(ButtonMain), 0.75, 0.75, 0, NULL);
+	al_draw_text(input->getFont(), al_map_rgb(0, 200, 195), dx_button - 25, dy_button + 2 * al_get_bitmap_height(ButtonMain) - 7.5, ALLEGRO_ALIGN_LEFT, "Build");
+	al_flip_display();
+	Sleep(100);
+	al_draw_scaled_rotated_bitmap(ButtonMain, cx_button, cy_button, dx_button, dy_button + 2 * al_get_bitmap_height(ButtonMain), 0.75, 0.75, 0, NULL);
+	al_draw_text(input->getFont(), al_map_rgb(0, 100, 95), dx_button - 25, dy_button + 2 * al_get_bitmap_height(ButtonMain) - 7.5, ALLEGRO_ALIGN_LEFT, "Build");
+	al_flip_display();
+}
+void Graphics::
+exitClicked()
+{
+	float cx_button, cy_button, dx_button, dy_button;
+	cx_button = al_get_bitmap_width(ButtonMain) / 2.0;
+	cy_button = al_get_bitmap_height(ButtonMain) / 2.0;
+
+	dx_button = 0.9 * WIDTH;
+	dy_button = 0.075 * HEIGHT;
+	
+	al_draw_scaled_rotated_bitmap(ButtonClick, cx_button, cy_button, dx_button, dy_button + 3 * al_get_bitmap_height(ButtonMain), 0.75, 0.75, 0, NULL);
+	al_draw_text(input->getFont(), al_map_rgb(0, 200, 195), dx_button - 25, dy_button + 3 * al_get_bitmap_height(ButtonMain) - 7.5, ALLEGRO_ALIGN_LEFT, "Exit");
+	al_flip_display();
+	Sleep(100);
+	al_draw_scaled_rotated_bitmap(ButtonMain, cx_button, cy_button, dx_button, dy_button + 3 * al_get_bitmap_height(ButtonMain), 0.75, 0.75, 0, NULL);
+	al_draw_text(input->getFont(), al_map_rgb(0, 100, 95), dx_button - 25, dy_button + 3 * al_get_bitmap_height(ButtonMain) - 7.5, ALLEGRO_ALIGN_LEFT, "Exit");
+	al_flip_display();
 }
