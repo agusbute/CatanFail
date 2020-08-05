@@ -14,6 +14,9 @@ using namespace std;
 class server : public NetworkSocket
 {
 public:
+	bool startListening();
+	void send_message(char* message);
+	char* receive_message();
 	server();
 	~server();
 	NStatus estado;

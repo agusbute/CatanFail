@@ -47,9 +47,10 @@ play()
 	//y si somos server crea el tablero y se lo manda al otro jugador
 	opponent->setName(network->getOpponentName());//network guarda el nombre del oponente en un string
 	*/
-	
+	//dependiendo si el usuario es o no el server, crea o recibe el tablero
+	board->initToStartGame(); //creo el tablero
 
-	while (!input->exitGame())
+	while (!(input->exitGame()))
 	{
 		this->input->evDispatcher();
 		*fsm_matrix[player_state][turn_state]();
@@ -391,7 +392,10 @@ getTurnCounter()
 
 //fsm functions
 void Game::
-player_default(void) {}
+player_default(void) 
+{
+	
+}
 void Game::
 opponent_default(void) {}
 

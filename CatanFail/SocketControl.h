@@ -20,10 +20,10 @@ class NetworkSocket
 	public:
 		NetworkSocket();				
 		bool Connect();
-		char* receive_message();
-		bool send_message(string message);
+		virtual char* receive_message();
+		virtual bool send_message(string message);
 		bool startConnection(const char* host);
-		bool startListening();
+		virtual bool startListening();
 		Mode getMode();
 		
 
